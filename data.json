@@ -2,7 +2,7 @@
   {
     "site": "Sandpiper House",
     "job": "59153",
-    "priority": "Ã¢ÂÂ",
+    "priority": "ÃÂ¢ÃÂÃÂ",
     "pcip": true,
     "cfra": true,
     "lead": true,
@@ -21,7 +21,7 @@
   {
     "site": "Tunbridge Wells",
     "job": "60327",
-    "priority": "Ã¢ÂÂ",
+    "priority": "ÃÂ¢ÃÂÃÂ",
     "pcip": true,
     "cfra": true,
     "lead": true,
@@ -40,7 +40,7 @@
   {
     "site": "Bristol Filton",
     "job": "60092",
-    "priority": "Ã¢ÂÂ",
+    "priority": "ÃÂ¢ÃÂÃÂ",
     "pcip": true,
     "cfra": true,
     "lead": false,
@@ -62,8 +62,8 @@
     "priority": "3",
     "pcip": true,
     "cfra": true,
-    "lead": true,
-    "leadNote": "",
+    "lead": false,
+    "leadNote": "PJ to arrange",
     "scaff": false,
     "scaffNote": "",
     "cpp": false,
@@ -192,7 +192,7 @@
   {
     "site": "Hornchurch",
     "job": "61465",
-    "priority": "Ã¢ÂÂ",
+    "priority": "ÃÂ¢ÃÂÃÂ",
     "pcip": false,
     "cfra": false,
     "lead": false,

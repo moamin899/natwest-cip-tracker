@@ -2,7 +2,7 @@
   {
     "site": "Sandpiper House",
     "job": "59153",
-    "priority": "",
+    "priority": "complete",
     "pcip": true,
     "cfra": true,
     "lead": true,
@@ -12,7 +12,7 @@
     "cpp": true,
     "cppPct": 100,
     "submission": "2026-04-10",
-    "subcosts": false,
+    "subcosts": true,
     "subcostsDate": "",
     "wtsub": true,
     "wtDate": "",
@@ -21,7 +21,7 @@
   {
     "site": "Tunbridge Wells",
     "job": "60327",
-    "priority": "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ",
+    "priority": "complete",
     "pcip": true,
     "cfra": true,
     "lead": true,
@@ -40,7 +40,7 @@
   {
     "site": "Bristol Filton",
     "job": "60092",
-    "priority": "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ",
+    "priority": "complete",
     "pcip": true,
     "cfra": true,
     "lead": false,
@@ -192,21 +192,21 @@
   {
     "site": "Hornchurch",
     "job": "61465",
-    "priority": "1",
+    "priority": "complete",
     "pcip": false,
     "cfra": false,
     "lead": false,
     "leadNote": "On completion of scaffold",
     "scaff": true,
-    "scaffNote": "Draft under review by ABP",
+    "scaffNote": "",
     "cpp": false,
     "cppPct": 0,
     "submission": "2026-04-14",
     "subcosts": true,
     "subcostsDate": "",
     "wtsub": true,
-    "wtDate": "2026-04-08",
-    "suppliers": "Complete"
+    "wtDate": "",
+    "suppliers": ""
   },
   {
     "site": "Hitchin",

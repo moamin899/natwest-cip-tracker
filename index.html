@@ -6,306 +6,303 @@
 <title>SW Bruce — NatWest CIP Pre-Construction Tracker</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
-:root{
-  --navy:#1a2744;--navy-mid:#243156;--navy-light:#2e3d6a;--navy-border:#3a4f80;
-  --slate:#8a93ad;--ice:#e8ecf5;--white:#fff;
-  --green:#2ecc8f;--amber:#f0a500;--red:#e05555;--blue:#4a90d9;
-  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
-}
+:root{--navy:#1a2744;--navy-mid:#243156;--navy-light:#2e3d6a;--navy-border:#3a4f80;--slate:#8a93ad;--ice:#e8ecf5;--white:#fff;--green:#2ecc8f;--amber:#f0a500;--red:#e05555;--blue:#4a90d9;--purple:#9b7fe8;--font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font);background:var(--navy);color:var(--white);min-height:100vh;font-size:13px}
-.shell{max-width:1400px;margin:0 auto;padding:2rem 1.5rem 3rem}
-
-.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--navy-light);flex-wrap:wrap;gap:1rem}
-.header-left{display:flex;align-items:center;gap:16px}
-.logo-wrap{display:flex;align-items:center;overflow:hidden}.logo-wrap svg{height:28px;width:auto;max-width:200px;display:block}
-.hdivider{width:1px;height:32px;background:var(--navy-light)}
-.header-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--slate);margin-bottom:3px}
-.header-title{font-size:18px;font-weight:300;color:var(--white)}
+.shell{max-width:1600px;margin:0 auto;padding:1.75rem 1.25rem 3rem}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--navy-light);flex-wrap:wrap;gap:1rem}
+.header-left{display:flex;align-items:center;gap:14px}
+.logo-wrap{display:flex;align-items:center}
+.hdivider{width:1px;height:32px;background:var(--navy-light);flex-shrink:0}
+.header-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--slate);margin-bottom:2px}
+.header-title{font-size:17px;font-weight:300;color:var(--white)}
 .header-title strong{font-weight:500}
-.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.live-pill{display:inline-flex;align-items:center;gap:6px;background:var(--navy-mid);border:1px solid var(--navy-light);border-radius:4px;padding:5px 12px;font-size:11px;color:var(--slate);font-family:var(--mono)}
+.header-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.live-pill{display:inline-flex;align-items:center;gap:6px;background:var(--navy-mid);border:1px solid var(--navy-light);border-radius:4px;padding:5px 11px;font-size:11px;color:var(--slate);font-family:var(--mono)}
 .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex-shrink:0}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
-.btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:7px 14px;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all 0.15s;border:1px solid;font-weight:400}
-.btn-primary{background:var(--blue);color:var(--white);border-color:var(--blue)}
-.btn-primary:hover{background:#3a7fc4}
-.btn-outline{background:transparent;color:var(--blue);border-color:var(--navy-border)}
-.btn-outline:hover{background:var(--navy-mid)}
-.btn-ghost{background:transparent;color:var(--slate);border-color:var(--navy-light)}
-.btn-ghost:hover{color:var(--white);border-color:var(--slate)}
-.btn-danger{background:rgba(224,85,85,0.15);color:var(--red);border-color:rgba(224,85,85,0.3)}
-.btn-danger:hover{background:rgba(224,85,85,0.25)}
-
-.setup-banner{background:rgba(240,165,0,0.08);border:1px solid rgba(240,165,0,0.25);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:flex-start;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:7px 13px;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all 0.15s;border:1px solid;font-weight:400}
+.btn-primary{background:var(--blue);color:var(--white);border-color:var(--blue)}.btn-primary:hover{background:#3a7fc4}
+.btn-ghost{background:transparent;color:var(--slate);border-color:var(--navy-light)}.btn-ghost:hover{color:var(--white);border-color:var(--slate)}
+.btn-danger{background:rgba(224,85,85,0.12);color:var(--red);border-color:rgba(224,85,85,0.25)}.btn-danger:hover{background:rgba(224,85,85,0.22)}
+.setup-banner{background:rgba(240,165,0,0.07);border:1px solid rgba(240,165,0,0.22);border-radius:10px;padding:1.125rem 1.375rem;margin-bottom:1.25rem;display:flex;align-items:flex-start;gap:12px}
 .setup-banner.hidden{display:none}
-.setup-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.setup-icon{font-size:16px;flex-shrink:0;margin-top:1px}
 .setup-text{flex:1}
-.setup-title{font-size:13px;font-weight:500;color:var(--amber);margin-bottom:4px}
+.setup-title{font-size:13px;font-weight:500;color:var(--amber);margin-bottom:3px}
 .setup-desc{font-size:12px;color:var(--slate);line-height:1.6}
-.setup-desc a{color:var(--blue);text-decoration:none}
-.setup-desc a:hover{text-decoration:underline}
-.setup-fields{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center}
-.setup-input{background:var(--navy);border:1px solid var(--navy-border);border-radius:6px;padding:7px 12px;color:var(--white);font-family:var(--mono);font-size:12px;width:320px}
+.setup-desc a{color:var(--blue)}
+.setup-fields{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.setup-input{background:var(--navy);border:1px solid var(--navy-border);border-radius:6px;padding:7px 11px;color:var(--white);font-family:var(--mono);font-size:12px}
 .setup-input:focus{outline:none;border-color:var(--blue)}
-
-.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:1.75rem}
-.metric{background:var(--navy-mid);border:1px solid var(--navy-light);border-radius:10px;padding:1rem 1.125rem;position:relative;overflow:hidden}
+.legend{display:flex;align-items:center;gap:14px;margin-bottom:1.25rem;padding:10px 14px;background:var(--navy-mid);border:1px solid var(--navy-light);border-radius:8px;flex-wrap:wrap}
+.legend-title{font-size:10px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--slate);margin-right:2px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--slate)}
+.ls{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:4px;font-size:11px}
+.ls-done{background:rgba(46,204,143,0.15);border:1px solid rgba(46,204,143,0.3);color:var(--green)}
+.ls-waiting{background:rgba(224,85,85,0.15);border:1px solid rgba(224,85,85,0.3);color:var(--red)}
+.ls-requested{background:rgba(240,165,0,0.15);border:1px solid rgba(240,165,0,0.3);color:var(--amber)}
+.ls-na{background:rgba(138,147,173,0.1);border:1px solid rgba(138,147,173,0.2);color:var(--slate);font-size:9px}
+.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:1.25rem}
+.metric{background:var(--navy-mid);border:1px solid var(--navy-light);border-radius:8px;padding:0.875rem 1rem;position:relative;overflow:hidden}
 .metric::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px}
-.m-green::after{background:var(--green)}.m-amber::after{background:var(--amber)}
-.m-red::after{background:var(--red)}.m-blue::after{background:var(--blue)}.m-slate::after{background:var(--slate)}
-.metric-label{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--slate);margin-bottom:8px}
-.metric-value{font-size:30px;font-weight:300;font-family:var(--mono);line-height:1;color:var(--white)}
-.metric-sub{font-size:10px;color:var(--slate);margin-top:5px}
-
-.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
-.toolbar-left{display:flex;gap:6px;flex-wrap:wrap}
-.filter-btn{font-size:11px;padding:5px 12px;border-radius:20px;cursor:pointer;font-family:var(--font);transition:all 0.15s;border:1px solid var(--navy-light);background:transparent;color:var(--slate)}
+.m-green::after{background:var(--green)}.m-amber::after{background:var(--amber)}.m-red::after{background:var(--red)}.m-blue::after{background:var(--blue)}.m-slate::after{background:var(--slate)}.m-purple::after{background:var(--purple)}
+.metric-label{font-size:10px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--slate);margin-bottom:6px}
+.metric-value{font-size:26px;font-weight:300;font-family:var(--mono);line-height:1;color:var(--white)}
+.metric-sub{font-size:10px;color:var(--slate);margin-top:4px}
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.875rem;flex-wrap:wrap;gap:8px}
+.toolbar-left{display:flex;gap:5px;flex-wrap:wrap}
+.filter-btn{font-size:11px;padding:5px 11px;border-radius:20px;cursor:pointer;font-family:var(--font);transition:all 0.15s;border:1px solid var(--navy-light);background:transparent;color:var(--slate)}
 .filter-btn:hover{color:var(--white);border-color:var(--slate)}
 .filter-btn.active{background:var(--navy-light);color:var(--white);border-color:var(--navy-border)}
-.sync-status{font-size:11px;font-family:var(--mono);display:flex;align-items:center;gap:6px}
+.sync-status{display:flex;align-items:center;gap:6px;font-size:11px;font-family:var(--mono);color:var(--slate)}
 .sync-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
-.sync-dot.syncing{background:var(--amber);animation:pulse 1s infinite}
-.sync-dot.error{background:var(--red)}
-
+.sync-dot.syncing{background:var(--amber);animation:pulse 1s infinite}.sync-dot.error{background:var(--red)}
 .table-wrap{border:1px solid var(--navy-light);border-radius:10px;overflow:hidden;overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:1200px}
-thead tr{background:var(--navy-mid)}
-th{padding:11px 14px;font-size:10px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--slate);text-align:left;white-space:nowrap;border-bottom:1px solid var(--navy-light);cursor:pointer;user-select:none}
+table{width:100%;border-collapse:collapse;min-width:1380px}
+thead tr:first-child th{padding:5px 10px;font-size:9px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:rgba(138,147,173,0.5);border-bottom:1px solid rgba(46,62,106,0.5);text-align:center;background:var(--navy-mid)}
+thead tr:first-child th.left{text-align:left}
+thead tr:last-child{background:rgba(20,30,60,0.6)}
+th{padding:9px 10px;font-size:10px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;color:var(--slate);text-align:center;white-space:nowrap;border-bottom:1px solid var(--navy-light);cursor:pointer;user-select:none}
+th.left{text-align:left}
 th:hover{color:var(--ice)}
 tbody tr{border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.1s;cursor:pointer}
 tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:rgba(255,255,255,0.035)}
-td{padding:12px 14px;vertical-align:middle}
+tbody tr:hover{background:rgba(255,255,255,0.03)}
+td{padding:10px 10px;vertical-align:middle;text-align:center}
+td.left{text-align:left}
 .site-name{font-weight:500;color:var(--white);font-size:13px}
-.job-ref{font-size:10px;color:var(--slate);font-family:var(--mono);margin-top:2px}
-.priority-badge{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:10px;font-weight:500;font-family:var(--mono)}
-.p-top{background:rgba(46,204,143,0.15);color:var(--green);border:1px solid rgba(46,204,143,0.3)}
-.p-mid{background:rgba(74,144,217,0.15);color:var(--blue);border:1px solid rgba(74,144,217,0.3)}
-.p-low{background:rgba(138,147,173,0.15);color:var(--slate);border:1px solid rgba(138,147,173,0.3)}
-.status-cell{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;font-size:14px;cursor:pointer;transition:all 0.15s;border:1px solid transparent}
-.s-done{background:rgba(46,204,143,0.12);border-color:rgba(46,204,143,0.25)}
-.s-pending{background:rgba(224,85,85,0.12);border-color:rgba(224,85,85,0.25)}
-.s-action{background:rgba(240,165,0,0.12);border-color:rgba(240,165,0,0.25);font-size:10px;color:var(--amber);font-family:var(--mono);width:auto;padding:0 8px;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis}
-.date-cell{font-size:11px;font-family:var(--mono);color:var(--ice)}
+.job-ref{font-size:10px;color:var(--slate);font-family:var(--mono);margin-top:1px}
+.pbadge{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:10px;font-weight:500;font-family:var(--mono)}
+.pb-complete{background:rgba(46,204,143,0.15);color:var(--green);border:1px solid rgba(46,204,143,0.3)}
+.pb-high{background:rgba(74,144,217,0.15);color:var(--blue);border:1px solid rgba(74,144,217,0.3)}
+.pb-low{background:rgba(138,147,173,0.12);color:var(--slate);border:1px solid rgba(138,147,173,0.2)}
+.sc{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:5px;font-size:12px;font-weight:500}
+.sc-done{background:rgba(46,204,143,0.12);border:1px solid rgba(46,204,143,0.25);color:var(--green)}
+.sc-waiting{background:rgba(224,85,85,0.12);border:1px solid rgba(224,85,85,0.25);color:var(--red)}
+.sc-requested{background:rgba(240,165,0,0.12);border:1px solid rgba(240,165,0,0.25);color:var(--amber)}
+.sc-na{background:rgba(138,147,173,0.08);border:1px solid rgba(138,147,173,0.15);color:var(--slate);font-size:9px}
+.sc-text{display:inline-flex;align-items:center;justify-content:center;height:26px;border-radius:5px;font-size:10px;font-weight:500;padding:0 7px;white-space:nowrap;font-family:var(--mono)}
+.listed-badge{display:inline-block;font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;font-family:var(--mono);white-space:nowrap}
+.lb-no{background:rgba(138,147,173,0.1);color:var(--slate)}
+.lb-ny{background:rgba(240,165,0,0.1);color:var(--amber)}
+.lb-yy{background:rgba(155,127,232,0.12);color:var(--purple)}
+.date-cell{font-size:11px;font-family:var(--mono);color:var(--ice);white-space:nowrap}
 .date-overdue{color:var(--red)}.date-soon{color:var(--amber)}
-.suppliers-cell{font-size:11px;color:var(--slate);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cpp-wrap{display:flex;align-items:center;gap:8px}
-.cpp-bar{flex:1;height:5px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;min-width:60px}
-.cpp-fill{height:100%;border-radius:3px;transition:width 0.3s}
+.cpp-wrap{display:flex;align-items:center;gap:6px;justify-content:center}
+.cpp-bar{width:46px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;flex-shrink:0}
+.cpp-fill{height:100%;border-radius:2px}
 .cpp-pct{font-size:10px;font-family:var(--mono);color:var(--slate);white-space:nowrap}
-
-.edit-overlay{display:none;position:fixed;inset:0;background:rgba(10,15,30,0.78);z-index:100;align-items:center;justify-content:center}
-.edit-overlay.open{display:flex}
-.edit-panel{background:var(--navy-mid);border:1px solid var(--navy-border);border-radius:12px;width:700px;max-width:95vw;max-height:90vh;overflow-y:auto}
-.edit-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--navy-light);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--navy-mid);z-index:1}
-.edit-title{font-size:15px;font-weight:500}
-.edit-subtitle{font-size:11px;color:var(--slate);font-family:var(--mono);margin-top:2px}
-.close-btn{background:transparent;border:none;color:var(--slate);font-size:20px;cursor:pointer;padding:4px;line-height:1}
-.close-btn:hover{color:var(--white)}
-.edit-body{padding:1.5rem}
-.edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.field-group{display:flex;flex-direction:column;gap:5px}
-.field-group.full{grid-column:1/-1}
-.field-label{font-size:10px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--slate)}
-.field-input{background:var(--navy);border:1px solid var(--navy-border);border-radius:6px;padding:8px 12px;color:var(--white);font-family:var(--font);font-size:13px;transition:border-color 0.15s;width:100%}
-.field-input:focus{outline:none;border-color:var(--blue)}
-.field-select{background:var(--navy);border:1px solid var(--navy-border);border-radius:6px;padding:8px 12px;color:var(--white);font-family:var(--font);font-size:13px;width:100%;cursor:pointer}
-.section-divider{grid-column:1/-1;border-top:1px solid var(--navy-light);padding-top:1rem;margin-top:0.25rem}
-.section-label{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--slate);margin-bottom:0.75rem}
-.checks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.check-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--navy);border:1px solid var(--navy-light);border-radius:6px;cursor:pointer;transition:all 0.15s}
-.check-item:hover{border-color:var(--navy-border)}
-.check-item.checked{border-color:rgba(46,204,143,0.3);background:rgba(46,204,143,0.05)}
-.check-label{font-size:11px;color:var(--slate);flex:1}
-.check-icon{font-size:14px;width:20px;text-align:center}
-.edit-footer{padding:1rem 1.5rem;border-top:1px solid var(--navy-light);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;position:sticky;bottom:0;background:var(--navy-mid)}
+.sup-cell{font-size:11px;color:var(--slate);max-width:155px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.overlay{display:none;position:fixed;inset:0;background:rgba(8,12,28,0.8);z-index:100;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.panel{background:var(--navy-mid);border:1px solid var(--navy-border);border-radius:12px;width:760px;max-width:96vw;max-height:92vh;overflow-y:auto}
+.panel-header{padding:1.125rem 1.375rem;border-bottom:1px solid var(--navy-light);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--navy-mid);z-index:1}
+.panel-title{font-size:15px;font-weight:500}
+.panel-sub{font-size:11px;color:var(--slate);font-family:var(--mono);margin-top:2px}
+.close-btn{background:transparent;border:none;color:var(--slate);font-size:18px;cursor:pointer;padding:4px;line-height:1}.close-btn:hover{color:var(--white)}
+.panel-body{padding:1.375rem}
+.egrid{display:grid;grid-template-columns:1fr 1fr;gap:0.875rem}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg.full{grid-column:1/-1}
+.fl{font-size:10px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--slate)}
+.fi{background:var(--navy);border:1px solid var(--navy-border);border-radius:6px;padding:7px 11px;color:var(--white);font-family:var(--font);font-size:13px;transition:border-color 0.15s;width:100%}
+.fi:focus{outline:none;border-color:var(--blue)}
+.fs{background:var(--navy);border:1px solid var(--navy-border);border-radius:6px;padding:7px 11px;color:var(--white);font-family:var(--font);font-size:13px;width:100%;cursor:pointer}
+.fsect{grid-column:1/-1;border-top:1px solid var(--navy-light);padding-top:0.875rem;margin-top:0.125rem}
+.fsect-label{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--slate);margin-bottom:0.625rem}
+.checks-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.ck{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 8px;background:var(--navy);border:1px solid var(--navy-light);border-radius:7px;cursor:pointer;transition:all 0.15s}
+.ck:hover{border-color:var(--navy-border)}
+.ck-label{font-size:10px;color:var(--slate);text-align:center;line-height:1.3;font-weight:500}
+.ck-state{display:flex;gap:4px}
+.ck-opt{width:24px;height:24px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;border:1px solid transparent;transition:all 0.12s;opacity:0.3}
+.ck-opt.sel{opacity:1}
+.opt-done{background:rgba(46,204,143,0.15);border-color:rgba(46,204,143,0.3);color:var(--green)}
+.opt-waiting{background:rgba(224,85,85,0.15);border-color:rgba(224,85,85,0.3);color:var(--red)}
+.opt-requested{background:rgba(240,165,0,0.15);border-color:rgba(240,165,0,0.3);color:var(--amber)}
+.ck.active-done{border-color:rgba(46,204,143,0.3);background:rgba(46,204,143,0.04)}
+.ck.active-waiting{border-color:rgba(224,85,85,0.3);background:rgba(224,85,85,0.04)}
+.ck.active-requested{border-color:rgba(240,165,0,0.3);background:rgba(240,165,0,0.04)}
+.panel-footer{padding:0.875rem 1.375rem;border-top:1px solid var(--navy-light);display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;position:sticky;bottom:0;background:var(--navy-mid)}
 .footer-note{font-size:11px;color:var(--slate)}
-
-.email-overlay{display:none;position:fixed;inset:0;background:rgba(10,15,30,0.8);z-index:200;align-items:center;justify-content:center}
-.email-overlay.open{display:flex}
-.email-panel{background:var(--navy-mid);border:1px solid var(--navy-border);border-radius:12px;width:520px;max-width:95vw}
-.email-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--navy-light);display:flex;align-items:center;justify-content:space-between}
-.email-body{padding:1.5rem;display:flex;flex-direction:column;gap:1rem}
-.email-footer{padding:1rem 1.5rem;border-top:1px solid var(--navy-light);display:flex;justify-content:flex-end;gap:8px}
-
-.toast{position:fixed;bottom:2rem;right:2rem;background:var(--navy-mid);border:1px solid var(--green);border-radius:8px;padding:12px 18px;font-size:12px;color:var(--green);z-index:300;transform:translateY(20px);opacity:0;transition:all 0.3s;pointer-events:none;display:flex;align-items:center;gap:8px}
-.toast.show{transform:translateY(0);opacity:1}
-.toast.error-toast{border-color:var(--red);color:var(--red)}
-
-.page-footer{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--navy-light);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.page-footer-left{font-size:11px;color:var(--slate)}
-.page-footer-left strong{color:var(--ice)}
-
-.loading-screen{display:flex;align-items:center;justify-content:center;min-height:300px;flex-direction:column;gap:12px}
-.loading-spinner{width:32px;height:32px;border:2px solid var(--navy-light);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite}
+.em-panel{background:var(--navy-mid);border:1px solid var(--navy-border);border-radius:12px;width:500px;max-width:95vw}
+.em-body{padding:1.375rem;display:flex;flex-direction:column;gap:0.875rem}
+.em-footer{padding:0.875rem 1.375rem;border-top:1px solid var(--navy-light);display:flex;justify-content:flex-end;gap:8px}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--navy-mid);border:1px solid var(--green);border-radius:8px;padding:11px 16px;font-size:12px;color:var(--green);z-index:300;transform:translateY(16px);opacity:0;transition:all 0.25s;pointer-events:none;display:flex;align-items:center;gap:8px}
+.toast.show{transform:translateY(0);opacity:1}.toast.err{border-color:var(--red);color:var(--red)}
+.page-footer{margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--navy-light);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.page-footer-left{font-size:11px;color:var(--slate)}.page-footer-left strong{color:var(--ice)}
+.loading-screen{display:flex;align-items:center;justify-content:center;min-height:280px;flex-direction:column;gap:10px}
+.spinner{width:28px;height:28px;border:2px solid var(--navy-light);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-size:12px;color:var(--slate);font-family:var(--mono)}
 </style>
 </head>
 <body>
 <div class="shell">
-
-<!-- HEADER -->
 <div class="header">
   <div class="header-left">
     <div class="logo-wrap">
-      <!-- Icon mark only: viewBox crops to just the cube (x:0-336) -->
-      <svg height="36" viewBox="-2 0 340 355" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:10px;flex-shrink:0">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M165.89 0.606C166.853-0.047 168.077-0.178 169.156 0.258L334.082 66.886C335.407 67.421 336.275 68.711 336.275 70.145V151.204C336.275 152.371 335.697 153.462 334.734 154.115C333.77 154.768 332.547 154.899 331.468 154.463L166.542 87.836C165.217 87.3 164.349 86.01 164.349 84.577V3.517C164.349 2.35 164.926 1.259 165.89 0.606ZM171.349 8.718V82.204L329.275 146.004V72.517Z" fill="white"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M334.734 67.22C335.697 67.873 336.275 68.964 336.275 70.131V151.19C336.275 152.624 335.407 153.914 334.082 154.449L169.156 221.077C168.077 221.513 166.853 221.382 165.89 220.729C164.926 220.076 164.349 218.985 164.349 217.818V136.772C164.349 135.339 165.217 134.049 166.541 133.514L331.468 66.872C332.546 66.436 333.77 66.567 334.734 67.22ZM171.349 139.145V212.617L329.275 148.818V75.332Z" fill="white"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M169.808 0.606C170.771 1.259 171.349 2.35 171.349 3.517V84.577C171.349 86.01 170.481 87.3 169.156 87.835L4.244 154.463C3.165 154.899 1.941 154.769 0.978 154.115C0.014 153.462-0.563 152.371-0.563 151.204V70.145C-0.563 68.711 0.304 67.421 1.63 66.886L166.542 0.258C167.62-0.178 168.844-0.047 169.808 0.606ZM6.437 72.517V146.004L164.349 82.204V8.718Z" fill="white"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M0.978 67.22C1.941 66.566 3.165 66.436 4.244 66.872L169.156 133.514C170.481 134.049 171.349 135.339 171.349 136.772V217.818C171.349 218.985 170.771 220.076 169.808 220.729C168.844 221.382 167.62 221.513 166.542 221.077L1.63 154.449C0.304 153.914-0.563 152.624-0.563 151.19V70.131C-0.563 68.964 0.014 67.873 0.978 67.22ZM6.437 75.332V148.818L164.349 212.617V139.145Z" fill="white"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M165.89 133.694C166.853 133.041 168.077 132.911 169.156 133.347L334.082 199.974C335.407 200.509 336.275 201.799 336.275 203.233V284.293C336.275 285.46 335.697 286.55 334.734 287.204C333.77 287.857 332.547 287.987 331.468 287.551L166.542 220.924C165.217 220.388 164.349 219.099 164.349 217.665V136.605C164.349 135.438 164.926 134.348 165.89 133.694ZM171.349 141.806V215.292L329.275 279.092V205.606Z" fill="white"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M334.734 200.308C335.697 200.961 336.275 202.052 336.275 203.219V284.279C336.275 285.712 335.407 287.002 334.082 287.538L169.156 354.165C168.077 354.601 166.853 354.471 165.89 353.817C164.926 353.164 164.349 352.073 164.349 350.906V269.86C164.349 268.427 165.217 267.137 166.541 266.602L331.468 199.96C332.546 199.525 333.77 199.655 334.734 200.308ZM171.349 272.233V345.706L329.275 281.906V208.42Z" fill="white"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M169.808 133.694C170.771 134.347 171.349 135.438 171.349 136.605V217.665C171.349 219.099 170.481 220.388 169.156 220.924L4.244 287.551C3.165 287.987 1.941 287.857 0.978 287.204C0.014 286.55-0.563 285.46-0.563 284.293V203.233C-0.563 201.799 0.304 200.51 1.63 199.974L166.542 133.347C167.62 132.911 168.844 133.041 169.808 133.694ZM6.437 205.605V279.092L164.349 215.292V141.806Z" fill="white"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M0.978 200.308C1.941 199.655 3.165 199.525 4.244 199.96L169.156 266.602C170.481 267.137 171.349 268.427 171.349 269.86V350.906C171.349 352.073 170.771 353.164 169.808 353.817C168.844 354.471 167.62 354.601 166.542 354.165L1.63 287.537C0.304 287.002-0.563 285.712-0.563 284.279V203.219C-0.563 202.052 0.014 200.961 0.978 200.308ZM6.437 208.42V281.906L164.349 345.706V272.233Z" fill="white"/>
-      </svg>
-      <!-- Wordmark only: viewBox crops to just "SW BRUCE" text (x:450-2000) -->
-      <svg height="22" viewBox="450 54 1560 250" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
-        <path d="M576.258 178.484C566.356 173.59 555.719 169.21 544.639 165.442C533.6 161.702 523.088 157.781 513.393 153.804C503.864 149.897 495.97 144.92 489.959 139.025C484.086 133.268 481.233 125.983 481.233 116.737C481.233 105.085 485.651 96.0058 494.751 88.9844C503.892 81.9351 516.121 78.3618 531.093 78.3618C542.16 78.3618 553.267 80.1554 564.112 83.687C574.929 87.2186 584.651 92.1684 593.1 98.4529C596.05 100.427 598.072 101.303 599.651 101.303C601.036 101.303 603.501 100.664 604.582 96.3534L606.23 89.3181C607.518 84.4378 606.521 80.1415 603.266 76.5403C600.33 73.3007 596.05 70.3253 590.552 67.7114C582.699 64.0546 573.987 60.9262 564.666 58.4096C555.248 55.8652 544.514 54.5861 532.755 54.5861C517.576 54.5861 504.058 57.3251 492.604 62.7059C481.095 68.1285 472.009 75.6644 465.597 85.1052C459.156 94.5876 455.888 105.516 455.888 117.557C455.888 130.766 459.184 141.722 465.666 150.12C472.051 158.393 480.471 165.247 490.665 170.517C500.665 175.675 511.315 180.208 522.312 183.976C533.129 187.688 543.641 191.609 553.572 195.614C563.253 199.534 571.217 204.443 577.214 210.199C583.073 215.816 585.926 223.032 585.926 232.264C585.926 245.876 580.829 256.318 570.344 264.174C559.818 272.057 545.207 276.062 526.925 276.062C513.213 276.062 501.247 273.267 491.371 267.775C481.427 262.255 472.286 253.954 464.225 243.165C461.885 239.814 459.212 238.104 456.289 238.104C453.658 238.104 449.226 239.411 449.226 248.115C449.226 254.177 451.996 261.115 457.702 269.332C463.27 277.369 471.981 284.529 483.574 290.633C495.18 296.737 510.318 299.837 528.586 299.837C554.209 299.837 574.527 293.205 588.973 280.108C603.487 266.968 610.856 249.602 610.856 228.51C610.856 215.83 607.546 205.416 601.022 197.56C594.637 189.871 586.3 183.448 576.244 178.456Z" fill="white"/>
-        <path d="M932.176 59.1882H918.049C915.598 59.1882 913.797 59.6888 912.565 60.7177C911.36 61.7326 910.473 63.4706 909.808 66.168L860.156 256.304L805.352 73.9959C803.551 68.2675 801.432 64.4717 798.856 62.3722C796.266 60.2727 793.025 59.2021 789.244 59.2021H785.504C783.053 59.2021 781.252 59.7027 780.02 60.7316C778.815 61.7466 777.928 63.4845 777.278 66.1402L723.664 256.137L675.341 74.121C673.804 67.9894 671.228 63.9017 667.668 61.9551C664.317 60.1198 660.633 59.2021 656.699 59.2021H651.298C649.359 59.2021 648.306 60.0225 647.766 60.7177C646.921 61.8022 646.741 63.2899 647.212 65.1808L708.318 291.37C709.163 293.9 711.033 295.305 713.609 295.305H729.813C732.736 295.305 734.675 293.803 735.16 291.189L789.701 101.164L847.497 291.37C848.342 293.9 850.212 295.305 852.788 295.305H868.577C873.023 295.305 874.089 292.51 874.339 291.175L935.819 65.1391C936.304 63.1787 936.137 61.6909 935.293 60.6064C934.794 59.9669 933.852 59.216 932.149 59.216Z" fill="white"/>
-        <path d="M1154.76 169.599C1162.82 165.678 1169.8 160.298 1175.58 153.568C1182.81 145.156 1186.46 133.324 1186.46 118.419C1186.46 99.7877 1180.2 85.0773 1167.85 74.6911C1155.6 64.4022 1138.53 59.1882 1117.07 59.1882H1040.21C1038.2 59.1882 1036.05 60.5091 1036.05 64.1936V290.688C1036.05 294.067 1038.2 295.277 1040.21 295.277H1123.31C1146.46 295.277 1164.76 289.117 1177.7 276.993C1190.67 264.827 1197.27 248.24 1197.27 227.704C1197.27 211.951 1192.47 198.575 1183.03 187.939C1175.08 178.998 1165.59 172.839 1154.76 169.599ZM1060.98 83.3811H1118.74C1132.59 83.3811 1143.4 86.4538 1150.88 92.5159C1158.33 98.5502 1161.95 107.171 1161.95 118.836C1161.95 131.808 1158.46 141.833 1151.56 148.632C1144.66 155.431 1134.87 158.879 1122.48 158.879H1060.98ZM1164.04 255.414C1159.08 261.838 1152.74 266.148 1145.19 268.234C1137.39 270.403 1129.18 271.501 1120.81 271.501H1060.98V182.238H1121.23C1138.57 182.238 1151.41 186.451 1159.41 194.738C1167.43 203.052 1171.5 213.591 1171.5 226.035C1171.5 239.119 1169 249.005 1164.04 255.414Z" fill="white"/>
-        <path d="M1350.32 201.745C1363.18 197.087 1374.39 189.385 1383.72 178.831C1393.71 167.5 1398.78 152.094 1398.78 133.018C1398.78 110.007 1391.79 91.7373 1377.98 78.7371C1364.2 65.7648 1344.92 59.1882 1320.67 59.1882H1242.14C1240.13 59.1882 1237.99 60.5091 1237.99 64.1936V290.688C1237.99 294.067 1240.13 295.277 1242.14 295.277H1258.76C1260.77 295.277 1262.92 294.067 1262.92 290.688V205.596H1323.63L1372.5 290.091C1374.52 293.483 1377.72 295.277 1381.76 295.277H1397.55C1400.22 295.277 1401.21 293.803 1401.55 292.913C1402.09 291.537 1401.86 290.132 1400.89 289.02L1350.34 201.731ZM1320.67 181.821H1262.92V83.3811H1323.16C1338.34 83.3811 1350.67 87.6217 1359.78 95.978C1368.84 104.279 1373.44 116.18 1373.44 131.35C1373.44 146.519 1369.16 159.616 1360.71 168.487C1352.29 177.33 1338.83 181.821 1320.66 181.821Z" fill="white"/>
-        <path d="M1584.5 59.1882H1582.84C1580.83 59.1882 1578.68 60.5091 1578.68 64.1936V208.933C1578.68 221.155 1576.84 232.487 1573.2 242.637C1569.62 252.606 1563.64 260.698 1555.44 266.676C1547.26 272.641 1535.93 275.658 1521.76 275.658C1507.59 275.658 1496.88 272.78 1489.11 267.093C1481.33 261.407 1475.71 253.537 1472.41 243.707C1469.03 233.696 1467.33 222.128 1467.33 209.337V82.9639C1467.33 75.8312 1465.57 70.0611 1462.08 65.7926C1458.49 61.4129 1453.82 59.1882 1448.21 59.1882H1446.14C1444.13 59.1882 1441.98 60.5091 1441.98 64.1936V212.27C1441.98 228.051 1444.61 242.692 1449.82 255.79C1455.08 269.068 1463.66 279.774 1475.32 287.616C1486.97 295.457 1502.74 299.434 1522.19 299.434C1537.95 299.434 1551.27 296.695 1561.78 291.272C1572.28 285.864 1580.73 278.55 1586.85 269.527C1592.92 260.6 1597.28 250.826 1599.83 240.481C1602.35 230.22 1603.63 220.154 1603.63 210.574V82.9639C1603.63 75.8312 1601.87 70.0611 1598.38 65.7926C1594.79 61.4129 1590.12 59.1882 1584.51 59.1882Z" fill="white"/>
-        <path d="M1827.98 238.966C1825.53 238.966 1823.34 240.634 1821.27 244.069C1814.55 253.217 1806.03 260.934 1795.96 267.01C1785.95 273.044 1772.96 276.103 1757.35 276.103C1732.07 276.103 1712.06 267.441 1697.86 250.367C1683.57 233.182 1676.32 208.864 1676.32 178.081C1676.32 147.297 1683.78 122.437 1698.48 104.974C1713.1 87.6079 1733.32 78.8067 1758.59 78.8067C1769.66 78.8067 1780.27 80.5169 1790.12 83.9094C1799.98 87.302 1809.23 92.1823 1817.59 98.4251C1825.38 101.748 1828.13 101.053 1829.17 96.4091L1830.82 89.763C1832.11 84.8827 1831.11 80.5864 1827.86 76.9853C1824.91 73.7318 1820.77 70.8954 1815.61 68.6012C1807.8 64.6803 1799.3 61.3434 1790.35 58.6599C1781.32 55.9765 1770.78 54.6139 1759.01 54.6139C1737.94 54.6139 1719.12 59.6332 1703.08 69.5189C1687.02 79.4185 1674.32 93.67 1665.33 111.87C1656.37 130.001 1651.81 151.997 1651.81 177.246C1651.81 202.496 1656.15 224.951 1664.68 243.207C1673.26 261.574 1685.48 275.77 1700.99 285.391C1716.48 295.013 1734.61 299.879 1754.85 299.879C1769.44 299.879 1782 297.863 1792.17 293.9C1802.33 289.938 1810.71 285.03 1817.1 279.329C1823.5 273.615 1828.2 267.803 1831.08 262.019C1834.02 256.109 1835.46 251.438 1835.46 247.739C1835.46 245.695 1834.95 243.791 1833.92 242.08C1833.08 240.662 1831.36 238.98 1827.98 238.98Z" fill="white"/>
-        <path d="M1985.46 271.501H1896.96V190.58H1982.96C1987.98 190.58 1988.37 187.063 1988.37 185.992V180.987C1988.37 171.713 1983.34 166.805 1973.82 166.805H1896.96V82.9639H1990.44C1993.82 82.9639 1995.85 81.0869 1995.85 77.9585V73.3702C1995.85 64.0963 1990.82 59.1882 1981.3 59.1882H1875.77C1873.76 59.1882 1871.61 60.5091 1871.61 64.1936V290.688C1871.61 294.067 1873.76 295.277 1875.77 295.277H1994.6C1997.98 295.277 2000 293.4 2000 290.271V285.683C2000 276.409 1994.97 271.501 1985.46 271.501Z" fill="white"/>
-      </svg>
+      <svg height="34" viewBox="-2 0 340 355" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right:10px;flex-shrink:0"><path fill-rule="evenodd" clip-rule="evenodd" d="M165.89 0.606C166.853-0.047 168.077-0.178 169.156 0.258L334.082 66.886C335.407 67.421 336.275 68.711 336.275 70.145V151.204C336.275 152.371 335.697 153.462 334.734 154.115C333.77 154.768 332.547 154.899 331.468 154.463L166.542 87.836C165.217 87.3 164.349 86.01 164.349 84.577V3.517C164.349 2.35 164.926 1.259 165.89 0.606ZM171.349 8.718V82.204L329.275 146.004V72.517Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M334.734 67.22C335.697 67.873 336.275 68.964 336.275 70.131V151.19C336.275 152.624 335.407 153.914 334.082 154.449L169.156 221.077C168.077 221.513 166.853 221.382 165.89 220.729C164.926 220.076 164.349 218.985 164.349 217.818V136.772C164.349 135.339 165.217 134.049 166.541 133.514L331.468 66.872C332.546 66.436 333.77 66.567 334.734 67.22ZM171.349 139.145V212.617L329.275 148.818V75.332Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M169.808 0.606C170.771 1.259 171.349 2.35 171.349 3.517V84.577C171.349 86.01 170.481 87.3 169.156 87.835L4.244 154.463C3.165 154.899 1.941 154.769 0.978 154.115C0.014 153.462-0.563 152.371-0.563 151.204V70.145C-0.563 68.711 0.304 67.421 1.63 66.886L166.542 0.258C167.62-0.178 168.844-0.047 169.808 0.606ZM6.437 72.517V146.004L164.349 82.204V8.718Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M0.978 67.22C1.941 66.566 3.165 66.436 4.244 66.872L169.156 133.514C170.481 134.049 171.349 135.339 171.349 136.772V217.818C171.349 218.985 170.771 220.076 169.808 220.729C168.844 221.382 167.62 221.513 166.542 221.077L1.63 154.449C0.304 153.914-0.563 152.624-0.563 151.19V70.131C-0.563 68.964 0.014 67.873 0.978 67.22ZM6.437 75.332V148.818L164.349 212.617V139.145Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M165.89 133.694C166.853 133.041 168.077 132.911 169.156 133.347L334.082 199.974C335.407 200.509 336.275 201.799 336.275 203.233V284.293C336.275 285.46 335.697 286.55 334.734 287.204C333.77 287.857 332.547 287.987 331.468 287.551L166.542 220.924C165.217 220.388 164.349 219.099 164.349 217.665V136.605C164.349 135.438 164.926 134.348 165.89 133.694ZM171.349 141.806V215.292L329.275 279.092V205.606Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M334.734 200.308C335.697 200.961 336.275 202.052 336.275 203.219V284.279C336.275 285.712 335.407 287.002 334.082 287.538L169.156 354.165C168.077 354.601 166.853 354.471 165.89 353.817C164.926 353.164 164.349 352.073 164.349 350.906V269.86C164.349 268.427 165.217 267.137 166.541 266.602L331.468 199.96C332.546 199.525 333.77 199.655 334.734 200.308ZM171.349 272.233V345.706L329.275 281.906V208.42Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M169.808 133.694C170.771 134.347 171.349 135.438 171.349 136.605V217.665C171.349 219.099 170.481 220.388 169.156 220.924L4.244 287.551C3.165 287.987 1.941 287.857 0.978 287.204C0.014 286.55-0.563 285.46-0.563 284.293V203.233C-0.563 201.799 0.304 200.51 1.63 199.974L166.542 133.347C167.62 132.911 168.844 133.041 169.808 133.694ZM6.437 205.605V279.092L164.349 215.292V141.806Z" fill="white"/><path fill-rule="evenodd" clip-rule="evenodd" d="M0.978 200.308C1.941 199.655 3.165 199.525 4.244 199.96L169.156 266.602C170.481 267.137 171.349 268.427 171.349 269.86V350.906C171.349 352.073 170.771 353.164 169.808 353.817C168.844 354.471 167.62 354.601 166.542 354.165L1.63 287.537C0.304 287.002-0.563 285.712-0.563 284.279V203.219C-0.563 202.052 0.014 200.961 0.978 200.308ZM6.437 208.42V281.906L164.349 345.706V272.233Z" fill="white"/></svg>
+      <svg height="20" viewBox="450 54 1560 250" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M576.258 178.484C566.356 173.59 555.719 169.21 544.639 165.442C533.6 161.702 523.088 157.781 513.393 153.804C503.864 149.897 495.97 144.92 489.959 139.025C484.086 133.268 481.233 125.983 481.233 116.737C481.233 105.085 485.651 96.006 494.751 88.984C503.892 81.935 516.121 78.362 531.093 78.362C542.16 78.362 553.267 80.155 564.112 83.687C574.929 87.219 584.651 92.168 593.1 98.453C596.05 100.427 598.072 101.303 599.651 101.303C601.036 101.303 603.501 100.664 604.582 96.353L606.23 89.318C607.518 84.438 606.521 80.142 603.266 76.54C600.33 73.301 596.05 70.325 590.552 67.711C582.699 64.055 573.987 60.926 564.666 58.41C555.248 55.865 544.514 54.586 532.755 54.586C517.576 54.586 504.058 57.325 492.604 62.706C481.095 68.129 472.009 75.664 465.597 85.105C459.156 94.588 455.888 105.516 455.888 117.557C455.888 130.766 459.184 141.722 465.666 150.12C472.051 158.393 480.471 165.247 490.665 170.517C500.665 175.675 511.315 180.208 522.312 183.976C533.129 187.688 543.641 191.609 553.572 195.614C563.253 199.534 571.217 204.443 577.214 210.199C583.073 215.816 585.926 223.032 585.926 232.264C585.926 245.876 580.829 256.318 570.344 264.174C559.818 272.057 545.207 276.062 526.925 276.062C513.213 276.062 501.247 273.267 491.371 267.775C481.427 262.255 472.286 253.954 464.225 243.165C461.885 239.814 459.212 238.104 456.289 238.104C453.658 238.104 449.226 239.411 449.226 248.115C449.226 254.177 451.996 261.115 457.702 269.332C463.27 277.369 471.981 284.529 483.574 290.633C495.18 296.737 510.318 299.837 528.586 299.837C554.209 299.837 574.527 293.205 588.973 280.108C603.487 266.968 610.856 249.602 610.856 228.51C610.856 215.83 607.546 205.416 601.022 197.56C594.637 189.871 586.3 183.448 576.244 178.456Z" fill="white"/><path d="M932.176 59.188H918.049C915.598 59.188 913.797 59.689 912.565 60.718C911.36 61.733 910.473 63.471 909.808 66.168L860.156 256.304L805.352 73.996C803.551 68.268 801.432 64.472 798.856 62.372C796.266 60.273 793.025 59.202 789.244 59.202H785.504C783.053 59.202 780.02 60.732 777.278 66.14L723.664 256.137L675.341 74.121C673.804 67.989 671.228 63.902 667.668 61.955C664.317 60.12 660.633 59.202 656.699 59.202H651.298C647.766 60.718 647.212 65.181 708.318 291.37H729.813C735.16 291.189 789.701 101.164L847.497 291.37H868.577C874.339 291.175 935.819 65.139 932.149 59.216Z" fill="white"/><path d="M1154.76 169.599C1162.82 165.678 1169.8 160.298 1175.58 153.568C1182.81 145.156 1186.46 133.324 1186.46 118.419C1186.46 99.788 1180.2 85.077 1167.85 74.691C1155.6 64.402 1138.53 59.188 1117.07 59.188H1040.21C1036.05 64.194 1036.05 294.067 1040.21 295.277H1123.31C1146.46 295.277 1164.76 289.117 1177.7 276.993C1190.67 264.827 1197.27 248.24 1197.27 227.704C1197.27 211.951 1192.47 198.575 1183.03 187.939C1175.08 178.998 1165.59 172.839 1154.76 169.599ZM1060.98 83.381H1118.74C1132.59 83.381 1143.4 86.454 1150.88 92.516C1158.33 98.55 1161.95 107.171 1161.95 118.836C1161.95 131.808 1158.46 141.833 1151.56 148.632C1144.66 155.431 1134.87 158.879 1122.48 158.879H1060.98ZM1164.04 255.414C1159.08 261.838 1152.74 266.148 1145.19 268.234C1137.39 270.403 1129.18 271.501 1120.81 271.501H1060.98V182.238H1121.23C1138.57 182.238 1151.41 186.451 1159.41 194.738C1167.43 203.052 1171.5 213.591 1171.5 226.035C1171.5 239.119 1169 249.005 1164.04 255.414Z" fill="white"/><path d="M1350.32 201.745C1363.18 197.087 1374.39 189.385 1383.72 178.831C1393.71 167.5 1398.78 152.094 1398.78 133.018C1398.78 110.007 1391.79 91.737 1377.98 78.737C1364.2 65.765 1344.92 59.188 1320.67 59.188H1242.14C1237.99 64.194 1237.99 295.277 1262.92 290.688V205.596H1323.63L1372.5 290.091C1374.52 293.483 1377.72 295.277 1381.76 295.277H1397.55C1402.09 291.537 1400.89 289.02 1350.34 201.731ZM1320.67 181.821H1262.92V83.381H1323.16C1338.34 83.381 1350.67 87.622 1359.78 95.978C1368.84 104.279 1373.44 116.18 1373.44 131.35C1373.44 146.519 1369.16 159.616 1360.71 168.487C1352.29 177.33 1338.83 181.821 1320.66 181.821Z" fill="white"/><path d="M1584.5 59.188H1582.84C1578.68 64.194 1578.68 208.933 1573.2 242.637C1569.62 252.606 1563.64 260.698 1555.44 266.676C1547.26 272.641 1535.93 275.658 1521.76 275.658C1507.59 275.658 1496.88 272.78 1489.11 267.093C1481.33 261.407 1475.71 253.537 1472.41 243.707C1469.03 233.696 1467.33 222.128 1467.33 209.337V82.964C1462.08 65.793 1441.98 64.194 1441.98 212.27C1441.98 228.051 1444.61 242.692 1449.82 255.79C1455.08 269.068 1463.66 279.774 1475.32 287.616C1486.97 295.457 1502.74 299.434 1522.19 299.434C1603.63 299.434 1603.63 82.964 1584.5 59.188Z" fill="white"/><path d="M1827.98 238.966C1825.53 238.966 1823.34 240.634 1821.27 244.069C1814.55 253.217 1806.03 260.934 1795.96 267.01C1785.95 273.044 1772.96 276.103 1757.35 276.103C1732.07 276.103 1712.06 267.441 1697.86 250.367C1683.57 233.182 1676.32 208.864 1676.32 178.081C1676.32 147.297 1683.78 122.437 1698.48 104.974C1713.1 87.608 1733.32 78.807 1758.59 78.807C1769.66 78.807 1780.27 80.517 1790.12 83.909C1799.98 87.302 1809.23 92.182 1817.59 98.425C1822.79 101.748 1825.38 101.748C1828.13 101.053 1829.17 96.409 1827.86 76.985C1807.8 64.68 1759.01 54.614 1703.08 69.519C1651.81 151.997 1664.68 243.207 1700.99 285.391C1716.48 295.013 1754.85 299.879 1792.17 293.9C1835.46 247.739 1833.92 242.08 1827.98 238.966Z" fill="white"/><path d="M1985.46 271.501H1896.96V190.58H1982.96C1988.37 185.992 1973.82 166.805 1896.96 166.805V82.964H1990.44C1995.85 77.959 1981.3 59.188 1875.77 59.188C1871.61 64.194 1871.61 295.277 1994.6 295.277C2000 290.271 1985.46 271.501Z" fill="white"/></svg>
     </div>
     <div class="hdivider"></div>
     <div>
       <div class="header-label">NatWest CIP</div>
-      <div class="header-title"><strong>Pre-Construction</strong> Status Tracker</div>
+      <div class="header-title"><strong>Pre-Construction</strong> Status Tracker &mdash; Rev 2</div>
     </div>
   </div>
   <div class="header-right">
     <div class="live-pill"><span class="live-dot"></span><span id="live-date"></span></div>
-    <button class="btn btn-ghost" onclick="openEmailSettings()">&#9993; Email settings</button>
-    <button class="btn btn-primary" onclick="addNewSite()">+ Add site</button>
+    <button class="btn btn-ghost" onclick="openEmail()">&#9993; Email</button>
+    <button class="btn btn-primary" onclick="addSite()">+ Add site</button>
   </div>
 </div>
 
-<!-- SETUP BANNER -->
 <div class="setup-banner" id="setup-banner">
-  <div class="setup-icon">⚙️</div>
+  <div class="setup-icon">&#9881;</div>
   <div class="setup-text">
-    <div class="setup-title">One-time setup required — connect your GitHub</div>
-    <div class="setup-desc">
-      To sync changes across your team, enter your GitHub username, repository name, and a Personal Access Token.<br>
-      <a href="https://github.com/settings/tokens/new?scopes=repo&description=CIP+Tracker" target="_blank">Click here to generate a token</a> — tick <strong>repo</strong> scope, copy the token, paste below.
-    </div>
+    <div class="setup-title">One-time setup &mdash; connect your GitHub</div>
+    <div class="setup-desc">Enter your GitHub username, repo name, and a Personal Access Token. <a href="https://github.com/settings/tokens/new?scopes=repo&description=CIP+Tracker" target="_blank">Generate a token here</a> &mdash; tick <strong>repo</strong> scope only.</div>
     <div class="setup-fields">
-      <input class="setup-input" id="gh-user" placeholder="GitHub username (e.g. swbruce)" style="width:180px">
-      <input class="setup-input" id="gh-repo" placeholder="Repo name (e.g. natwest-cip-tracker)" style="width:220px">
-      <input class="setup-input" id="gh-token" placeholder="Paste token here" type="password" style="width:220px">
-      <button class="btn btn-primary" onclick="saveGHConfig()">Connect</button>
+      <input class="setup-input" id="gh-user" placeholder="GitHub username" style="width:160px">
+      <input class="setup-input" id="gh-repo" placeholder="Repo name" style="width:200px">
+      <input class="setup-input" id="gh-token" placeholder="Paste token" type="password" style="width:210px">
+      <button class="btn btn-primary" onclick="saveGH()">Connect</button>
     </div>
   </div>
 </div>
 
-<!-- METRICS -->
-<div class="metrics">
-  <div class="metric m-blue"><div class="metric-label">Total sites</div><div class="metric-value" id="m-total">—</div><div class="metric-sub">in tracker</div></div>
-  <div class="metric m-green"><div class="metric-label">CPP ready</div><div class="metric-value" id="m-ready">—</div><div class="metric-sub">fully complete</div></div>
-  <div class="metric m-amber"><div class="metric-label">In progress</div><div class="metric-value" id="m-progress">—</div><div class="metric-sub">partially complete</div></div>
-  <div class="metric m-red"><div class="metric-label">Not started</div><div class="metric-value" id="m-notstarted">—</div><div class="metric-sub">all checks pending</div></div>
-  <div class="metric m-slate"><div class="metric-label">Actions needed</div><div class="metric-value" id="m-actions">—</div><div class="metric-sub">PJ / MA outstanding</div></div>
+<div class="legend">
+  <span class="legend-title">Key:</span>
+  <span class="legend-item"><span class="ls ls-done">&#10003;</span> Done</span>
+  <span class="legend-item"><span class="ls ls-waiting">&#10005;</span> Waiting / to action</span>
+  <span class="legend-item"><span class="ls ls-requested">&#8987;</span> Requested / ongoing</span>
+  <span class="legend-item"><span class="ls ls-na" style="font-size:9px">N/A</span> Not applicable</span>
+  <span style="width:1px;height:14px;background:var(--navy-light);display:inline-block;margin:0 4px"></span>
+  <span class="legend-item"><span class="listed-badge lb-no">No</span> Not listed</span>
+  <span class="legend-item"><span class="listed-badge lb-ny">NY</span> Listed &mdash; not yet confirmed</span>
+  <span class="legend-item"><span class="listed-badge lb-yy">YY</span> Listed / conservation area</span>
 </div>
 
-<!-- TOOLBAR -->
+<div class="metrics">
+  <div class="metric m-blue"><div class="metric-label">Total sites</div><div class="metric-value" id="m-total">&#8212;</div><div class="metric-sub">in tracker</div></div>
+  <div class="metric m-green"><div class="metric-label">CPP ready</div><div class="metric-value" id="m-ready">&#8212;</div><div class="metric-sub">fully complete</div></div>
+  <div class="metric m-amber"><div class="metric-label">In progress</div><div class="metric-value" id="m-prog">&#8212;</div><div class="metric-sub">partially done</div></div>
+  <div class="metric m-red"><div class="metric-label">Not started</div><div class="metric-value" id="m-none">&#8212;</div><div class="metric-sub">all pending</div></div>
+  <div class="metric m-purple"><div class="metric-label">Listed / cons.</div><div class="metric-value" id="m-listed">&#8212;</div><div class="metric-sub">YY sites</div></div>
+  <div class="metric m-slate"><div class="metric-label">Actions needed</div><div class="metric-value" id="m-actions">&#8212;</div><div class="metric-sub">with initials</div></div>
+</div>
+
 <div class="toolbar">
   <div class="toolbar-left">
-    <button class="filter-btn active" onclick="setFilter('all',this)">All sites</button>
+    <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
     <button class="filter-btn" onclick="setFilter('ready',this)">CPP ready</button>
-    <button class="filter-btn" onclick="setFilter('inprogress',this)">In progress</button>
+    <button class="filter-btn" onclick="setFilter('inprog',this)">In progress</button>
     <button class="filter-btn" onclick="setFilter('notstarted',this)">Not started</button>
-    <button class="filter-btn" onclick="setFilter('actions',this)">Actions needed</button>
+    <button class="filter-btn" onclick="setFilter('listed',this)">Listed / conservation</button>
+    <button class="filter-btn" onclick="setFilter('actions',this)">Has actions</button>
   </div>
   <div class="sync-status">
     <span class="sync-dot" id="sync-dot"></span>
-    <span id="sync-label" style="color:var(--slate);font-family:var(--mono);font-size:11px">Not connected</span>
-    <button class="btn btn-ghost" style="padding:4px 10px;font-size:11px;margin-left:4px" onclick="loadData()">↻ Refresh</button>
+    <span id="sync-lbl">Not connected</span>
+    <button class="btn btn-ghost" style="padding:4px 9px;font-size:11px;margin-left:4px" onclick="loadData()">&#8635; Refresh</button>
   </div>
 </div>
 
-<!-- TABLE -->
 <div class="table-wrap">
-  <div id="loading-screen" class="loading-screen">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Connecting to GitHub...</div>
-  </div>
+  <div id="loading-screen" class="loading-screen"><div class="spinner"></div><div class="loading-text">Connecting to GitHub...</div></div>
   <table id="main-table" style="display:none">
     <thead>
       <tr>
-        <th onclick="sortBy('priority')">Priority</th>
-        <th onclick="sortBy('site')">Site</th>
-        <th>PCIP</th><th>CFRA</th><th>Lead test</th><th>Scaffold design</th>
-        <th onclick="sortBy('cpp')">CPP ready</th>
+        <th class="left" style="width:36px"></th>
+        <th class="left" colspan="2">Site</th>
+        <th colspan="2">Consents</th>
+        <th colspan="4">Pre-construction checks</th>
+        <th colspan="3">Programme</th>
+        <th colspan="2">Costs</th>
+        <th class="left">Suppliers</th>
+      </tr>
+      <tr>
+        <th class="left" onclick="sortBy('priority')" style="width:36px">Pri.</th>
+        <th class="left" colspan="2" onclick="sortBy('site')">Site / Job No</th>
+        <th>Listed</th>
+        <th>Planning</th>
+        <th>BSA</th>
+        <th>PCI</th>
+        <th>CFRA</th>
+        <th>Lead test</th>
+        <th>Scaff design</th>
+        <th onclick="sortBy('cpp')">CPP</th>
+        <th onclick="sortBy('review')">Review date</th>
         <th onclick="sortBy('submission')">Target submission</th>
-        <th>Sub costs</th><th>WT submission</th><th>Suppliers to meet</th>
+        <th>Sub costs</th>
+        <th>WT submission</th>
+        <th class="left">Suppliers to meet</th>
       </tr>
     </thead>
-    <tbody id="table-body"></tbody>
+    <tbody id="tbody"></tbody>
   </table>
 </div>
 
-<!-- FOOTER -->
 <div class="page-footer">
-  <div class="page-footer-left">SW Bruce · NatWest CIP Pre-Construction &nbsp;|&nbsp; <strong>Rev 1</strong></div>
-  <div style="font-size:11px;font-family:var(--mono);color:var(--slate)">Last saved: <span id="last-saved">—</span></div>
+  <div class="page-footer-left">SW Bruce &middot; NatWest CIP Pre-Construction &nbsp;|&nbsp; <strong>Rev 2</strong></div>
+  <div style="font-size:11px;font-family:var(--mono);color:var(--slate)">Last saved: <span id="last-saved">&#8212;</span></div>
 </div>
-
 </div>
 
 <!-- EDIT PANEL -->
-<div class="edit-overlay" id="edit-overlay">
-<div class="edit-panel">
-  <div class="edit-header">
-    <div>
-      <div class="edit-title" id="edit-panel-title">Edit site</div>
-      <div class="edit-subtitle" id="edit-panel-sub"></div>
-    </div>
+<div class="overlay" id="edit-overlay">
+<div class="panel">
+  <div class="panel-header">
+    <div><div class="panel-title" id="ep-title">Edit site</div><div class="panel-sub" id="ep-sub"></div></div>
     <div style="display:flex;gap:8px;align-items:center">
-      <button class="btn btn-danger" id="delete-btn" onclick="deleteSite()" style="font-size:11px;padding:5px 10px">Delete site</button>
+      <button class="btn btn-danger" onclick="deleteSite()" style="font-size:11px;padding:5px 10px">Delete</button>
       <button class="close-btn" onclick="closeEdit()">&#10005;</button>
     </div>
   </div>
-  <div class="edit-body">
-    <div class="edit-grid">
-      <div class="field-group"><div class="field-label">Site name</div><input class="field-input" id="f-site" type="text"></div>
-      <div class="field-group"><div class="field-label">Job number</div><input class="field-input" id="f-job" type="text"></div>
-      <div class="field-group"><div class="field-label">Priority</div>
-        <select class="field-select" id="f-priority">
+  <div class="panel-body">
+    <div class="egrid">
+      <div class="fg"><div class="fl">Site name</div><input class="fi" id="f-site" type="text"></div>
+      <div class="fg"><div class="fl">Job number</div><input class="fi" id="f-job" type="text"></div>
+      <div class="fg"><div class="fl">Priority</div>
+        <select class="fs" id="f-priority">
           <option value="complete">Complete / on site</option>
-          <option value="1">1 — Highest</option><option value="2">2</option><option value="3">3</option>
-          <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-          <option value="7">7</option><option value="8">8</option><option value="9">9</option>
-          <option value="10">10 — Lowest</option>
+          <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
         </select>
       </div>
-      <div class="field-group"><div class="field-label">CPP % complete</div><input class="field-input" id="f-cpp" type="number" min="0" max="100"></div>
-      <div class="field-group"><div class="field-label">Target submission</div><input class="field-input" id="f-submission" type="date"></div>
-      <div class="field-group"><div class="field-label">Sub costs required by</div><input class="field-input" id="f-subcosts" type="date"></div>
-      <div class="field-group"><div class="field-label">WT submission date</div><input class="field-input" id="f-wt" type="date"></div>
-      <div class="field-group"><div class="field-label">Suppliers to meet</div><input class="field-input" id="f-suppliers" type="text"></div>
-      <div class="field-group full"><div class="field-label">Lead test action note</div><input class="field-input" id="f-leadnote" type="text" placeholder="e.g. PJ to arrange"></div>
-      <div class="field-group full"><div class="field-label">Scaffold design action note</div><input class="field-input" id="f-scaffnote" type="text" placeholder="e.g. Instruct SD - PJ"></div>
-      <div class="section-divider">
-        <div class="section-label">Pre-construction checks</div>
-        <div class="checks-grid">
-          <div class="check-item" id="chk-pcip" onclick="toggleCheck('pcip')"><span class="check-icon" id="icon-pcip">❌</span><span class="check-label">PCIP</span></div>
-          <div class="check-item" id="chk-cfra" onclick="toggleCheck('cfra')"><span class="check-icon" id="icon-cfra">❌</span><span class="check-label">CFRA</span></div>
-          <div class="check-item" id="chk-lead" onclick="toggleCheck('lead')"><span class="check-icon" id="icon-lead">❌</span><span class="check-label">Lead test</span></div>
-          <div class="check-item" id="chk-scaff" onclick="toggleCheck('scaff')"><span class="check-icon" id="icon-scaff">❌</span><span class="check-label">Scaffold design</span></div>
-          <div class="check-item" id="chk-cpp" onclick="toggleCheck('cpp')"><span class="check-icon" id="icon-cpp">❌</span><span class="check-label">CPP ready</span></div>
-          <div class="check-item" id="chk-subcosts" onclick="toggleCheck('subcosts')"><span class="check-icon" id="icon-subcosts">❌</span><span class="check-label">Sub costs</span></div>
-          <div class="check-item" id="chk-wtsub" onclick="toggleCheck('wtsub')"><span class="check-icon" id="icon-wtsub">❌</span><span class="check-label">WT submission</span></div>
-        </div>
+      <div class="fg"><div class="fl">Listed / Conservation</div>
+        <select class="fs" id="f-listed">
+          <option value="No">No &mdash; not listed</option>
+          <option value="NY">NY &mdash; noted, not yet confirmed</option>
+          <option value="YY">YY &mdash; listed / conservation area</option>
+        </select>
+      </div>
+      <div class="fg"><div class="fl">Planning status</div>
+        <select class="fs" id="f-planning">
+          <option value="none">None required</option>
+          <option value="done">Done / approved</option>
+          <option value="yes-waiting">Required &mdash; waiting</option>
+          <option value="yes-requested">Required &mdash; submitted</option>
+        </select>
+      </div>
+      <div class="fg"><div class="fl">CPP % complete</div><input class="fi" id="f-cpp" type="number" min="0" max="100"></div>
+      <div class="fg"><div class="fl">Review date</div><input class="fi" id="f-review" type="date"></div>
+      <div class="fg"><div class="fl">Target submission</div><input class="fi" id="f-submission" type="date"></div>
+      <div class="fg"><div class="fl">Sub costs required by</div><input class="fi" id="f-subcosts-date" type="date"></div>
+      <div class="fg"><div class="fl">WT submission date</div><input class="fi" id="f-wt-date" type="date"></div>
+      <div class="fg full"><div class="fl">Suppliers to meet</div><input class="fi" id="f-suppliers" type="text"></div>
+      <div class="fg full"><div class="fl">Lead test note</div><input class="fi" id="f-lead-note" type="text" placeholder="e.g. PJ to arrange / On completion of scaffold"></div>
+      <div class="fg full"><div class="fl">Scaffold design note</div><input class="fi" id="f-scaff-note" type="text" placeholder="e.g. PJ / Instruct SD"></div>
+      <div class="fsect">
+        <div class="fsect-label">Check statuses &mdash; click to cycle: Done &rarr; Waiting &rarr; Requested</div>
+        <div class="checks-grid" id="checks-grid"></div>
       </div>
     </div>
   </div>
-  <div class="edit-footer">
-    <div class="footer-note" id="save-status"></div>
+  <div class="panel-footer">
+    <div class="footer-note" id="save-note"></div>
     <div style="display:flex;gap:8px">
       <button class="btn btn-ghost" onclick="closeEdit()">Cancel</button>
       <button class="btn btn-primary" id="save-btn" onclick="saveEdit()">Save &amp; sync</button>
@@ -314,210 +311,208 @@ td{padding:12px 14px;vertical-align:middle}
 </div>
 </div>
 
-<!-- EMAIL SETTINGS -->
-<div class="email-overlay" id="email-overlay">
-<div class="email-panel">
-  <div class="email-header">
-    <div><div class="edit-title">Email notifications</div><div class="edit-subtitle">Notified on every save</div></div>
-    <button class="close-btn" onclick="closeEmailSettings()">&#10005;</button>
+<!-- EMAIL MODAL -->
+<div class="overlay" id="email-overlay">
+<div class="em-panel">
+  <div class="panel-header">
+    <div><div class="panel-title">Email notifications</div><div class="panel-sub">Recipients notified on every save</div></div>
+    <button class="close-btn" onclick="closeEmail()">&#10005;</button>
   </div>
-  <div class="email-body">
-    <div class="field-group"><div class="field-label">Your name</div><input class="field-input" id="email-name" type="text" placeholder="Paul Jones"></div>
-    <div class="field-group"><div class="field-label">Your email</div><input class="field-input" id="email-from" type="email" placeholder="paul.jones@swbruce.co.uk"></div>
-    <div class="field-group"><div class="field-label">Recipients (comma separated)</div><input class="field-input" id="email-to" type="text" placeholder="george.fox@atkinsrealis.com, jon.winton@swbruce.co.uk"></div>
+  <div class="em-body">
+    <div class="fg"><div class="fl">Your name</div><input class="fi" id="e-name" type="text" placeholder="Paul Jones"></div>
+    <div class="fg"><div class="fl">Your email</div><input class="fi" id="e-from" type="email" placeholder="paul.jones@swbruce.co.uk"></div>
+    <div class="fg"><div class="fl">Recipients (comma separated)</div><input class="fi" id="e-to" type="text" placeholder="george.fox@atkinsrealis.com, jon.winton@swbruce.co.uk"></div>
   </div>
-  <div class="email-footer">
-    <button class="btn btn-ghost" onclick="closeEmailSettings()">Cancel</button>
-    <button class="btn btn-primary" onclick="saveEmailSettings()">Save</button>
+  <div class="em-footer">
+    <button class="btn btn-ghost" onclick="closeEmail()">Cancel</button>
+    <button class="btn btn-primary" onclick="saveEmail()">Save</button>
   </div>
 </div>
 </div>
 
-<!-- TOAST -->
-<div class="toast" id="toast"><span>✓</span><span id="toast-msg"></span></div>
+<div class="toast" id="toast"><span>&#10003;</span><span id="toast-msg"></span></div>
 
 <script>
-let data = [];
-let currentIdx = null;
-let sortField = 'priority';
-let sortAsc = true;
-let currentFilter = 'all';
-let ghUser = '', ghRepo = '', ghToken = '', fileSha = '';
-let emailFrom = '', emailTo = '', emailName = '';
+const CHECKS=[{id:'bsa',label:'BSA'},{id:'pci',label:'PCI'},{id:'cfra',label:'CFRA'},{id:'lead',label:'Lead test'},{id:'scaff',label:'Scaff design'},{id:'cpp',label:'CPP ready'},{id:'subcosts',label:'Sub costs'},{id:'wtsub',label:'WT submission'}];
+const STATES=['done','waiting','requested'];
+let data=[],currentIdx=null,sortField='priority',sortAsc=true,currentFilter='all';
+let ghUser='',ghRepo='',ghToken='',fileSha='';
+let eName='',eFrom='',eTo='';
+let ckStates={};
+
+function ls(k){return localStorage.getItem(k)||''}
+function lss(k,v){localStorage.setItem(k,v)}
 
 function loadConfig(){
-  ghUser = localStorage.getItem('gh_user')||'';
-  ghRepo = localStorage.getItem('gh_repo')||'';
-  ghToken = localStorage.getItem('gh_token')||'';
-  emailFrom = localStorage.getItem('email_from')||'';
-  emailTo = localStorage.getItem('email_to')||'';
-  emailName = localStorage.getItem('email_name')||'';
-  if(ghUser && ghRepo && ghToken){
-    document.getElementById('setup-banner').classList.add('hidden');
-  } else {
-    document.getElementById('gh-user').value = ghUser;
-    document.getElementById('gh-repo').value = ghRepo;
-  }
+  ghUser=ls('gh_user');ghRepo=ls('gh_repo');ghToken=ls('gh_token');
+  eName=ls('e_name');eFrom=ls('e_from');eTo=ls('e_to');
+  if(ghUser&&ghRepo&&ghToken) document.getElementById('setup-banner').classList.add('hidden');
+  else{document.getElementById('gh-user').value=ghUser;document.getElementById('gh-repo').value=ghRepo;}
+  buildChecksGrid();
 }
 
-function saveGHConfig(){
-  ghUser = document.getElementById('gh-user').value.trim();
-  ghRepo = document.getElementById('gh-repo').value.trim();
-  ghToken = document.getElementById('gh-token').value.trim();
-  if(!ghUser||!ghRepo||!ghToken){showToast('Please fill in all fields','error');return;}
-  localStorage.setItem('gh_user',ghUser);
-  localStorage.setItem('gh_repo',ghRepo);
-  localStorage.setItem('gh_token',ghToken);
+function buildChecksGrid(){
+  document.getElementById('checks-grid').innerHTML=CHECKS.map(c=>`
+    <div class="ck" id="ck-${c.id}" onclick="cycleCheck('${c.id}')">
+      <div class="ck-state">
+        <span class="ck-opt opt-done" id="opt-${c.id}-done">&#10003;</span>
+        <span class="ck-opt opt-waiting" id="opt-${c.id}-waiting">&#10005;</span>
+        <span class="ck-opt opt-requested" id="opt-${c.id}-requested">&#8987;</span>
+      </div>
+      <div class="ck-label">${c.label}</div>
+    </div>`).join('');
+}
+
+function saveGH(){
+  ghUser=document.getElementById('gh-user').value.trim();
+  ghRepo=document.getElementById('gh-repo').value.trim();
+  ghToken=document.getElementById('gh-token').value.trim();
+  if(!ghUser||!ghRepo||!ghToken){toast('Please fill in all fields','err');return;}
+  lss('gh_user',ghUser);lss('gh_repo',ghRepo);lss('gh_token',ghToken);
   document.getElementById('setup-banner').classList.add('hidden');
   loadData();
 }
 
 async function loadData(){
-  if(!ghUser||!ghRepo||!ghToken){
-    showLoading(false);
-    setSyncStatus('not-connected','Not connected');
-    return;
-  }
-  setSyncStatus('syncing','Loading...');
+  if(!ghUser||!ghRepo||!ghToken){showLoading(false);setSync('off','Not connected');return;}
+  setSync('syncing','Loading...');
   try{
-    const res = await fetch(`https://api.github.com/repos/${ghUser}/${ghRepo}/contents/data.json`,{
+    const res=await fetch(`https://api.github.com/repos/${ghUser}/${ghRepo}/contents/data.json`,{
       headers:{'Authorization':`token ${ghToken}`,'Accept':'application/vnd.github.v3+json'}
     });
-    if(!res.ok) throw new Error(`GitHub error: ${res.status}`);
-    const json = await res.json();
-    fileSha = json.sha;
-    const b64 = json.content.replace(/
-/g,''); const raw = atob(b64); const bytes = new Uint8Array(raw.length); for(let i=0;i<raw.length;i++) bytes[i]=raw.charCodeAt(i); data = JSON.parse(new TextDecoder('utf-8').decode(bytes));
-    showLoading(false);
-    render();
-    setSyncStatus('synced',`Synced · ${new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`);
-  } catch(e){
-    showLoading(false);
-    setSyncStatus('error',`Error: ${e.message}`);
-    showToast('Could not load from GitHub — check your token and repo name','error');
+    if(!res.ok) throw new Error('GitHub '+res.status);
+    const json=await res.json();
+    fileSha=json.sha;
+    const raw=atob(json.content.replace(/\n/g,''));
+    const bytes=new Uint8Array(raw.length);
+    for(let i=0;i<raw.length;i++) bytes[i]=raw.charCodeAt(i);
+    data=JSON.parse(new TextDecoder('utf-8').decode(bytes));
+    showLoading(false);render();
+    setSync('ok','Synced '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}));
+  }catch(e){
+    showLoading(false);setSync('err','Load failed');
+    toast('Could not load — check token and repo name','err');
   }
 }
 
-async function saveData(site, changes){
-  if(!ghUser||!ghRepo||!ghToken){showToast('Not connected to GitHub','error');return;}
-  setSyncStatus('syncing','Saving...');
-  document.getElementById('save-btn').textContent='Saving...';
-  document.getElementById('save-btn').disabled=true;
+async function pushData(label,changes){
+  if(!ghUser||!ghRepo||!ghToken){toast('Not connected','err');return;}
+  setSync('syncing','Saving...');
+  const btn=document.getElementById('save-btn');
+  if(btn){btn.textContent='Saving...';btn.disabled=true;}
   try{
-    const jsonStr = JSON.stringify(data,null,2);
-    const bytes = new TextEncoder().encode(jsonStr);
-    const binStr = Array.from(bytes).map(b=>String.fromCharCode(b)).join('');
-    const content = btoa(binStr);
-    const now = new Date().toLocaleString('en-GB');
-    const res = await fetch(`https://api.github.com/repos/${ghUser}/${ghRepo}/contents/data.json`,{
+    const jsonStr=JSON.stringify(data,null,2);
+    const bytes=new TextEncoder().encode(jsonStr);
+    const binStr=Array.from(bytes).map(b=>String.fromCharCode(b)).join('');
+    const content=btoa(binStr);
+    const now=new Date().toLocaleString('en-GB');
+    const res=await fetch(`https://api.github.com/repos/${ghUser}/${ghRepo}/contents/data.json`,{
       method:'PUT',
       headers:{'Authorization':`token ${ghToken}`,'Content-Type':'application/json'},
-      body:JSON.stringify({
-        message:`Update: ${site} — ${now}`,
-        content,
-        sha:fileSha
-      })
+      body:JSON.stringify({message:'Update: '+label+' — '+now,content,sha:fileSha})
     });
-    if(!res.ok) throw new Error(`Save failed: ${res.status}`);
-    const json = await res.json();
-    fileSha = json.content.sha;
-    document.getElementById('last-saved').textContent = now;
-    setSyncStatus('synced',`Saved · ${new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`);
-    showToast(`${site} saved & synced`);
-    if(changes.length && emailTo) triggerEmail(site, changes);
-  } catch(e){
-    setSyncStatus('error','Save failed');
-    showToast('Save failed — '+e.message,'error');
-  } finally{
-    document.getElementById('save-btn').textContent='Save & sync';
-    document.getElementById('save-btn').disabled=false;
+    if(!res.ok) throw new Error('Save '+res.status);
+    const json=await res.json();
+    fileSha=json.content.sha;
+    document.getElementById('last-saved').textContent=new Date().toLocaleString('en-GB');
+    setSync('ok','Saved '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}));
+    toast(label+' saved & synced');
+    if(changes&&changes.length&&eTo) sendEmail(label,changes);
+  }catch(e){
+    setSync('err','Save failed');toast('Save failed — '+e.message,'err');
+  }finally{
+    if(btn){btn.textContent='Save & sync';btn.disabled=false;}
   }
 }
 
 function showLoading(show){
-  document.getElementById('loading-screen').style.display = show?'flex':'none';
-  document.getElementById('main-table').style.display = show?'none':'table';
+  document.getElementById('loading-screen').style.display=show?'flex':'none';
+  document.getElementById('main-table').style.display=show?'none':'table';
 }
-
-function setSyncStatus(state, label){
-  const dot = document.getElementById('sync-dot');
-  const lbl = document.getElementById('sync-label');
-  dot.className = 'sync-dot' + (state==='syncing'?' syncing':state==='error'?' error':'');
-  lbl.textContent = label;
-  lbl.style.color = state==='error'?'var(--red)':state==='syncing'?'var(--amber)':'var(--slate)';
+function setSync(state,label){
+  const d=document.getElementById('sync-dot');
+  const l=document.getElementById('sync-lbl');
+  d.className='sync-dot'+(state==='syncing'?' syncing':state==='err'?' error':'');
+  l.textContent=label;
+  l.style.color=state==='err'?'var(--red)':state==='syncing'?'var(--amber)':'var(--slate)';
 }
+function fmtDate(d){if(!d)return'';const dt=new Date(d);if(isNaN(dt))return d;return dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});}
+function dClass(d){if(!d)return'';const diff=(new Date(d)-new Date())/86400000;if(diff<0)return'date-overdue';if(diff<14)return'date-soon';return'';}
+function prSort(p){if(p==='complete')return 0;const n=parseInt(p);return isNaN(n)?99:n;}
 
-function formatDate(d){
-  if(!d) return '';
-  const dt = new Date(d);
-  if(isNaN(dt)) return d;
-  return dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-}
-
-function dateClass(d){
-  if(!d) return '';
-  const diff = (new Date(d)-new Date())/(86400000);
-  if(diff<0) return 'date-overdue';
-  if(diff<14) return 'date-soon';
-  return '';
-}
-
-function prioritySort(p){
-  if(p==='complete') return 0;
-  const n=parseInt(p); return isNaN(n)?99:n;
-}
-
-function getSortedFiltered(){
+function getSF(){
   let rows=[...data];
-  if(currentFilter==='ready') rows=rows.filter(r=>r.cpp&&r.cppPct===100);
-  else if(currentFilter==='inprogress') rows=rows.filter(r=>!r.cpp&&(r.pcip||r.cfra||r.lead||r.scaff||r.subcosts||r.wtsub||r.cppPct>0));
-  else if(currentFilter==='notstarted') rows=rows.filter(r=>!r.pcip&&!r.cfra&&!r.lead&&!r.scaff&&!r.cpp&&!r.subcosts&&!r.wtsub&&r.cppPct===0);
+  const checkIds=CHECKS.map(c=>c.id);
+  if(currentFilter==='ready') rows=rows.filter(r=>r.cpp==='done'&&r.cppPct===100);
+  else if(currentFilter==='inprog') rows=rows.filter(r=>r.cpp!=='done'&&checkIds.some(c=>r[c]==='done'||r[c]==='requested'));
+  else if(currentFilter==='notstarted') rows=rows.filter(r=>checkIds.every(c=>r[c]==='waiting'));
+  else if(currentFilter==='listed') rows=rows.filter(r=>r.listed==='YY');
   else if(currentFilter==='actions') rows=rows.filter(r=>r.leadNote||r.scaffNote);
   rows.sort((a,b)=>{
     let av,bv;
-    if(sortField==='priority'){av=prioritySort(a.priority);bv=prioritySort(b.priority);}
+    if(sortField==='priority'){av=prSort(a.priority);bv=prSort(b.priority);}
     else if(sortField==='site'){av=a.site.toLowerCase();bv=b.site.toLowerCase();}
     else if(sortField==='submission'){av=a.submission||'9999';bv=b.submission||'9999';}
+    else if(sortField==='review'){av=a.reviewDate||'9999';bv=b.reviewDate||'9999';}
     else if(sortField==='cpp'){av=a.cppPct;bv=b.cppPct;}
     else{av=0;bv=0;}
-    if(av<bv) return sortAsc?-1:1; if(av>bv) return sortAsc?1:-1; return 0;
+    if(av<bv)return sortAsc?-1:1;if(av>bv)return sortAsc?1:-1;return 0;
   });
   return rows;
 }
 
-function sc(checked,note){
-  if(checked) return `<span class="status-cell s-done">✅</span>`;
-  if(note) return `<span class="status-cell s-action" title="${note}">${note}</span>`;
-  return `<span class="status-cell s-pending">❌</span>`;
+function sc(state,note){
+  if(state==='done') return '<span class="sc sc-done">&#10003;</span>';
+  if(state==='requested') return note?`<span class="sc-text sc-requested" title="${note}">${note}</span>`:'<span class="sc sc-requested">&#8987;</span>';
+  if(state==='waiting') return note?`<span class="sc-text sc-waiting" title="${note}">${note}</span>`:'<span class="sc sc-waiting">&#10005;</span>';
+  if(state==='yes') return '<span class="sc sc-done">&#10003;</span>';
+  if(state==='no') return '<span class="sc sc-na">N/A</span>';
+  return '<span class="sc sc-na">&#8212;</span>';
 }
-
-function cppCell(pct,ready){
-  if(ready&&pct===100) return `<span class="status-cell s-done">✅</span>`;
-  const col=pct>75?'var(--green)':pct>40?'var(--amber)':'var(--red)';
-  return `<div class="cpp-wrap"><div class="cpp-bar"><div class="cpp-fill" style="width:${pct}%;background:${col}"></div></div><span class="cpp-pct">${pct}%</span></div>`;
+function planCell(p){
+  if(p==='none') return '<span class="sc sc-na">N/A</span>';
+  if(p==='done') return '<span class="sc sc-done">&#10003;</span>';
+  if(p==='yes-waiting') return '<span class="sc-text sc-waiting">Req\'d</span>';
+  if(p==='yes-requested') return '<span class="sc-text sc-requested">Submitted</span>';
+  return '<span class="sc sc-na">&#8212;</span>';
 }
-
-function pBadge(p){
-  if(p==='complete') return `<span class="priority-badge p-top" style="font-size:13px">&#10003;</span>`;
+function listedBadge(l){
+  if(l==='NY') return '<span class="listed-badge lb-ny">NY</span>';
+  if(l==='YY') return '<span class="listed-badge lb-yy">YY</span>';
+  return '<span class="listed-badge lb-no">No</span>';
+}
+function cppCell(r){
+  if(r.cpp==='done'&&r.cppPct===100) return '<span class="sc sc-done">&#10003;</span>';
+  const col=r.cppPct>75?'var(--green)':r.cppPct>40?'var(--amber)':'var(--red)';
+  return `<div class="cpp-wrap"><div class="cpp-bar"><div class="cpp-fill" style="width:${r.cppPct}%;background:${col}"></div></div><span class="cpp-pct">${r.cppPct}%</span></div>`;
+}
+function pbadge(p){
+  if(p==='complete') return '<span class="pbadge pb-complete">&#10003;</span>';
   const n=parseInt(p);
-  if(n<=3) return `<span class="priority-badge p-mid">${p}</span>`;
-  return `<span class="priority-badge p-low">${p}</span>`;
+  if(n<=3) return `<span class="pbadge pb-high">${p}</span>`;
+  return `<span class="pbadge pb-low">${p}</span>`;
 }
 
 function render(){
-  const rows=getSortedFiltered();
-  document.getElementById('table-body').innerHTML=rows.map(r=>{
+  const rows=getSF();
+  document.getElementById('tbody').innerHTML=rows.map(r=>{
     const ri=data.indexOf(r);
-    const dc=dateClass(r.submission);
     return `<tr onclick="openEdit(${ri})">
-      <td>${pBadge(r.priority)}</td>
-      <td><div class="site-name">${r.site}</div><div class="job-ref">Job No ${r.job}</div></td>
-      <td>${sc(r.pcip,'')}</td><td>${sc(r.cfra,'')}</td>
-      <td>${sc(r.lead,r.leadNote)}</td><td>${sc(r.scaff,r.scaffNote)}</td>
-      <td>${cppCell(r.cppPct,r.cpp)}</td>
-      <td><span class="date-cell ${dc}">${formatDate(r.submission)||'—'}</span></td>
-      <td>${sc(r.subcosts,'')}</td><td>${sc(r.wtsub,'')}</td>
-      <td><span class="suppliers-cell" title="${r.suppliers}">${r.suppliers||'—'}</span></td>
+      <td class="left">${pbadge(r.priority)}</td>
+      <td class="left" colspan="2"><div class="site-name">${r.site}</div><div class="job-ref">Job No ${r.job}</div></td>
+      <td>${listedBadge(r.listed)}</td>
+      <td>${planCell(r.planning)}</td>
+      <td>${sc(r.bsa,'')}</td>
+      <td>${sc(r.pci,'')}</td>
+      <td>${sc(r.cfra,'')}</td>
+      <td>${sc(r.lead,r.leadNote)}</td>
+      <td>${sc(r.scaff,r.scaffNote)}</td>
+      <td>${cppCell(r)}</td>
+      <td><span class="date-cell ${dClass(r.reviewDate)}">${fmtDate(r.reviewDate)||'&#8212;'}</span></td>
+      <td><span class="date-cell ${dClass(r.submission)}">${fmtDate(r.submission)||'&#8212;'}</span></td>
+      <td>${sc(r.subcosts,'')}</td>
+      <td>${sc(r.wtsub,'')}</td>
+      <td class="left"><span class="sup-cell" title="${r.suppliers||''}">${r.suppliers||'&#8212;'}</span></td>
     </tr>`;
   }).join('');
   updateMetrics();
@@ -525,141 +520,119 @@ function render(){
 }
 
 function updateMetrics(){
+  const checkIds=CHECKS.map(c=>c.id);
   document.getElementById('m-total').textContent=data.length;
-  document.getElementById('m-ready').textContent=data.filter(r=>r.cpp&&r.cppPct===100).length;
-  document.getElementById('m-progress').textContent=data.filter(r=>!r.cpp&&(r.pcip||r.cfra||r.lead||r.scaff||r.subcosts||r.wtsub||r.cppPct>0)).length;
-  document.getElementById('m-notstarted').textContent=data.filter(r=>!r.pcip&&!r.cfra&&!r.lead&&!r.scaff&&!r.cpp&&!r.subcosts&&!r.wtsub&&r.cppPct===0).length;
+  document.getElementById('m-ready').textContent=data.filter(r=>r.cpp==='done'&&r.cppPct===100).length;
+  document.getElementById('m-prog').textContent=data.filter(r=>r.cpp!=='done'&&checkIds.some(c=>r[c]==='done'||r[c]==='requested')).length;
+  document.getElementById('m-none').textContent=data.filter(r=>checkIds.every(c=>r[c]==='waiting')).length;
+  document.getElementById('m-listed').textContent=data.filter(r=>r.listed==='YY').length;
   document.getElementById('m-actions').textContent=data.filter(r=>r.leadNote||r.scaffNote).length;
 }
 
-function sortBy(field){
-  if(sortField===field) sortAsc=!sortAsc; else{sortField=field;sortAsc=true;}
-  render();
-}
+function sortBy(f){if(sortField===f)sortAsc=!sortAsc;else{sortField=f;sortAsc=true;}render();}
+function setFilter(f,el){currentFilter=f;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');render();}
 
-function setFilter(f,el){
-  currentFilter=f;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  render();
-}
-
-let editSnapshot=null;
-
+let snap=null;
 function openEdit(idx){
-  currentIdx=idx;
-  const r=data[idx];
-  editSnapshot=JSON.stringify(r);
-  document.getElementById('edit-panel-title').textContent=r.site;
-  document.getElementById('edit-panel-sub').textContent=`Job No ${r.job} · Priority ${r.priority}`;
+  currentIdx=idx;const r=data[idx];snap=JSON.stringify(r);
+  document.getElementById('ep-title').textContent=r.site;
+  document.getElementById('ep-sub').textContent='Job No '+r.job+' · Priority '+r.priority;
   document.getElementById('f-site').value=r.site;
   document.getElementById('f-job').value=r.job;
   document.getElementById('f-priority').value=r.priority;
+  document.getElementById('f-listed').value=r.listed||'No';
+  document.getElementById('f-planning').value=r.planning||'none';
   document.getElementById('f-cpp').value=r.cppPct;
+  document.getElementById('f-review').value=r.reviewDate||'';
   document.getElementById('f-submission').value=r.submission||'';
-  document.getElementById('f-subcosts').value=r.subcostsDate||'';
-  document.getElementById('f-wt').value=r.wtDate||'';
+  document.getElementById('f-subcosts-date').value=r.subcostsDate||'';
+  document.getElementById('f-wt-date').value=r.wtDate||'';
   document.getElementById('f-suppliers').value=r.suppliers||'';
-  document.getElementById('f-leadnote').value=r.leadNote||'';
-  document.getElementById('f-scaffnote').value=r.scaffNote||'';
-  ['pcip','cfra','lead','scaff','cpp','subcosts','wtsub'].forEach(c=>{
-    const el=document.getElementById('chk-'+c);
-    const ic=document.getElementById('icon-'+c);
-    if(r[c]){el.classList.add('checked');ic.textContent='✅';}
-    else{el.classList.remove('checked');ic.textContent='❌';}
-  });
-  document.getElementById('save-status').textContent='';
+  document.getElementById('f-lead-note').value=r.leadNote||'';
+  document.getElementById('f-scaff-note').value=r.scaffNote||'';
+  ckStates={};
+  CHECKS.forEach(c=>{ckStates[c.id]=r[c.id]||'waiting';renderCk(c.id);});
+  document.getElementById('save-note').textContent='';
   document.getElementById('edit-overlay').classList.add('open');
 }
 
-function toggleCheck(c){
-  const el=document.getElementById('chk-'+c);
-  const ic=document.getElementById('icon-'+c);
-  if(el.classList.contains('checked')){el.classList.remove('checked');ic.textContent='❌';}
-  else{el.classList.add('checked');ic.textContent='✅';}
+function renderCk(id){
+  const state=ckStates[id];
+  const el=document.getElementById('ck-'+id);
+  if(el) el.className='ck active-'+state;
+  STATES.forEach(s=>{
+    const opt=document.getElementById('opt-'+id+'-'+s);
+    if(opt) opt.classList.toggle('sel',s===state);
+  });
 }
 
-function addNewSite(){
-  data.push({site:'New site',job:'',priority:'10',pcip:false,cfra:false,lead:false,leadNote:'',scaff:false,scaffNote:'',cpp:false,cppPct:0,submission:'',subcosts:false,subcostsDate:'',wtsub:false,wtDate:'',suppliers:''});
-  openEdit(data.length-1);
+function cycleCheck(id){
+  const cur=ckStates[id]||'waiting';
+  ckStates[id]=STATES[(STATES.indexOf(cur)+1)%STATES.length];
+  renderCk(id);
+}
+
+function addSite(){
+  const blank={site:'New site',job:'',priority:'12',listed:'No',planning:'none',bsa:'waiting',pci:'waiting',cfra:'waiting',lead:'waiting',leadNote:'',scaff:'waiting',scaffNote:'',cpp:'waiting',cppPct:0,reviewDate:'',submission:'',subcosts:'waiting',subcostsDate:'',wtsub:'waiting',wtDate:'',suppliers:''};
+  data.push(blank);openEdit(data.length-1);
 }
 
 function deleteSite(){
   const r=data[currentIdx];
-  if(!confirm(`Delete ${r.site}? This cannot be undone.`)) return;
-  data.splice(currentIdx,1);
-  closeEdit();
-  render();
-  saveData(r.site+' (deleted)',[`Site ${r.site} removed from tracker`]);
+  if(!confirm('Delete '+r.site+'? Cannot be undone.')) return;
+  data.splice(currentIdx,1);closeEdit();render();
+  pushData(r.site+' (deleted)',['Removed '+r.site]);
 }
 
 function getChanges(old,neo){
-  const labels={pcip:'PCIP',cfra:'CFRA',lead:'Lead test',scaff:'Scaffold design',cpp:'CPP ready',subcosts:'Sub costs',wtsub:'WT submission',cppPct:'CPP %',submission:'Target submission',leadNote:'Lead note',scaffNote:'Scaffold note',suppliers:'Suppliers',priority:'Priority'};
-  return Object.keys(labels).filter(k=>JSON.stringify(old[k])!==JSON.stringify(neo[k])).map(k=>`${labels[k]}: ${old[k]===true?'✅':old[k]===false?'❌':old[k]||'—'} → ${neo[k]===true?'✅':neo[k]===false?'❌':neo[k]||'—'}`);
+  const labels={bsa:'BSA',pci:'PCI',cfra:'CFRA',lead:'Lead test',scaff:'Scaffold design',cpp:'CPP ready',subcosts:'Sub costs',wtsub:'WT submission',cppPct:'CPP %',reviewDate:'Review date',submission:'Target submission',leadNote:'Lead note',scaffNote:'Scaffold note',suppliers:'Suppliers',priority:'Priority',listed:'Listed',planning:'Planning'};
+  return Object.keys(labels).filter(k=>JSON.stringify(old[k])!==JSON.stringify(neo[k])).map(k=>labels[k]+': '+(old[k]||'—')+' -> '+(neo[k]||'—'));
 }
 
 function saveEdit(){
-  const r=data[currentIdx];
-  const old=JSON.parse(editSnapshot);
+  const r=data[currentIdx];const old=JSON.parse(snap);
   r.site=document.getElementById('f-site').value.trim()||r.site;
   r.job=document.getElementById('f-job').value.trim();
   r.priority=document.getElementById('f-priority').value;
+  r.listed=document.getElementById('f-listed').value;
+  r.planning=document.getElementById('f-planning').value;
   r.cppPct=Math.min(100,Math.max(0,parseInt(document.getElementById('f-cpp').value)||0));
+  r.reviewDate=document.getElementById('f-review').value;
   r.submission=document.getElementById('f-submission').value;
-  r.subcostsDate=document.getElementById('f-subcosts').value;
-  r.wtDate=document.getElementById('f-wt').value;
+  r.subcostsDate=document.getElementById('f-subcosts-date').value;
+  r.wtDate=document.getElementById('f-wt-date').value;
   r.suppliers=document.getElementById('f-suppliers').value.trim();
-  r.leadNote=document.getElementById('f-leadnote').value.trim();
-  r.scaffNote=document.getElementById('f-scaffnote').value.trim();
-  ['pcip','cfra','lead','scaff','cpp','subcosts','wtsub'].forEach(c=>{r[c]=document.getElementById('chk-'+c).classList.contains('checked');});
+  r.leadNote=document.getElementById('f-lead-note').value.trim();
+  r.scaffNote=document.getElementById('f-scaff-note').value.trim();
+  CHECKS.forEach(c=>{r[c.id]=ckStates[c.id]||'waiting';});
   const changes=getChanges(old,r);
-  closeEdit();
-  render();
-  saveData(r.site,changes);
+  closeEdit();render();pushData(r.site,changes);
 }
 
 function closeEdit(){document.getElementById('edit-overlay').classList.remove('open');currentIdx=null;}
+function openEmail(){document.getElementById('e-name').value=eName;document.getElementById('e-from').value=eFrom;document.getElementById('e-to').value=eTo;document.getElementById('email-overlay').classList.add('open');}
+function closeEmail(){document.getElementById('email-overlay').classList.remove('open');}
+function saveEmail(){eName=document.getElementById('e-name').value.trim();eFrom=document.getElementById('e-from').value.trim();eTo=document.getElementById('e-to').value.trim();lss('e_name',eName);lss('e_from',eFrom);lss('e_to',eTo);closeEmail();toast('Email settings saved');}
 
-function openEmailSettings(){
-  document.getElementById('email-name').value=emailName;
-  document.getElementById('email-from').value=emailFrom;
-  document.getElementById('email-to').value=emailTo;
-  document.getElementById('email-overlay').classList.add('open');
-}
-function closeEmailSettings(){document.getElementById('email-overlay').classList.remove('open');}
-function saveEmailSettings(){
-  emailName=document.getElementById('email-name').value.trim();
-  emailFrom=document.getElementById('email-from').value.trim();
-  emailTo=document.getElementById('email-to').value.trim();
-  localStorage.setItem('email_name',emailName);
-  localStorage.setItem('email_from',emailFrom);
-  localStorage.setItem('email_to',emailTo);
-  closeEmailSettings();
-  showToast('Email settings saved');
-}
-
-function triggerEmail(site,changes){
+function sendEmail(site,changes){
   const now=new Date().toLocaleString('en-GB');
-  const changeList=changes.map(c=>`  • ${c}`).join('\n');
-  const subject=encodeURIComponent(`NatWest CIP Pre-Con Tracker — ${site} updated`);
-  const body=encodeURIComponent(`Hi,\n\nThis is an update notification from the SW Bruce NatWest CIP Pre-Construction Status Tracker.\n\nSite updated: ${site}\nUpdated by: ${emailName||emailFrom}\nDate/time: ${now}\n\nChanges made:\n${changeList}\n\nPlease open the tracker to review the latest status.\n\nRegards,\nSW Bruce — NatWest CIP Team`);
-  window.open(`mailto:${emailTo}?subject=${subject}&body=${body}`);
+  const subj=encodeURIComponent('NatWest CIP Pre-Con Tracker - '+site+' updated');
+  const body=encodeURIComponent('Hi,\n\nUpdate from SW Bruce NatWest CIP Pre-Construction Tracker.\n\nSite: '+site+'\nUpdated by: '+(eName||eFrom)+'\nTime: '+now+'\n\nChanges:\n'+changes.map(c=>'  - '+c).join('\n')+'\n\nRegards,\nSW Bruce CIP Team');
+  window.open('mailto:'+eTo+'?subject='+subj+'&body='+body);
 }
 
-function showToast(msg,type=''){
+function toast(msg,type){
   const t=document.getElementById('toast');
   document.getElementById('toast-msg').textContent=msg;
-  t.className='toast'+(type==='error'?' error-toast':'');
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3500);
+  t.className='toast'+(type==='err'?' err':'');
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);
 }
 
 document.getElementById('edit-overlay').addEventListener('click',function(e){if(e.target===this)closeEdit();});
-document.getElementById('email-overlay').addEventListener('click',function(e){if(e.target===this)closeEmailSettings();});
+document.getElementById('email-overlay').addEventListener('click',function(e){if(e.target===this)closeEmail();});
 
-loadConfig();
-loadData();
-setInterval(loadData, 60000);
+loadConfig();loadData();
+setInterval(loadData,60000);
 </script>
 </body>
 </html>

@@ -168,7 +168,7 @@
     "planning": "yes-waiting",
     "bsa": "yes",
     "pci": "requested",
-    "cfra": "waiting",
+    "cfra": "requested",
     "lead": "waiting",
     "leadNote": "PJ",
     "scaff": "waiting",

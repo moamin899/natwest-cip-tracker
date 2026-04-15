@@ -29,7 +29,21 @@
       "description": "CIP works — pre-start complete"
     }
   ],
-  "diary": [],
+  "diary": [
+    {
+      "id": "mnzx43spq0ji",
+      "site": "sandpiper",
+      "date": "2026-04-15",
+      "weather": "",
+      "workers": 0,
+      "works": "d",
+      "subs": "d",
+      "issues": "d",
+      "tomorrow": "d",
+      "author": "",
+      "ts": "2026-04-15T10:38:58.873Z"
+    }
+  ],
   "gantt": {
     "sandpiper": [
       {

@@ -187,7 +187,15 @@
   },
   "photos": [],
   "subcontractors": {
-    "sandpiper": [],
+    "sandpiper": [
+      {
+        "id": "mnzydpw7e1hb",
+        "name": "highview",
+        "trade": "roofers",
+        "contact": "dave dave",
+        "active": true
+      }
+    ],
     "tunbridge": []
   },
   "attendance": []

@@ -656,7 +656,7 @@ function toast(msg,type){
 function checkPassword(){
   const val=document.getElementById('pw-input').value.trim();
   if(val==='4444'){
-    lss('pw_auth',Date.now().toString());
+    sessionStorage.setItem('pw_auth','1');
     unlock();
   } else {
     document.getElementById('pw-error').textContent='Incorrect password. Please try again.';
@@ -688,8 +688,7 @@ function unlock(){
 
 function startApp(){
   // Check session — 8 hour lock
-  const auth=ls('pw_auth');
-  const valid=auth&&(Date.now()-parseInt(auth))<8*60*60*1000;
+  const valid=sessionStorage.getItem('pw_auth')==='1';
   if(valid){
     unlock();
   } else {

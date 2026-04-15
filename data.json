@@ -100,19 +100,19 @@
     "bsa": "done",
     "pci": "requested",
     "cfra": "requested",
-    "lead": "waiting",
+    "lead": "done",
     "leadNote": "On completion of scaffold",
     "scaff": "done",
-    "scaffNote": "",
+    "scaffNote": "testing",
     "cpp": "waiting",
     "cppPct": 0,
     "reviewDate": "2026-04-24",
     "submission": "2026-04-14",
     "subcosts": "done",
     "subcostsDate": "",
-    "wtsub": "done",
+    "wtsub": "requested",
     "wtDate": "",
-    "suppliers": ""
+    "suppliers": "testing"
   },
   {
     "site": "Worthing",

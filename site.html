@@ -456,8 +456,8 @@ body{font-family:var(--font);background:var(--navy);color:var(--white);min-heigh
       <div class="fg"><div class="fl">Contract value (&#163;)</div><input class="fi" id="ns-value" type="text" placeholder="e.g. 125000"></div>
       <div class="fg"><div class="fl">Project manager (SWB)</div><input class="fi" id="ns-pm" type="text" placeholder="e.g. Project manager name"></div>
       <div class="fg"><div class="fl">Site manager</div><input class="fi" id="ns-sm" type="text" placeholder="e.g. Site manager name"></div>
-      <div class="fg"><div class="fl">Atkins / client PM</div><input class="fi" id="ns-client-pm" type="text" placeholder="e.g. Client PM name"></div>
-      <div class="fg"><div class="fl">Project director</div><input class="fi" id="ns-pd" type="text" placeholder="e.g. Project director name"></div>
+      <div class="fg"><div class="fl">Client PM</div><input class="fi" id="ns-client-pm" type="text" placeholder="e.g. Client PM name"></div>
+      <div class="fg"><div class="fl">Client</div><input class="fi" id="ns-pd" type="text" placeholder="e.g. Client name"></div>
       <div class="fg"><div class="fl">Start date</div><input class="fi" id="ns-start" type="date"></div>
       <div class="fg"><div class="fl">Planned completion</div><input class="fi" id="ns-completion" type="date"></div>
       <div class="fg full"><div class="fl">Works description</div><input class="fi" id="ns-description" type="text" placeholder="e.g. New flat roof coverings"></div>
@@ -488,8 +488,8 @@ body{font-family:var(--font);background:var(--navy);color:var(--white);min-heigh
       <div class="fg"><div class="fl">Contract value (&#163;)</div><input class="fi" id="es-value" type="text" placeholder="e.g. 125000"></div>
       <div class="fg"><div class="fl">Project manager (SWB)</div><input class="fi" id="es-pm" type="text" placeholder="e.g. Project manager name"></div>
       <div class="fg"><div class="fl">Site manager</div><input class="fi" id="es-sm" type="text" placeholder="e.g. Site manager name"></div>
-      <div class="fg"><div class="fl">Atkins / client PM</div><input class="fi" id="es-client-pm" type="text" placeholder="e.g. Client PM name"></div>
-      <div class="fg"><div class="fl">Project director</div><input class="fi" id="es-pd" type="text" placeholder="e.g. Project director name"></div>
+      <div class="fg"><div class="fl">Client PM</div><input class="fi" id="es-client-pm" type="text" placeholder="e.g. Client PM name"></div>
+      <div class="fg"><div class="fl">Client</div><input class="fi" id="es-pd" type="text" placeholder="e.g. Client name"></div>
       <div class="fg"><div class="fl">Start date</div><input class="fi" id="es-start" type="date"></div>
       <div class="fg"><div class="fl">Planned completion</div><input class="fi" id="es-completion" type="date"></div>
       <div class="fg full"><div class="fl">Works description</div><input class="fi" id="es-description" type="text" placeholder="e.g. New flat roof coverings"></div>
@@ -695,8 +695,8 @@ function renderSiteInfo(){
       <div style="font-size:12px;line-height:1.9;color:var(--ice)">
         <span style="color:var(--slate)">PM:</span> ${site.pm||'&#8212;'}<br>
         <span style="color:var(--slate)">SM:</span> ${site.sm||'&#8212;'}<br>
-        <span style="color:var(--slate)">Atkins PM:</span> ${site.client_pm||'&#8212;'}<br>
-        <span style="color:var(--slate)">PD:</span> ${site.pd||'&#8212;'}
+        <span style="color:var(--slate)">Client PM:</span> ${site.client_pm||'&#8212;'}<br>
+        <span style="color:var(--slate)">Client:</span> ${site.pd||'&#8212;'}
       </div>
     </div>
     <div class="si-field">

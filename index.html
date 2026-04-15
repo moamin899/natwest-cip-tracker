@@ -137,9 +137,35 @@ td.left{text-align:left}
 .spinner{width:28px;height:28px;border:2px solid var(--navy-light);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-size:12px;color:var(--slate);font-family:var(--mono)}
+
+.pw-screen{position:fixed;inset:0;background:var(--navy);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.5rem}
+.pw-screen.hidden{display:none}
+.pw-box{background:var(--navy-mid);border:1px solid var(--navy-light);border-radius:12px;padding:2rem 2.5rem;display:flex;flex-direction:column;align-items:center;gap:1.25rem;width:320px}
+.pw-logo{margin-bottom:0.5rem}
+.pw-title{font-size:16px;font-weight:500;color:var(--white);text-align:center}
+.pw-sub{font-size:12px;color:var(--slate);text-align:center;line-height:1.5}
+.pw-input{background:var(--navy);border:1px solid var(--navy-border);border-radius:8px;padding:10px 14px;color:var(--white);font-family:var(--mono);font-size:18px;letter-spacing:0.3em;text-align:center;width:100%}
+.pw-input:focus{outline:none;border-color:var(--blue)}
+.pw-btn{width:100%;padding:10px;border-radius:8px;background:var(--blue);color:var(--white);border:none;cursor:pointer;font-family:var(--font);font-size:14px;font-weight:500;transition:background 0.15s}
+.pw-btn:hover{background:#3a7fc4}
+.pw-error{font-size:12px;color:var(--red);text-align:center;min-height:16px}
+
 </style>
 </head>
 <body>
+
+<!-- PASSWORD SCREEN -->
+<div class="pw-screen" id="pw-screen">
+  <div class="pw-box">
+    <div class="pw-logo" id="pw-logo"></div>
+    <div class="pw-title">NatWest CIP Tracker</div>
+    <div class="pw-sub">SW Bruce · Pre-Construction Status</div>
+    <input class="pw-input" id="pw-input" type="password" maxlength="10" placeholder="&#9679;&#9679;&#9679;&#9679;" onkeydown="if(event.key==='Enter')checkPassword()">
+    <button class="pw-btn" onclick="checkPassword()">Enter</button>
+    <div class="pw-error" id="pw-error"></div>
+  </div>
+</div>
+
 <div class="shell">
 <div class="header">
   <div class="header-left">
@@ -239,7 +265,7 @@ td.left{text-align:left}
         <th onclick="sortBy('submission')">Target submission</th>
         <th>Sub costs</th>
         <th>WT submission</th>
-        <th class="left">Suppliers to meet</th>
+        <th class="left">General notes</th>
       </tr>
     </thead>
     <tbody id="tbody"></tbody>
@@ -292,7 +318,7 @@ td.left{text-align:left}
       <div class="fg"><div class="fl">Target submission</div><input class="fi" id="f-submission" type="date"></div>
       <div class="fg"><div class="fl">Sub costs required by</div><input class="fi" id="f-subcosts-date" type="date"></div>
       <div class="fg"><div class="fl">WT submission date</div><input class="fi" id="f-wt-date" type="date"></div>
-      <div class="fg full"><div class="fl">Suppliers to meet</div><input class="fi" id="f-suppliers" type="text"></div>
+      <div class="fg full"><div class="fl">General notes</div><input class="fi" id="f-suppliers" type="text"></div>
       <div class="fg full"><div class="fl">Lead test note</div><input class="fi" id="f-lead-note" type="text" placeholder="e.g. PJ to arrange / On completion of scaffold"></div>
       <div class="fg full"><div class="fl">Scaffold design note</div><input class="fi" id="f-scaff-note" type="text" placeholder="e.g. PJ / Instruct SD"></div>
       <div class="fsect">
@@ -319,9 +345,9 @@ td.left{text-align:left}
     <button class="close-btn" onclick="closeEmail()">&#10005;</button>
   </div>
   <div class="em-body">
-    <div class="fg"><div class="fl">Your name</div><input class="fi" id="e-name" type="text" placeholder="Paul Jones"></div>
+    <div class="fg"><div class="fl">Your name</div><input class="fi" id="e-name" type="text" placeholder="Your name"></div>
     <div class="fg"><div class="fl">Your email</div><input class="fi" id="e-from" type="email" placeholder="paul.jones@swbruce.co.uk"></div>
-    <div class="fg"><div class="fl">Recipients (comma separated)</div><input class="fi" id="e-to" type="text" placeholder="george.fox@atkinsrealis.com, jon.winton@swbruce.co.uk"></div>
+    <div class="fg"><div class="fl">Recipients (comma separated)</div><input class="fi" id="e-to" type="text" placeholder="client.pm@email.com, team@swbruce.co.uk"></div>
   </div>
   <div class="em-footer">
     <button class="btn btn-ghost" onclick="closeEmail()">Cancel</button>
@@ -628,10 +654,39 @@ function toast(msg,type){
   t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);
 }
 
+
+// ── PASSWORD ───────────────────────────────────────────
+function checkPassword(){
+  const val=document.getElementById('pw-input').value;
+  if(val==='4444'){
+    document.getElementById('pw-screen').classList.add('hidden');
+    lss('pw_auth',Date.now().toString());
+    init();
+  } else {
+    document.getElementById('pw-error').textContent='Incorrect password. Please try again.';
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+function checkAuth(){
+  const auth=ls('pw_auth');
+  // Session lasts 8 hours
+  if(auth&&(Date.now()-parseInt(auth))<8*60*60*1000){
+    document.getElementById('pw-screen').classList.add('hidden');
+    init();
+  } else {
+    // Inject logo into password screen too
+    const b64=ls('swb_logo_b64');
+    if(b64) document.getElementById('pw-logo').innerHTML=`<img src="data:image/svg+xml;base64,${b64}" style="height:36px;width:auto" alt="SW Bruce">`;
+    document.getElementById('pw-input').focus();
+  }
+}
+
 document.getElementById('edit-overlay').addEventListener('click',function(e){if(e.target===this)closeEdit();});
 document.getElementById('email-overlay').addEventListener('click',function(e){if(e.target===this)closeEmail();});
 
-loadConfig();loadData();
+checkAuth();
 setInterval(loadData,60000);
 </script>
 </body>

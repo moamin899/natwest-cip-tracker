@@ -155,7 +155,7 @@ td.left{text-align:left}
 <body>
 
 <!-- PASSWORD SCREEN -->
-<div class="pw-screen" id="pw-screen">
+<div class="pw-screen hidden" id="pw-screen">
   <div class="pw-box">
     <div class="pw-logo" id="pw-logo"></div>
     <div class="pw-title">NatWest CIP Tracker</div>
@@ -372,9 +372,6 @@ function lss(k,v){localStorage.setItem(k,v)}
 function loadConfig(){
   ghUser=ls('gh_user');ghRepo=ls('gh_repo');ghToken=ls('gh_token');
   eName=ls('e_name');eFrom=ls('e_from');eTo=ls('e_to');
-  if(ghUser&&ghRepo&&ghToken) document.getElementById('setup-banner').classList.add('hidden');
-  else{document.getElementById('gh-user').value=ghUser;document.getElementById('gh-repo').value=ghRepo;}
-  buildChecksGrid();
 }
 
 function buildChecksGrid(){
@@ -393,7 +390,7 @@ function saveGH(){
   ghUser=document.getElementById('gh-user').value.trim();
   ghRepo=document.getElementById('gh-repo').value.trim();
   ghToken=document.getElementById('gh-token').value.trim();
-  if(!ghUser||!ghRepo||!ghToken){toast('Please fill in all fields','err');return;}
+  if(!ghUser||!ghRepo||!ghToken){toast('Fill in all three fields','err');return;}
   lss('gh_user',ghUser);lss('gh_repo',ghRepo);lss('gh_token',ghToken);
   document.getElementById('setup-banner').classList.add('hidden');
   loadData();
@@ -657,11 +654,10 @@ function toast(msg,type){
 
 // ── PASSWORD ───────────────────────────────────────────
 function checkPassword(){
-  const val=document.getElementById('pw-input').value;
+  const val=document.getElementById('pw-input').value.trim();
   if(val==='4444'){
-    document.getElementById('pw-screen').classList.add('hidden');
     lss('pw_auth',Date.now().toString());
-    init();
+    unlock();
   } else {
     document.getElementById('pw-error').textContent='Incorrect password. Please try again.';
     document.getElementById('pw-input').value='';
@@ -669,16 +665,40 @@ function checkPassword(){
   }
 }
 
-function checkAuth(){
-  const auth=ls('pw_auth');
-  // Session lasts 8 hours
-  if(auth&&(Date.now()-parseInt(auth))<8*60*60*1000){
-    document.getElementById('pw-screen').classList.add('hidden');
-    init();
+function unlock(){
+  document.getElementById('pw-screen').classList.add('hidden');
+  // Load GitHub credentials from storage
+  ghUser=ls('gh_user');
+  ghRepo=ls('gh_repo');
+  ghToken=ls('gh_token');
+  eName=ls('e_name');
+  eFrom=ls('e_from');
+  eTo=ls('e_to');
+  buildChecksGrid();
+  // Hide setup banner if credentials already stored, else show it
+  if(ghUser&&ghRepo&&ghToken){
+    document.getElementById('setup-banner').classList.add('hidden');
   } else {
-    // Inject logo into password screen too
+    document.getElementById('setup-banner').classList.remove('hidden');
+    document.getElementById('gh-user').value=ghUser;
+    document.getElementById('gh-repo').value=ghRepo;
+  }
+  loadData();
+}
+
+function startApp(){
+  // Check session — 8 hour lock
+  const auth=ls('pw_auth');
+  const valid=auth&&(Date.now()-parseInt(auth))<8*60*60*1000;
+  if(valid){
+    unlock();
+  } else {
+    // Show password screen with logo if available
     const b64=ls('swb_logo_b64');
-    if(b64) document.getElementById('pw-logo').innerHTML=`<img src="data:image/svg+xml;base64,${b64}" style="height:36px;width:auto" alt="SW Bruce">`;
+    if(b64){
+      document.getElementById('pw-logo').innerHTML=`<img src="data:image/svg+xml;base64,${b64}" style="height:36px;width:auto" alt="SW Bruce">`;
+    }
+    document.getElementById('pw-screen').classList.remove('hidden');
     document.getElementById('pw-input').focus();
   }
 }
@@ -686,8 +706,8 @@ function checkAuth(){
 document.getElementById('edit-overlay').addEventListener('click',function(e){if(e.target===this)closeEdit();});
 document.getElementById('email-overlay').addEventListener('click',function(e){if(e.target===this)closeEmail();});
 
-checkAuth();
-setInterval(loadData,60000);
+startApp();
+setInterval(()=>{if(!document.getElementById('pw-screen').classList.contains('hidden'))return;loadData();},60000);
 </script>
 </body>
 </html>

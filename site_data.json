@@ -29,7 +29,21 @@
       "description": "CIP works — pre-start complete"
     }
   ],
-  "diary": [],
+  "diary": [
+    {
+      "id": "mnzum2c5e603",
+      "site": "sandpiper",
+      "date": "2026-04-15",
+      "weather": "",
+      "workers": 3,
+      "works": "roofing",
+      "subs": "cutting out roof 1",
+      "issues": "none",
+      "tomorrow": "liquid works",
+      "author": "Jon Winton",
+      "ts": "2026-04-15T09:28:57.941Z"
+    }
+  ],
   "gantt": {
     "sandpiper": [
       {

@@ -204,7 +204,7 @@ body{font-family:var(--font);background:var(--navy);color:var(--white);min-heigh
     </div>
   </div>
   <div class="header-right">
-    <a href="index.html" class="nav-link">&#8592; Pre-con tracker</a>
+    <a href="javascript:void(0)" onclick="goToTracker()" class="nav-link">&#8592; Pre-con tracker</a>
     <div class="live-pill"><span class="live-dot"></span><span id="live-date"></span></div>
     <button class="btn btn-ghost" onclick="saveAll()">&#8635; Sync now</button>
   </div>
@@ -235,6 +235,10 @@ body{font-family:var(--font);background:var(--navy);color:var(--white);min-heigh
 </div>
 
 <!-- SITE INFO -->
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
+  <div style="font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--slate)">Project details</div>
+  <button class="btn btn-ghost" onclick="openEditSite()" style="font-size:11px;padding:4px 10px">&#9998; Edit details</button>
+</div>
 <div class="site-info-card" id="site-info-card"></div>
 
 <!-- SECTIONS -->
@@ -422,6 +426,67 @@ body{font-family:var(--font);background:var(--navy);color:var(--white);min-heigh
 </div>
 </div>
 
+
+<!-- ADD SITE OVERLAY -->
+<div class="overlay" id="add-site-overlay">
+<div class="panel">
+  <div class="panel-header">
+    <div><div class="panel-title">Add live project</div><div class="panel-sub">New site to track on the live dashboard</div></div>
+    <button class="close-btn" onclick="document.getElementById('add-site-overlay').classList.remove('open')">&#10005;</button>
+  </div>
+  <div class="panel-body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="fg full"><div class="fl">Site name</div><input class="fi" id="ns-name" type="text" placeholder="e.g. Eastbourne"></div>
+      <div class="fg"><div class="fl">Job number</div><input class="fi" id="ns-job" type="text" placeholder="e.g. 59310"></div>
+      <div class="fg"><div class="fl">Order number</div><input class="fi" id="ns-order" type="text" placeholder="e.g. P010100145568"></div>
+      <div class="fg"><div class="fl">Contract value (&#163;)</div><input class="fi" id="ns-value" type="text" placeholder="e.g. 125000"></div>
+      <div class="fg"><div class="fl">Project manager (SWB)</div><input class="fi" id="ns-pm" type="text" placeholder="e.g. Paul Jones"></div>
+      <div class="fg"><div class="fl">Site manager</div><input class="fi" id="ns-sm" type="text" placeholder="e.g. Jon Winton"></div>
+      <div class="fg"><div class="fl">Atkins / client PM</div><input class="fi" id="ns-client-pm" type="text" placeholder="e.g. George Fox"></div>
+      <div class="fg"><div class="fl">Project director</div><input class="fi" id="ns-pd" type="text" placeholder="e.g. Maria Ibini"></div>
+      <div class="fg"><div class="fl">Start date</div><input class="fi" id="ns-start" type="date"></div>
+      <div class="fg"><div class="fl">Planned completion</div><input class="fi" id="ns-completion" type="date"></div>
+      <div class="fg full"><div class="fl">Works description</div><input class="fi" id="ns-description" type="text" placeholder="e.g. New flat roof coverings"></div>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <button class="btn btn-ghost" onclick="document.getElementById('add-site-overlay').classList.remove('open')">Cancel</button>
+    <button class="btn btn-primary" onclick="saveNewSite()">Add project</button>
+  </div>
+</div>
+</div>
+
+<!-- EDIT SITE OVERLAY -->
+<div class="overlay" id="edit-site-overlay">
+<div class="panel">
+  <div class="panel-header">
+    <div><div class="panel-title">Edit project details</div><div class="panel-sub" id="edit-site-sub">Update site information</div></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn btn-danger" onclick="deleteCurrentSite()" style="font-size:11px;padding:5px 10px">Remove site</button>
+      <button class="close-btn" onclick="document.getElementById('edit-site-overlay').classList.remove('open')">&#10005;</button>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="fg full"><div class="fl">Site name</div><input class="fi" id="es-name" type="text" placeholder="e.g. Eastbourne"></div>
+      <div class="fg"><div class="fl">Job number</div><input class="fi" id="es-job" type="text" placeholder="e.g. 59310"></div>
+      <div class="fg"><div class="fl">Order number</div><input class="fi" id="es-order" type="text" placeholder="e.g. P010100145568"></div>
+      <div class="fg"><div class="fl">Contract value (&#163;)</div><input class="fi" id="es-value" type="text" placeholder="e.g. 125000"></div>
+      <div class="fg"><div class="fl">Project manager (SWB)</div><input class="fi" id="es-pm" type="text" placeholder="e.g. Paul Jones"></div>
+      <div class="fg"><div class="fl">Site manager</div><input class="fi" id="es-sm" type="text" placeholder="e.g. Jon Winton"></div>
+      <div class="fg"><div class="fl">Atkins / client PM</div><input class="fi" id="es-client-pm" type="text" placeholder="e.g. George Fox"></div>
+      <div class="fg"><div class="fl">Project director</div><input class="fi" id="es-pd" type="text" placeholder="e.g. Maria Ibini"></div>
+      <div class="fg"><div class="fl">Start date</div><input class="fi" id="es-start" type="date"></div>
+      <div class="fg"><div class="fl">Planned completion</div><input class="fi" id="es-completion" type="date"></div>
+      <div class="fg full"><div class="fl">Works description</div><input class="fi" id="es-description" type="text" placeholder="e.g. New flat roof coverings"></div>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <button class="btn btn-ghost" onclick="document.getElementById('edit-site-overlay').classList.remove('open')">Cancel</button>
+    <button class="btn btn-primary" onclick="saveEditSite()">Save changes</button>
+  </div>
+</div>
+</div>
 <div class="toast" id="toast"><span>&#10003;</span><span id="toast-msg"></span></div>
 
 <script>
@@ -538,12 +603,18 @@ function setSync(state,label){
 
 // ── SITE TABS ──────────────────────────────────────────
 function buildSiteTabs(){
-  const sites=[{id:'sandpiper',name:'Sandpiper House',job:'59153'},{id:'tunbridge',name:'Tunbridge Wells',job:'60327'}];
-  document.getElementById('site-tabs').innerHTML=sites.map(s=>`
-    <div class="site-tab${s.id===currentSite?' active':''}" onclick="switchSite('${s.id}')">
-      ${s.name}
-      <div class="tab-job">Job No ${s.job}</div>
-    </div>`).join('');
+  const sites=siteData.sites||[];
+  document.getElementById('site-tabs').innerHTML=
+    sites.map(s=>`
+      <div class="site-tab${s.id===currentSite?' active':''}" onclick="switchSite('${s.id}')">
+        ${s.name}
+        <div class="tab-job">Job No ${s.job}</div>
+      </div>`).join('')+
+    `<div class="site-tab" onclick="openAddSite()" style="border-style:dashed;opacity:0.6">
+      + Add live project
+      <div class="tab-job">new site</div>
+    </div>`;
+  if(sites.length&&!sites.find(s=>s.id===currentSite)) currentSite=sites[0].id;
 }
 
 function switchSite(id){
@@ -898,6 +969,108 @@ function toast(msg,type){
   t.className='toast'+(type==='err'?' err':'');
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),4000);
+}
+
+
+// ── NAVIGATION ─────────────────────────────────────────
+function goToTracker(){
+  // Works on GitHub Pages and locally
+  const base=window.location.href.replace(/site\.html.*$/,'').replace(/\/$/,'');
+  window.location.href=base+'/index.html';
+}
+
+// ── ADD NEW LIVE SITE ──────────────────────────────────
+function openAddSite(){
+  document.getElementById('ns-name').value='';
+  document.getElementById('ns-job').value='';
+  document.getElementById('ns-order').value='';
+  document.getElementById('ns-value').value='';
+  document.getElementById('ns-pm').value='';
+  document.getElementById('ns-sm').value='';
+  document.getElementById('ns-client-pm').value='';
+  document.getElementById('ns-pd').value='';
+  document.getElementById('ns-start').value='';
+  document.getElementById('ns-completion').value='';
+  document.getElementById('ns-description').value='';
+  document.getElementById('add-site-overlay').classList.add('open');
+}
+
+function saveNewSite(){
+  const name=document.getElementById('ns-name').value.trim();
+  const job=document.getElementById('ns-job').value.trim();
+  if(!name||!job){toast('Site name and job number required','err');return;}
+  const id='site_'+job.replace(/\D/g,'')+'_'+Date.now().toString(36);
+  const site={
+    id,name,job,
+    order:document.getElementById('ns-order').value.trim(),
+    value:document.getElementById('ns-value').value.trim(),
+    pm:document.getElementById('ns-pm').value.trim(),
+    sm:document.getElementById('ns-sm').value.trim(),
+    client_pm:document.getElementById('ns-client-pm').value.trim(),
+    pd:document.getElementById('ns-pd').value.trim(),
+    start:document.getElementById('ns-start').value,
+    completion:document.getElementById('ns-completion').value,
+    description:document.getElementById('ns-description').value.trim()
+  };
+  if(!siteData.sites) siteData.sites=[];
+  siteData.sites.push(site);
+  currentSite=id;
+  document.getElementById('add-site-overlay').classList.remove('open');
+  buildSiteTabs();renderAll();saveAll();
+  toast('Live project added: '+name);
+}
+
+// ── EDIT SITE DETAILS ──────────────────────────────────
+function openEditSite(){
+  const site=(siteData.sites||[]).find(s=>s.id===currentSite)||{};
+  document.getElementById('es-name').value=site.name||'';
+  document.getElementById('es-job').value=site.job||'';
+  document.getElementById('es-order').value=site.order||'';
+  document.getElementById('es-value').value=site.value||'';
+  document.getElementById('es-pm').value=site.pm||'';
+  document.getElementById('es-sm').value=site.sm||'';
+  document.getElementById('es-client-pm').value=site.client_pm||'';
+  document.getElementById('es-pd').value=site.pd||'';
+  document.getElementById('es-start').value=site.start||'';
+  document.getElementById('es-completion').value=site.completion||'';
+  document.getElementById('es-description').value=site.description||'';
+  document.getElementById('edit-site-overlay').classList.add('open');
+}
+
+function saveEditSite(){
+  const idx=(siteData.sites||[]).findIndex(s=>s.id===currentSite);
+  if(idx<0){toast('Site not found','err');return;}
+  const site=siteData.sites[idx];
+  site.name=document.getElementById('es-name').value.trim()||site.name;
+  site.job=document.getElementById('es-job').value.trim();
+  site.order=document.getElementById('es-order').value.trim();
+  site.value=document.getElementById('es-value').value.trim();
+  site.pm=document.getElementById('es-pm').value.trim();
+  site.sm=document.getElementById('es-sm').value.trim();
+  site.client_pm=document.getElementById('es-client-pm').value.trim();
+  site.pd=document.getElementById('es-pd').value.trim();
+  site.start=document.getElementById('es-start').value;
+  site.completion=document.getElementById('es-completion').value;
+  site.description=document.getElementById('es-description').value.trim();
+  document.getElementById('edit-site-overlay').classList.remove('open');
+  buildSiteTabs();renderAll();saveAll();
+  toast('Project details updated');
+}
+
+function deleteCurrentSite(){
+  const site=(siteData.sites||[]).find(s=>s.id===currentSite);
+  if(!site) return;
+  if(!confirm('Remove '+site.name+' from the live site dashboard? All diary entries and programme for this site will also be removed.')) return;
+  siteData.sites=(siteData.sites||[]).filter(s=>s.id!==currentSite);
+  siteData.diary=(siteData.diary||[]).filter(e=>e.site!==currentSite);
+  if(siteData.gantt) delete siteData.gantt[currentSite];
+  if(siteData.subcontractors) delete siteData.subcontractors[currentSite];
+  siteData.attendance=(siteData.attendance||[]).filter(a=>a.site!==currentSite);
+  siteData.photos=(siteData.photos||[]).filter(p=>p.site!==currentSite);
+  currentSite=siteData.sites.length?siteData.sites[0].id:'';
+  document.getElementById('edit-site-overlay').classList.remove('open');
+  buildSiteTabs();renderAll();saveAll();
+  toast('Site removed');
 }
 
 document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');}));

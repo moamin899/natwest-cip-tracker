@@ -5,7 +5,7 @@
     "num": "53653",
     "pm": "Paul Jones",
     "assigned": "Highview (Adam Bird)",
-    "status": "Pricing Requested",
+    "status": "Quotes Received",
     "priority": "Medium",
     "requested": "2026-04-15",
     "due": "2026-04-17",
@@ -15,6 +15,6 @@
     "notes": "pitched only",
     "subs": [],
     "created": "2026-04-15T15:31:04.126Z",
-    "updated": "2026-04-15T15:31:04.126Z"
+    "updated": "2026-04-15T15:33:06.627Z"
   }
 ]

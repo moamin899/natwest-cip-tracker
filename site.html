@@ -136,6 +136,20 @@ body{font-family:var(--font);background:var(--navy);color:var(--white);min-heigh
 .attend-total-val{font-family:var(--mono);color:var(--green);font-weight:500}
 
 /* PHOTOS */
+
+.lightbox{display:none;position:fixed;inset:0;background:rgba(5,8,20,0.95);z-index:500;align-items:center;justify-content:center;flex-direction:column;gap:0}
+.lightbox.open{display:flex}
+.lightbox-img{max-width:92vw;max-height:82vh;object-fit:contain;border-radius:6px;display:block}
+.lightbox-bar{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:92vw;padding:10px 0 0}
+.lightbox-caption{font-size:13px;color:var(--ice);flex:1}
+.lightbox-date{font-size:11px;font-family:var(--mono);color:var(--slate);margin-left:12px}
+.lightbox-actions{display:flex;gap:8px;margin-left:16px}
+.lb-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:6px 12px;border-radius:6px;cursor:pointer;font-family:var(--font);border:1px solid;font-weight:400;transition:all 0.15s}
+.lb-close{background:transparent;color:var(--slate);border-color:var(--navy-border)}.lb-close:hover{color:var(--white);border-color:var(--slate)}
+.lb-download{background:rgba(46,204,143,0.12);color:var(--green);border-color:rgba(46,204,143,0.3)}.lb-download:hover{background:rgba(46,204,143,0.22)}
+.lb-delete{background:rgba(224,85,85,0.12);color:var(--red);border-color:rgba(224,85,85,0.25)}.lb-delete:hover{background:rgba(224,85,85,0.22)}
+.photo-img{cursor:zoom-in}
+
 .photo-upload-area{border:2px dashed var(--navy-border);border-radius:8px;padding:2rem;text-align:center;margin-bottom:1rem;cursor:pointer;transition:all 0.15s;background:var(--navy)}
 .photo-upload-area:hover{border-color:var(--blue);background:rgba(74,144,217,0.04)}
 .photo-upload-area.drag-over{border-color:var(--green);background:rgba(46,204,143,0.05)}
@@ -346,7 +360,7 @@ body{font-family:var(--font);background:var(--navy);color:var(--white);min-heigh
     <div class="fg"><div class="fl">Subcontractor activity</div><textarea class="fi fi-ta" id="d-subs" placeholder="Which subcontractors were on site and what did they do?"></textarea></div>
     <div class="fg"><div class="fl">Issues / delays / instructions</div><textarea class="fi fi-ta" id="d-issues" placeholder="Any problems, delays, instructions given or received today?"></textarea></div>
     <div class="fg"><div class="fl">Next day planned works</div><textarea class="fi" id="d-tomorrow" placeholder="What is planned for tomorrow?" style="min-height:55px"></textarea></div>
-    <div class="fg"><div class="fl">Entered by</div><input class="fi" id="d-author" type="text" placeholder="e.g. Paul Jones / Jon Winton"></div>
+    <div class="fg"><div class="fl">Entered by</div><input class="fi" id="d-author" type="text" placeholder="e.g. Site manager / PM"></div>
   </div>
   <div class="panel-footer">
     <button class="btn btn-ghost" onclick="closeDiary()">Cancel</button>
@@ -396,7 +410,7 @@ body{font-family:var(--font);background:var(--navy);color:var(--white);min-heigh
     <button class="close-btn" onclick="closeSub()">&#10005;</button>
   </div>
   <div class="panel-body">
-    <div class="fg"><div class="fl">Company name</div><input class="fi" id="s-name" type="text" placeholder="e.g. Apex Roofing"></div>
+    <div class="fg"><div class="fl">Company name</div><input class="fi" id="s-name" type="text" placeholder="e.g. Company name"></div>
     <div class="fg"><div class="fl">Trade / package</div><input class="fi" id="s-trade" type="text" placeholder="e.g. Roofing, M&E, Scaffold"></div>
     <div class="fg"><div class="fl">Contact name</div><input class="fi" id="s-contact" type="text" placeholder="e.g. Dave Smith"></div>
   </div>
@@ -440,10 +454,10 @@ body{font-family:var(--font);background:var(--navy);color:var(--white);min-heigh
       <div class="fg"><div class="fl">Job number</div><input class="fi" id="ns-job" type="text" placeholder="e.g. 59310"></div>
       <div class="fg"><div class="fl">Order number</div><input class="fi" id="ns-order" type="text" placeholder="e.g. P010100145568"></div>
       <div class="fg"><div class="fl">Contract value (&#163;)</div><input class="fi" id="ns-value" type="text" placeholder="e.g. 125000"></div>
-      <div class="fg"><div class="fl">Project manager (SWB)</div><input class="fi" id="ns-pm" type="text" placeholder="e.g. Paul Jones"></div>
-      <div class="fg"><div class="fl">Site manager</div><input class="fi" id="ns-sm" type="text" placeholder="e.g. Jon Winton"></div>
-      <div class="fg"><div class="fl">Atkins / client PM</div><input class="fi" id="ns-client-pm" type="text" placeholder="e.g. George Fox"></div>
-      <div class="fg"><div class="fl">Project director</div><input class="fi" id="ns-pd" type="text" placeholder="e.g. Maria Ibini"></div>
+      <div class="fg"><div class="fl">Project manager (SWB)</div><input class="fi" id="ns-pm" type="text" placeholder="e.g. Project manager name"></div>
+      <div class="fg"><div class="fl">Site manager</div><input class="fi" id="ns-sm" type="text" placeholder="e.g. Site manager name"></div>
+      <div class="fg"><div class="fl">Atkins / client PM</div><input class="fi" id="ns-client-pm" type="text" placeholder="e.g. Client PM name"></div>
+      <div class="fg"><div class="fl">Project director</div><input class="fi" id="ns-pd" type="text" placeholder="e.g. Project director name"></div>
       <div class="fg"><div class="fl">Start date</div><input class="fi" id="ns-start" type="date"></div>
       <div class="fg"><div class="fl">Planned completion</div><input class="fi" id="ns-completion" type="date"></div>
       <div class="fg full"><div class="fl">Works description</div><input class="fi" id="ns-description" type="text" placeholder="e.g. New flat roof coverings"></div>
@@ -472,10 +486,10 @@ body{font-family:var(--font);background:var(--navy);color:var(--white);min-heigh
       <div class="fg"><div class="fl">Job number</div><input class="fi" id="es-job" type="text" placeholder="e.g. 59310"></div>
       <div class="fg"><div class="fl">Order number</div><input class="fi" id="es-order" type="text" placeholder="e.g. P010100145568"></div>
       <div class="fg"><div class="fl">Contract value (&#163;)</div><input class="fi" id="es-value" type="text" placeholder="e.g. 125000"></div>
-      <div class="fg"><div class="fl">Project manager (SWB)</div><input class="fi" id="es-pm" type="text" placeholder="e.g. Paul Jones"></div>
-      <div class="fg"><div class="fl">Site manager</div><input class="fi" id="es-sm" type="text" placeholder="e.g. Jon Winton"></div>
-      <div class="fg"><div class="fl">Atkins / client PM</div><input class="fi" id="es-client-pm" type="text" placeholder="e.g. George Fox"></div>
-      <div class="fg"><div class="fl">Project director</div><input class="fi" id="es-pd" type="text" placeholder="e.g. Maria Ibini"></div>
+      <div class="fg"><div class="fl">Project manager (SWB)</div><input class="fi" id="es-pm" type="text" placeholder="e.g. Project manager name"></div>
+      <div class="fg"><div class="fl">Site manager</div><input class="fi" id="es-sm" type="text" placeholder="e.g. Site manager name"></div>
+      <div class="fg"><div class="fl">Atkins / client PM</div><input class="fi" id="es-client-pm" type="text" placeholder="e.g. Client PM name"></div>
+      <div class="fg"><div class="fl">Project director</div><input class="fi" id="es-pd" type="text" placeholder="e.g. Project director name"></div>
       <div class="fg"><div class="fl">Start date</div><input class="fi" id="es-start" type="date"></div>
       <div class="fg"><div class="fl">Planned completion</div><input class="fi" id="es-completion" type="date"></div>
       <div class="fg full"><div class="fl">Works description</div><input class="fi" id="es-description" type="text" placeholder="e.g. New flat roof coverings"></div>
@@ -487,6 +501,23 @@ body{font-family:var(--font);background:var(--navy);color:var(--white);min-heigh
   </div>
 </div>
 </div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <img class="lightbox-img" id="lb-img" src="" alt="Site photo">
+  <div class="lightbox-bar">
+    <div>
+      <span class="lightbox-caption" id="lb-caption"></span>
+      <span class="lightbox-date" id="lb-date"></span>
+    </div>
+    <div class="lightbox-actions">
+      <button class="lb-btn lb-download" onclick="downloadPhoto(null)">&#11123; Download</button>
+      <button class="lb-btn lb-delete" onclick="lightboxDelete()">&#10005; Delete</button>
+      <button class="lb-btn lb-close" onclick="closeLightbox()">&#10005; Close</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"><span>&#10003;</span><span id="toast-msg"></span></div>
 
 <script>
@@ -940,11 +971,16 @@ function renderPhotos(){
   }
   document.getElementById('photo-grid').innerHTML=photos.map(p=>`
     <div class="photo-card">
-      <img class="photo-img" src="${p.data}" alt="${p.caption||'Site photo'}" onerror="this.style.display='none'">
+      <img class="photo-img" src="${p.data}" alt="${p.caption||'Site photo'}" onclick="openLightbox('${p.id}')" onerror="this.style.display='none'" title="Click to enlarge">
       <div class="photo-meta">
-        <span class="photo-delete" onclick="deletePhoto('${p.id}')">&#10005;</span>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <div class="photo-date">${fmtDate(p.date)}</div>
+          <div style="display:flex;gap:6px">
+            <span onclick="downloadPhoto('${p.id}')" title="Download" style="cursor:pointer;font-size:13px;color:var(--green);padding:2px 4px;border-radius:3px">&#11123;</span>
+            <span class="photo-delete" onclick="deletePhoto('${p.id}')">&#10005;</span>
+          </div>
+        </div>
         <div class="photo-caption">${p.caption||'No caption'}</div>
-        <div class="photo-date">${fmtDate(p.date)}</div>
       </div>
     </div>`).join('');
 }
@@ -961,6 +997,48 @@ function toggleSection(id){
   body.classList.toggle('open',!isOpen);
   chev.classList.toggle('open',!isOpen);
 }
+
+
+// ── LIGHTBOX ───────────────────────────────────────────
+let lightboxPhotoId=null;
+
+function openLightbox(id){
+  const photos=(siteData.photos||[]).filter(p=>p.site===currentSite);
+  const photo=photos.find(p=>p.id===id);
+  if(!photo) return;
+  lightboxPhotoId=id;
+  document.getElementById('lb-img').src=photo.data;
+  document.getElementById('lb-caption').textContent=photo.caption||'No caption';
+  document.getElementById('lb-date').textContent=fmtDate(photo.date);
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  lightboxPhotoId=null;
+}
+
+function downloadPhoto(id){
+  const photos=siteData.photos||[];
+  const photo=photos.find(p=>p.id===id)||photos.find(p=>p.id===lightboxPhotoId);
+  if(!photo) return;
+  const a=document.createElement('a');
+  a.href=photo.data;
+  const ext=photo.filename?photo.filename.split('.').pop():'jpg';
+  const name=(photo.caption||'site-photo').replace(/[^a-z0-9]/gi,'-').toLowerCase().slice(0,40);
+  a.download=name+'-'+fmtDate(photo.date).replace(/ /g,'-')+'.'+ext;
+  a.click();
+}
+
+function lightboxDelete(){
+  if(!lightboxPhotoId) return;
+  closeLightbox();
+  deletePhoto(lightboxPhotoId);
+}
+
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape') closeLightbox();
+});
 
 // ── TOAST ──────────────────────────────────────────────
 function toast(msg,type){

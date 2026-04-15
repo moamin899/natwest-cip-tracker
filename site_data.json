@@ -5,11 +5,11 @@
       "name": "Sandpiper House — Cash & Coin",
       "job": "59153",
       "order": "P010100145568",
-      "value": "5000",
-      "pm": "Paul Jones",
-      "sm": "Jon Winton",
-      "client_pm": "George Fox",
-      "pd": "Maria Ibini",
+      "value": "545565.77",
+      "pm": "",
+      "sm": "",
+      "client_pm": "",
+      "pd": "",
       "start": "2025-10-15",
       "completion": "2026-04-27",
       "description": "New flat roof coverings — roofing and AC works"
@@ -20,10 +20,10 @@
       "job": "60327",
       "order": "",
       "value": "",
-      "pm": "Paul Jones",
+      "pm": "",
       "sm": "",
-      "client_pm": "George Fox",
-      "pd": "Maria Ibini",
+      "client_pm": "",
+      "pd": "",
       "start": "2026-04-01",
       "completion": "2026-07-31",
       "description": "CIP works — pre-start complete"
@@ -173,32 +173,7 @@
   },
   "photos": [],
   "subcontractors": {
-    "sandpiper": [
-      {
-        "name": "Apex Roofing",
-        "trade": "Roofing",
-        "contact": "",
-        "active": true
-      },
-      {
-        "name": "Select Controls",
-        "trade": "BMS / M&E",
-        "contact": "",
-        "active": true
-      },
-      {
-        "name": "Volt Solutions",
-        "trade": "Electrical",
-        "contact": "",
-        "active": true
-      },
-      {
-        "name": "Fire Stop Co",
-        "trade": "Fire stopping",
-        "contact": "",
-        "active": false
-      }
-    ],
+    "sandpiper": [],
     "tunbridge": []
   },
   "attendance": []

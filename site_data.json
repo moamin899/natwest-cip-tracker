@@ -1,0 +1,205 @@
+{
+  "sites": [
+    {
+      "id": "sandpiper",
+      "name": "Sandpiper House — Cash & Coin",
+      "job": "59153",
+      "order": "P010100145568",
+      "value": "545565.77",
+      "pm": "Paul Jones",
+      "sm": "Jon Winton",
+      "client_pm": "George Fox",
+      "pd": "Maria Ibini",
+      "start": "2025-10-15",
+      "completion": "2026-04-27",
+      "description": "New flat roof coverings — roofing and AC works"
+    },
+    {
+      "id": "tunbridge",
+      "name": "Tunbridge Wells",
+      "job": "60327",
+      "order": "",
+      "value": "",
+      "pm": "Paul Jones",
+      "sm": "",
+      "client_pm": "George Fox",
+      "pd": "Maria Ibini",
+      "start": "2026-04-01",
+      "completion": "2026-07-31",
+      "description": "CIP works — pre-start complete"
+    }
+  ],
+  "diary": [],
+  "gantt": {
+    "sandpiper": [
+      {
+        "id": "g1",
+        "task": "Strip out & preparation",
+        "trade": "General",
+        "start": "2025-10-15",
+        "end": "2025-11-14",
+        "progress": 100,
+        "color": "blue"
+      },
+      {
+        "id": "g2",
+        "task": "VLC insulation above vaults",
+        "trade": "Roofing",
+        "start": "2025-11-15",
+        "end": "2026-01-31",
+        "progress": 100,
+        "color": "green"
+      },
+      {
+        "id": "g3",
+        "task": "Liquid application — roof 1",
+        "trade": "Roofing",
+        "start": "2026-02-01",
+        "end": "2026-03-31",
+        "progress": 100,
+        "color": "green"
+      },
+      {
+        "id": "g4",
+        "task": "Parapet detailing & upstands",
+        "trade": "Roofing",
+        "start": "2026-03-01",
+        "end": "2026-04-20",
+        "progress": 80,
+        "color": "green"
+      },
+      {
+        "id": "g5",
+        "task": "Final insulation — roof 1",
+        "trade": "Roofing",
+        "start": "2026-04-07",
+        "end": "2026-04-18",
+        "progress": 40,
+        "color": "green"
+      },
+      {
+        "id": "g6",
+        "task": "Roof 2 completion",
+        "trade": "Roofing",
+        "start": "2026-04-13",
+        "end": "2026-04-27",
+        "progress": 20,
+        "color": "green"
+      },
+      {
+        "id": "g7",
+        "task": "AC installation (weekends)",
+        "trade": "M&E",
+        "start": "2026-02-15",
+        "end": "2026-04-13",
+        "progress": 75,
+        "color": "amber"
+      },
+      {
+        "id": "g8",
+        "task": "BMS cabling & commissioning",
+        "trade": "M&E",
+        "start": "2026-03-20",
+        "end": "2026-04-20",
+        "progress": 60,
+        "color": "amber"
+      },
+      {
+        "id": "g9",
+        "task": "Condenser relocation",
+        "trade": "M&E",
+        "start": "2026-04-07",
+        "end": "2026-04-20",
+        "progress": 10,
+        "color": "amber"
+      },
+      {
+        "id": "g10",
+        "task": "Fire stopping — compartmentation",
+        "trade": "Fire",
+        "start": "2026-04-14",
+        "end": "2026-04-24",
+        "progress": 0,
+        "color": "red"
+      }
+    ],
+    "tunbridge": [
+      {
+        "id": "t1",
+        "task": "Pre-construction & surveys",
+        "trade": "General",
+        "start": "2026-04-01",
+        "end": "2026-04-30",
+        "progress": 60,
+        "color": "blue"
+      },
+      {
+        "id": "t2",
+        "task": "Scaffold erection",
+        "trade": "Scaffold",
+        "start": "2026-05-01",
+        "end": "2026-05-14",
+        "progress": 0,
+        "color": "gray"
+      },
+      {
+        "id": "t3",
+        "task": "Roofing works",
+        "trade": "Roofing",
+        "start": "2026-05-15",
+        "end": "2026-07-01",
+        "progress": 0,
+        "color": "green"
+      },
+      {
+        "id": "t4",
+        "task": "Finishes & making good",
+        "trade": "General",
+        "start": "2026-07-01",
+        "end": "2026-07-24",
+        "progress": 0,
+        "color": "blue"
+      },
+      {
+        "id": "t5",
+        "task": "Scaffold strike & completion",
+        "trade": "Scaffold",
+        "start": "2026-07-24",
+        "end": "2026-07-31",
+        "progress": 0,
+        "color": "gray"
+      }
+    ]
+  },
+  "photos": [],
+  "subcontractors": {
+    "sandpiper": [
+      {
+        "name": "Apex Roofing",
+        "trade": "Roofing",
+        "contact": "",
+        "active": true
+      },
+      {
+        "name": "Select Controls",
+        "trade": "BMS / M&E",
+        "contact": "",
+        "active": true
+      },
+      {
+        "name": "Volt Solutions",
+        "trade": "Electrical",
+        "contact": "",
+        "active": true
+      },
+      {
+        "name": "Fire Stop Co",
+        "trade": "Fire stopping",
+        "contact": "",
+        "active": false
+      }
+    ],
+    "tunbridge": []
+  },
+  "attendance": []
+}

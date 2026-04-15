@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SW Bruce — Live Site Dashboard</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
+:root{
+  --navy:#1a2744;--navy-mid:#243156;--navy-light:#2e3d6a;--navy-border:#3a4f80;
+  --slate:#8a93ad;--ice:#e8ecf5;--white:#fff;
+  --green:#2ecc8f;--amber:#f0a500;--red:#e05555;--blue:#4a90d9;--purple:#9b7fe8;
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--navy);color:var(--white);min-height:100vh;font-size:13px}
+.shell{max-width:1400px;margin:0 auto;padding:1.75rem 1.25rem 4rem}
+
+/* HEADER */
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--navy-light);flex-wrap:wrap;gap:1rem}
+.header-left{display:flex;align-items:center;gap:14px}
+.logo-wrap{display:flex;align-items:center}
+.hdivider{width:1px;height:32px;background:var(--navy-light);flex-shrink:0}
+.header-label{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--slate);margin-bottom:2px}
+.header-title{font-size:17px;font-weight:300;color:var(--white)}
+.header-title strong{font-weight:500}
+.header-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.live-pill{display:inline-flex;align-items:center;gap:6px;background:var(--navy-mid);border:1px solid var(--navy-light);border-radius:4px;padding:5px 11px;font-size:11px;color:var(--slate);font-family:var(--mono)}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
+.btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:7px 13px;border-radius:6px;cursor:pointer;font-family:var(--font);transition:all 0.15s;border:1px solid;font-weight:400}
+.btn-primary{background:var(--blue);color:var(--white);border-color:var(--blue)}.btn-primary:hover{background:#3a7fc4}
+.btn-ghost{background:transparent;color:var(--slate);border-color:var(--navy-light)}.btn-ghost:hover{color:var(--white);border-color:var(--slate)}
+.btn-green{background:rgba(46,204,143,0.15);color:var(--green);border-color:rgba(46,204,143,0.3)}.btn-green:hover{background:rgba(46,204,143,0.25)}
+.btn-danger{background:rgba(224,85,85,0.12);color:var(--red);border-color:rgba(224,85,85,0.25)}.btn-danger:hover{background:rgba(224,85,85,0.22)}
+
+/* SITE SELECTOR */
+.site-tabs{display:flex;gap:8px;margin-bottom:1.5rem}
+.site-tab{padding:10px 20px;border-radius:8px;cursor:pointer;border:1px solid var(--navy-light);background:var(--navy-mid);color:var(--slate);font-size:13px;transition:all 0.15s}
+.site-tab:hover{border-color:var(--navy-border);color:var(--ice)}
+.site-tab.active{background:var(--blue);border-color:var(--blue);color:var(--white);font-weight:500}
+.site-tab .tab-job{font-size:10px;font-family:var(--mono);margin-top:2px;opacity:0.7}
+
+/* SITE INFO CARD */
+.site-info-card{background:var(--navy-mid);border:1px solid var(--navy-light);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1rem}
+.si-field{}
+.si-label{font-size:10px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--slate);margin-bottom:4px}
+.si-value{font-size:13px;color:var(--white);font-weight:500}
+.si-value.mono{font-family:var(--mono);font-size:12px}
+.si-value.green{color:var(--green)}
+.si-value.amber{color:var(--amber)}
+.prog-bar-wrap{margin-top:6px}
+.prog-bar{height:5px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;background:var(--green)}
+.prog-label{font-size:10px;color:var(--slate);margin-top:3px;font-family:var(--mono)}
+
+/* SECTIONS */
+.sections{display:flex;flex-direction:column;gap:1.5rem}
+.section{background:var(--navy-mid);border:1px solid var(--navy-light);border-radius:10px;overflow:hidden}
+.section-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--navy-light);cursor:pointer;user-select:none}
+.section-header:hover{background:rgba(255,255,255,0.02)}
+.section-title{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500}
+.section-icon{font-size:16px;width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.si-blue{background:rgba(74,144,217,0.15);color:var(--blue)}
+.si-green{background:rgba(46,204,143,0.15);color:var(--green)}
+.si-amber{background:rgba(240,165,0,0.15);color:var(--amber)}
+.si-purple{background:rgba(155,127,232,0.15);color:var(--purple)}
+.si-slate{background:rgba(138,147,173,0.12);color:var(--slate)}
+.section-badge{font-size:10px;font-family:var(--mono);background:var(--navy);border-radius:10px;padding:2px 8px;color:var(--slate)}
+.section-chevron{font-size:12px;color:var(--slate);transition:transform 0.2s}
+.section-chevron.open{transform:rotate(180deg)}
+.section-body{padding:1.25rem;display:none}
+.section-body.open{display:block}
+
+/* DAILY DIARY */
+.diary-add-form{background:var(--navy);border:1px solid var(--navy-border);border-radius:8px;padding:1.125rem;margin-bottom:1.125rem}
+.diary-form-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.diary-form-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.fg{display:flex;flex-direction:column;gap:4px}
+.fg.full{grid-column:1/-1}
+.fl{font-size:10px;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--slate)}
+.fi{background:var(--navy-mid);border:1px solid var(--navy-border);border-radius:6px;padding:7px 10px;color:var(--white);font-family:var(--font);font-size:13px;width:100%;resize:vertical}
+.fi:focus{outline:none;border-color:var(--blue)}
+.fi-ta{min-height:70px}
+.diary-entries{display:flex;flex-direction:column;gap:10px}
+.diary-entry{background:var(--navy);border:1px solid var(--navy-border);border-radius:8px;padding:1rem 1.125rem}
+.de-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+.de-date{font-size:13px;font-weight:500;color:var(--white)}
+.de-meta{display:flex;gap:8px;flex-wrap:wrap}
+.de-pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-family:var(--mono);padding:3px 8px;border-radius:4px;background:rgba(74,144,217,0.1);color:var(--blue)}
+.de-pill.weather{background:rgba(240,165,0,0.1);color:var(--amber)}
+.de-pill.workers{background:rgba(46,204,143,0.1);color:var(--green)}
+.de-pill.issue{background:rgba(224,85,85,0.1);color:var(--red)}
+.de-section{margin-bottom:8px}
+.de-section-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--slate);margin-bottom:3px}
+.de-section-text{font-size:12px;color:var(--ice);line-height:1.6}
+.de-delete{background:transparent;border:none;color:var(--slate);cursor:pointer;font-size:11px;padding:3px 6px;border-radius:4px;transition:all 0.15s}
+.de-delete:hover{color:var(--red);background:rgba(224,85,85,0.1)}
+
+/* WEATHER BADGE */
+.weather-opts{display:flex;gap:6px;flex-wrap:wrap}
+.w-opt{padding:5px 10px;border-radius:6px;cursor:pointer;border:1px solid var(--navy-border);background:transparent;color:var(--slate);font-size:12px;transition:all 0.15s;font-family:var(--font)}
+.w-opt:hover{border-color:var(--slate);color:var(--white)}
+.w-opt.sel{background:rgba(240,165,0,0.12);border-color:rgba(240,165,0,0.3);color:var(--amber)}
+
+/* GANTT */
+.gantt-wrap{overflow-x:auto}
+.gantt-table{width:100%;border-collapse:collapse;min-width:900px}
+.gantt-table th{padding:8px 10px;font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--slate);border-bottom:1px solid var(--navy-light);text-align:left;white-space:nowrap}
+.gantt-table th.month-header{text-align:center;border-left:1px solid rgba(255,255,255,0.05)}
+.gantt-table td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle}
+.gantt-table tr:last-child td{border-bottom:none}
+.gantt-table tr:hover td{background:rgba(255,255,255,0.02)}
+.task-name{font-size:12px;color:var(--white);font-weight:500;white-space:nowrap}
+.task-trade{font-size:10px;color:var(--slate);font-family:var(--mono)}
+.gantt-bar-cell{padding:6px 4px;border-left:1px solid rgba(255,255,255,0.04)}
+.gantt-bar-outer{height:18px;background:rgba(255,255,255,0.05);border-radius:4px;position:relative;overflow:hidden;min-width:20px}
+.gantt-bar-fill{height:100%;border-radius:4px;position:absolute;left:0;top:0;opacity:0.85}
+.gantt-bar-text{position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:9px;font-family:var(--mono);color:rgba(255,255,255,0.7);white-space:nowrap}
+.gantt-add-btn{margin-top:1rem}
+.pct-badge{font-size:10px;font-family:var(--mono);color:var(--slate);white-space:nowrap}
+
+/* SUBCONTRACTOR ATTENDANCE */
+.attend-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:1rem}
+.attend-card{background:var(--navy);border:1px solid var(--navy-border);border-radius:8px;padding:0.875rem 1rem}
+.attend-name{font-size:13px;font-weight:500;color:var(--white);margin-bottom:2px}
+.attend-trade{font-size:10px;color:var(--slate);font-family:var(--mono);margin-bottom:8px}
+.attend-log{display:flex;flex-direction:column;gap:4px}
+.attend-day{display:flex;align-items:center;justify-content:space-between;font-size:11px}
+.attend-day-label{color:var(--slate)}
+.attend-count{display:flex;align-items:center;gap:6px}
+.attend-input{width:50px;background:var(--navy-mid);border:1px solid var(--navy-border);border-radius:4px;padding:3px 6px;color:var(--white);font-family:var(--mono);font-size:11px;text-align:center}
+.attend-input:focus{outline:none;border-color:var(--blue)}
+.attend-total{display:flex;justify-content:space-between;align-items:center;margin-top:6px;padding-top:6px;border-top:1px solid var(--navy-light);font-size:11px}
+.attend-total-label{color:var(--slate)}
+.attend-total-val{font-family:var(--mono);color:var(--green);font-weight:500}
+
+/* PHOTOS */
+.photo-upload-area{border:2px dashed var(--navy-border);border-radius:8px;padding:2rem;text-align:center;margin-bottom:1rem;cursor:pointer;transition:all 0.15s;background:var(--navy)}
+.photo-upload-area:hover{border-color:var(--blue);background:rgba(74,144,217,0.04)}
+.photo-upload-area.drag-over{border-color:var(--green);background:rgba(46,204,143,0.05)}
+.upload-icon{font-size:28px;margin-bottom:8px;color:var(--slate)}
+.upload-label{font-size:13px;color:var(--slate)}
+.upload-label strong{color:var(--blue)}
+.upload-sub{font-size:11px;color:var(--slate);margin-top:4px;font-family:var(--mono)}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.photo-card{background:var(--navy);border:1px solid var(--navy-border);border-radius:8px;overflow:hidden}
+.photo-img{width:100%;height:140px;object-fit:cover;display:block;background:var(--navy-light)}
+.photo-img-placeholder{width:100%;height:140px;background:var(--navy-light);display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--slate)}
+.photo-meta{padding:8px 10px}
+.photo-caption{font-size:12px;color:var(--ice);margin-bottom:4px}
+.photo-date{font-size:10px;color:var(--slate);font-family:var(--mono)}
+.photo-delete{font-size:10px;color:var(--slate);cursor:pointer;float:right;padding:2px 4px;border-radius:3px}
+.photo-delete:hover{color:var(--red)}
+
+/* OVERLAYS */
+.overlay{display:none;position:fixed;inset:0;background:rgba(8,12,28,0.82);z-index:100;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.panel{background:var(--navy-mid);border:1px solid var(--navy-border);border-radius:12px;width:640px;max-width:96vw;max-height:90vh;overflow-y:auto}
+.panel-header{padding:1.125rem 1.375rem;border-bottom:1px solid var(--navy-light);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--navy-mid);z-index:1}
+.panel-title{font-size:15px;font-weight:500}
+.panel-sub{font-size:11px;color:var(--slate);font-family:var(--mono);margin-top:2px}
+.close-btn{background:transparent;border:none;color:var(--slate);font-size:18px;cursor:pointer;padding:4px;line-height:1}.close-btn:hover{color:var(--white)}
+.panel-body{padding:1.375rem;display:flex;flex-direction:column;gap:0.875rem}
+.panel-footer{padding:0.875rem 1.375rem;border-top:1px solid var(--navy-light);display:flex;justify-content:flex-end;gap:8px;position:sticky;bottom:0;background:var(--navy-mid)}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--navy-mid);border:1px solid var(--green);border-radius:8px;padding:11px 16px;font-size:12px;color:var(--green);z-index:300;transform:translateY(16px);opacity:0;transition:all 0.25s;pointer-events:none;display:flex;align-items:center;gap:8px}
+.toast.show{transform:translateY(0);opacity:1}.toast.err{border-color:var(--red);color:var(--red)}
+
+/* SETUP */
+.setup-banner{background:rgba(240,165,0,0.07);border:1px solid rgba(240,165,0,0.22);border-radius:10px;padding:1.125rem 1.375rem;margin-bottom:1.25rem;display:flex;align-items:flex-start;gap:12px}
+.setup-banner.hidden{display:none}
+.setup-title{font-size:13px;font-weight:500;color:var(--amber);margin-bottom:3px}
+.setup-desc{font-size:12px;color:var(--slate);line-height:1.6}
+.setup-desc a{color:var(--blue)}
+.setup-fields{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.setup-input{background:var(--navy);border:1px solid var(--navy-border);border-radius:6px;padding:7px 11px;color:var(--white);font-family:var(--mono);font-size:12px}
+.setup-input:focus{outline:none;border-color:var(--blue)}
+
+.sync-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
+.sync-status{display:flex;align-items:center;gap:6px;font-size:11px;font-family:var(--mono);color:var(--slate)}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+.sync-dot.syncing{background:var(--amber);animation:pulse 1s infinite}.sync-dot.error{background:var(--red)}
+.nav-link{font-size:12px;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.nav-link:hover{color:var(--ice)}
+.empty-state{text-align:center;padding:2rem;color:var(--slate);font-size:13px}
+.empty-state .empty-icon{font-size:28px;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="logo-wrap" id="logo-wrap">
+      <!-- Logo injected by JS from base64 -->
+    </div>
+    <div class="hdivider"></div>
+    <div>
+      <div class="header-label">NatWest CIP</div>
+      <div class="header-title"><strong>Live Site</strong> Dashboard</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <a href="index.html" class="nav-link">&#8592; Pre-con tracker</a>
+    <div class="live-pill"><span class="live-dot"></span><span id="live-date"></span></div>
+    <button class="btn btn-ghost" onclick="saveAll()">&#8635; Sync now</button>
+  </div>
+</div>
+
+<!-- SETUP -->
+<div class="setup-banner" id="setup-banner">
+  <div style="font-size:16px;flex-shrink:0">&#9881;</div>
+  <div>
+    <div class="setup-title">Connect to GitHub to sync with your team</div>
+    <div class="setup-desc">Enter the same credentials as the pre-con tracker. <a href="https://github.com/settings/tokens/new?scopes=repo&description=CIP+Tracker" target="_blank">Generate a token here</a> if needed.</div>
+    <div class="setup-fields">
+      <input class="setup-input" id="gh-user" placeholder="GitHub username" style="width:160px">
+      <input class="setup-input" id="gh-repo" placeholder="Repo name" style="width:200px">
+      <input class="setup-input" id="gh-token" placeholder="Paste token" type="password" style="width:210px">
+      <button class="btn btn-primary" onclick="saveGH()">Connect</button>
+    </div>
+  </div>
+</div>
+
+<!-- SYNC BAR -->
+<div class="sync-bar">
+  <div class="site-tabs" id="site-tabs"></div>
+  <div class="sync-status">
+    <span class="sync-dot" id="sync-dot"></span>
+    <span id="sync-lbl">Not connected</span>
+  </div>
+</div>
+
+<!-- SITE INFO -->
+<div class="site-info-card" id="site-info-card"></div>
+
+<!-- SECTIONS -->
+<div class="sections">
+
+  <!-- DAILY DIARY -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('diary')">
+      <div class="section-title">
+        <div class="section-icon si-blue">&#128214;</div>
+        Daily site diary
+        <span class="section-badge" id="diary-badge">0 entries</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button class="btn btn-green" onclick="event.stopPropagation();openDiaryForm()" style="font-size:11px;padding:5px 11px">+ Add entry</button>
+        <span class="section-chevron open" id="chevron-diary">&#9660;</span>
+      </div>
+    </div>
+    <div class="section-body open" id="body-diary">
+      <div id="diary-entries-list"><div class="empty-state"><div class="empty-icon">&#128214;</div>No diary entries yet. Add the first entry above.</div></div>
+    </div>
+  </div>
+
+  <!-- GANTT -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('gantt')">
+      <div class="section-title">
+        <div class="section-icon si-green">&#128200;</div>
+        Programme — Gantt chart
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button class="btn btn-primary" onclick="event.stopPropagation();openGanttForm()" style="font-size:11px;padding:5px 11px">+ Add task</button>
+        <span class="section-chevron" id="chevron-gantt">&#9660;</span>
+      </div>
+    </div>
+    <div class="section-body" id="body-gantt">
+      <div class="gantt-wrap"><div id="gantt-container"></div></div>
+    </div>
+  </div>
+
+  <!-- SUBCONTRACTOR ATTENDANCE -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('attend')">
+      <div class="section-title">
+        <div class="section-icon si-amber">&#128119;</div>
+        Subcontractor attendance
+        <span class="section-badge" id="attend-badge">Today</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button class="btn btn-primary" onclick="event.stopPropagation();openSubForm()" style="font-size:11px;padding:5px 11px">+ Add subcontractor</button>
+        <span class="section-chevron" id="chevron-attend">&#9660;</span>
+      </div>
+    </div>
+    <div class="section-body" id="body-attend">
+      <div id="attend-container"></div>
+    </div>
+  </div>
+
+  <!-- PHOTOS -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection('photos')">
+      <div class="section-title">
+        <div class="section-icon si-purple">&#128247;</div>
+        Site photos
+        <span class="section-badge" id="photos-badge">0 photos</span>
+      </div>
+      <span class="section-chevron" id="chevron-photos">&#9660;</span>
+    </div>
+    <div class="section-body" id="body-photos">
+      <div class="photo-upload-area" id="upload-area" onclick="document.getElementById('photo-file-input').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event)">
+        <div class="upload-icon">&#128247;</div>
+        <div class="upload-label"><strong>Click to upload</strong> or drag and drop photos here</div>
+        <div class="upload-sub">JPG, PNG, WEBP — photos are stored locally in your browser session</div>
+      </div>
+      <input type="file" id="photo-file-input" accept="image/*" multiple style="display:none" onchange="handleFileSelect(event)">
+      <div class="photo-grid" id="photo-grid"></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- DIARY ADD FORM OVERLAY -->
+<div class="overlay" id="diary-overlay">
+<div class="panel">
+  <div class="panel-header">
+    <div><div class="panel-title">Add diary entry</div><div class="panel-sub" id="diary-panel-sub"></div></div>
+    <button class="close-btn" onclick="closeDiary()">&#10005;</button>
+  </div>
+  <div class="panel-body">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+      <div class="fg"><div class="fl">Date</div><input class="fi" id="d-date" type="date"></div>
+      <div class="fg"><div class="fl">Weather</div>
+        <div class="weather-opts" id="weather-opts">
+          <span class="w-opt" onclick="setWeather('Sunny')">&#9728; Sunny</span>
+          <span class="w-opt" onclick="setWeather('Cloudy')">&#9729; Cloudy</span>
+          <span class="w-opt" onclick="setWeather('Raining')">&#127783; Raining</span>
+          <span class="w-opt" onclick="setWeather('Windy')">&#127788; Windy</span>
+          <span class="w-opt" onclick="setWeather('Frost')">&#10052; Frost</span>
+        </div>
+      </div>
+      <div class="fg"><div class="fl">Total workers on site</div><input class="fi" id="d-workers" type="number" min="0" placeholder="0"></div>
+    </div>
+    <div class="fg"><div class="fl">Works carried out today</div><textarea class="fi fi-ta" id="d-works" placeholder="Describe works completed today — roofing, M&E, general, etc."></textarea></div>
+    <div class="fg"><div class="fl">Subcontractor activity</div><textarea class="fi fi-ta" id="d-subs" placeholder="Which subcontractors were on site and what did they do?"></textarea></div>
+    <div class="fg"><div class="fl">Issues / delays / instructions</div><textarea class="fi fi-ta" id="d-issues" placeholder="Any problems, delays, instructions given or received today?"></textarea></div>
+    <div class="fg"><div class="fl">Next day planned works</div><textarea class="fi" id="d-tomorrow" placeholder="What is planned for tomorrow?" style="min-height:55px"></textarea></div>
+    <div class="fg"><div class="fl">Entered by</div><input class="fi" id="d-author" type="text" placeholder="e.g. Paul Jones / Jon Winton"></div>
+  </div>
+  <div class="panel-footer">
+    <button class="btn btn-ghost" onclick="closeDiary()">Cancel</button>
+    <button class="btn btn-primary" onclick="saveDiaryEntry()">Save entry</button>
+  </div>
+</div>
+</div>
+
+<!-- GANTT FORM OVERLAY -->
+<div class="overlay" id="gantt-overlay">
+<div class="panel">
+  <div class="panel-header">
+    <div><div class="panel-title">Add programme task</div></div>
+    <button class="close-btn" onclick="closeGantt()">&#10005;</button>
+  </div>
+  <div class="panel-body">
+    <div class="fg"><div class="fl">Task name</div><input class="fi" id="g-task" type="text" placeholder="e.g. Roof 1 insulation"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="fg"><div class="fl">Trade / package</div><input class="fi" id="g-trade" type="text" placeholder="e.g. Roofing, M&E, Scaffold"></div>
+      <div class="fg"><div class="fl">Colour</div>
+        <select class="fi" id="g-color">
+          <option value="green">Green — roofing / main works</option>
+          <option value="blue">Blue — general / prelims</option>
+          <option value="amber">Amber — M&E / services</option>
+          <option value="red">Red — fire / critical</option>
+          <option value="purple">Purple — specialist</option>
+          <option value="gray">Grey — scaffold</option>
+        </select>
+      </div>
+      <div class="fg"><div class="fl">Start date</div><input class="fi" id="g-start" type="date"></div>
+      <div class="fg"><div class="fl">End date</div><input class="fi" id="g-end" type="date"></div>
+      <div class="fg"><div class="fl">Progress %</div><input class="fi" id="g-progress" type="number" min="0" max="100" placeholder="0"></div>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <button class="btn btn-ghost" onclick="closeGantt()">Cancel</button>
+    <button class="btn btn-primary" onclick="saveGanttTask()">Add task</button>
+  </div>
+</div>
+</div>
+
+<!-- SUBCONTRACTOR FORM OVERLAY -->
+<div class="overlay" id="sub-overlay">
+<div class="panel">
+  <div class="panel-header">
+    <div><div class="panel-title">Add subcontractor</div></div>
+    <button class="close-btn" onclick="closeSub()">&#10005;</button>
+  </div>
+  <div class="panel-body">
+    <div class="fg"><div class="fl">Company name</div><input class="fi" id="s-name" type="text" placeholder="e.g. Apex Roofing"></div>
+    <div class="fg"><div class="fl">Trade / package</div><input class="fi" id="s-trade" type="text" placeholder="e.g. Roofing, M&E, Scaffold"></div>
+    <div class="fg"><div class="fl">Contact name</div><input class="fi" id="s-contact" type="text" placeholder="e.g. Dave Smith"></div>
+  </div>
+  <div class="panel-footer">
+    <button class="btn btn-ghost" onclick="closeSub()">Cancel</button>
+    <button class="btn btn-primary" onclick="saveSub()">Add</button>
+  </div>
+</div>
+</div>
+
+<!-- PHOTO CAPTION OVERLAY -->
+<div class="overlay" id="photo-overlay">
+<div class="panel" style="width:440px">
+  <div class="panel-header">
+    <div><div class="panel-title">Add photo details</div></div>
+    <button class="close-btn" onclick="closePhoto()">&#10005;</button>
+  </div>
+  <div class="panel-body">
+    <img id="photo-preview" style="width:100%;border-radius:6px;margin-bottom:4px;max-height:220px;object-fit:cover">
+    <div class="fg"><div class="fl">Caption / description</div><input class="fi" id="p-caption" type="text" placeholder="e.g. Roof 1 insulation complete — north elevation"></div>
+    <div class="fg"><div class="fl">Date taken</div><input class="fi" id="p-date" type="date"></div>
+  </div>
+  <div class="panel-footer">
+    <button class="btn btn-ghost" onclick="closePhoto()">Cancel</button>
+    <button class="btn btn-primary" onclick="confirmPhoto()">Add photo</button>
+  </div>
+</div>
+</div>
+
+<div class="toast" id="toast"><span>&#10003;</span><span id="toast-msg"></span></div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────
+let ghUser='',ghRepo='',ghToken='',fileSha='';
+let siteData={sites:[],diary:[],gantt:{},photos:[],subcontractors:{},attendance:[]};
+let currentSite='sandpiper';
+let pendingPhotoData=null,pendingPhotoFile=null;
+let selectedWeather='';
+
+// SW Bruce logo as base64 - loaded from localStorage if set, else placeholder
+const LOGO_B64 = localStorage.getItem('swb_logo_b64')||'';
+
+function ls(k){return localStorage.getItem(k)||''}
+function lss(k,v){localStorage.setItem(k,v)}
+
+// ── INIT ────────────────────────────────────────────────
+function init(){
+  ghUser=ls('gh_user');ghRepo=ls('gh_repo');ghToken=ls('gh_token');
+  if(ghUser&&ghRepo&&ghToken) document.getElementById('setup-banner').classList.add('hidden');
+  else{document.getElementById('gh-user').value=ghUser;document.getElementById('gh-repo').value=ghRepo;}
+  document.getElementById('d-date').value=today();
+  document.getElementById('p-date').value=today();
+  document.getElementById('live-date').textContent=new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  injectLogo();
+  buildSiteTabs();
+  loadData();
+}
+
+function injectLogo(){
+  const b64=ls('swb_logo_b64');
+  if(b64){
+    document.getElementById('logo-wrap').innerHTML=`<img src="data:image/svg+xml;base64,${b64}" style="height:32px;width:auto;display:block" alt="SW Bruce">`;
+  } else {
+    // Fetch and cache from index.html's embedded logo if available
+    document.getElementById('logo-wrap').innerHTML=`<span style="font-size:14px;font-weight:500;letter-spacing:0.05em;color:var(--white)">SW BRUCE</span>`;
+    fetch('index.html').then(r=>r.text()).then(html=>{
+      const match = html.match(/logo-wrap[^>]*>\s*<img[^>]*base64,([A-Za-z0-9+/=]+)/);
+      if(match){lss('swb_logo_b64',match[1]);injectLogo();}
+    }).catch(()=>{});
+  }
+}
+
+function today(){return new Date().toISOString().split('T')[0];}
+function fmtDate(d){if(!d)return'';const dt=new Date(d);if(isNaN(dt))return d;return dt.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+
+// ── GITHUB ─────────────────────────────────────────────
+function saveGH(){
+  ghUser=document.getElementById('gh-user').value.trim();
+  ghRepo=document.getElementById('gh-repo').value.trim();
+  ghToken=document.getElementById('gh-token').value.trim();
+  if(!ghUser||!ghRepo||!ghToken){toast('Fill in all fields','err');return;}
+  lss('gh_user',ghUser);lss('gh_repo',ghRepo);lss('gh_token',ghToken);
+  document.getElementById('setup-banner').classList.add('hidden');
+  loadData();
+}
+
+async function loadData(){
+  if(!ghUser||!ghRepo||!ghToken){setSync('off','Not connected');return;}
+  setSync('syncing','Loading...');
+  try{
+    const res=await fetch(`https://api.github.com/repos/${ghUser}/${ghRepo}/contents/site_data.json`,{
+      headers:{'Authorization':`token ${ghToken}`,'Accept':'application/vnd.github.v3+json'}
+    });
+    if(!res.ok) throw new Error('GitHub '+res.status);
+    const json=await res.json();
+    fileSha=json.sha;
+    const raw=atob(json.content.replace(/\n/g,''));
+    const bytes=new Uint8Array(raw.length);
+    for(let i=0;i<raw.length;i++) bytes[i]=raw.charCodeAt(i);
+    siteData=JSON.parse(new TextDecoder('utf-8').decode(bytes));
+    renderAll();
+    setSync('ok','Synced '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}));
+  }catch(e){
+    setSync('err','Load failed — '+e.message);
+    toast('Could not load site data','err');
+  }
+}
+
+async function saveAll(){
+  if(!ghUser||!ghRepo||!ghToken){toast('Not connected to GitHub','err');return;}
+  setSync('syncing','Saving...');
+  try{
+    const jsonStr=JSON.stringify(siteData,null,2);
+    const bytes=new TextEncoder().encode(jsonStr);
+    const binStr=Array.from(bytes).map(b=>String.fromCharCode(b)).join('');
+    const content=btoa(binStr);
+    const now=new Date().toLocaleString('en-GB');
+    const body={message:'Site update — '+now,content,sha:fileSha};
+    const res=await fetch(`https://api.github.com/repos/${ghUser}/${ghRepo}/contents/site_data.json`,{
+      method:'PUT',
+      headers:{'Authorization':`token ${ghToken}`,'Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    });
+    if(!res.ok) throw new Error('Save '+res.status);
+    const json=await res.json();
+    fileSha=json.content.sha;
+    setSync('ok','Saved '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}));
+    toast('All data saved & synced');
+  }catch(e){
+    setSync('err','Save failed');
+    toast('Save failed: '+e.message,'err');
+  }
+}
+
+function setSync(state,label){
+  const d=document.getElementById('sync-dot');
+  const l=document.getElementById('sync-lbl');
+  d.className='sync-dot'+(state==='syncing'?' syncing':state==='err'?' error':'');
+  l.textContent=label;
+  l.style.color=state==='err'?'var(--red)':state==='syncing'?'var(--amber)':'var(--slate)';
+}
+
+// ── SITE TABS ──────────────────────────────────────────
+function buildSiteTabs(){
+  const sites=[{id:'sandpiper',name:'Sandpiper House',job:'59153'},{id:'tunbridge',name:'Tunbridge Wells',job:'60327'}];
+  document.getElementById('site-tabs').innerHTML=sites.map(s=>`
+    <div class="site-tab${s.id===currentSite?' active':''}" onclick="switchSite('${s.id}')">
+      ${s.name}
+      <div class="tab-job">Job No ${s.job}</div>
+    </div>`).join('');
+}
+
+function switchSite(id){
+  currentSite=id;
+  buildSiteTabs();
+  renderAll();
+}
+
+// ── RENDER ALL ─────────────────────────────────────────
+function renderAll(){
+  renderSiteInfo();
+  renderDiary();
+  renderGantt();
+  renderAttendance();
+  renderPhotos();
+}
+
+// ── SITE INFO ──────────────────────────────────────────
+function renderSiteInfo(){
+  const site=(siteData.sites||[]).find(s=>s.id===currentSite)||{};
+  const start=site.start?new Date(site.start):null;
+  const end=site.completion?new Date(site.completion):null;
+  const now=new Date();
+  let pct=0,daysLeft=0;
+  if(start&&end){
+    pct=Math.min(100,Math.max(0,Math.round((now-start)/(end-start)*100)));
+    daysLeft=Math.max(0,Math.round((end-now)/86400000));
+  }
+  const val=site.value?'&#163;'+parseFloat(site.value).toLocaleString('en-GB',{minimumFractionDigits:2}):'&#8212;';
+  document.getElementById('site-info-card').innerHTML=`
+    <div class="si-field">
+      <div class="si-label">Project</div>
+      <div class="si-value">${site.name||'&#8212;'}</div>
+      <div class="si-value mono" style="margin-top:2px;font-size:11px">Job No ${site.job||'&#8212;'} &nbsp;|&nbsp; ${site.order||'&#8212;'}</div>
+    </div>
+    <div class="si-field">
+      <div class="si-label">Contract value</div>
+      <div class="si-value green">${val}</div>
+      <div style="margin-top:6px">
+        <div class="si-label">Programme</div>
+        <div class="prog-bar-wrap"><div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+        <div class="prog-label">${pct}% elapsed &nbsp;&bull;&nbsp; ${daysLeft} days remaining</div></div>
+      </div>
+    </div>
+    <div class="si-field">
+      <div class="si-label">Key contacts</div>
+      <div style="font-size:12px;line-height:1.9;color:var(--ice)">
+        <span style="color:var(--slate)">PM:</span> ${site.pm||'&#8212;'}<br>
+        <span style="color:var(--slate)">SM:</span> ${site.sm||'&#8212;'}<br>
+        <span style="color:var(--slate)">Atkins PM:</span> ${site.client_pm||'&#8212;'}<br>
+        <span style="color:var(--slate)">PD:</span> ${site.pd||'&#8212;'}
+      </div>
+    </div>
+    <div class="si-field">
+      <div class="si-label">Dates</div>
+      <div style="font-size:12px;line-height:1.9;color:var(--ice)">
+        <span style="color:var(--slate)">Start:</span> ${fmtDate(site.start)}<br>
+        <span style="color:var(--slate)">Completion:</span> <span style="${daysLeft<14?'color:var(--amber)':''}">${fmtDate(site.completion)}</span>
+      </div>
+      <div style="margin-top:8px;font-size:11px;color:var(--slate);line-height:1.5">${site.description||''}</div>
+    </div>`;
+}
+
+// ── DIARY ──────────────────────────────────────────────
+function openDiaryForm(){
+  document.getElementById('diary-panel-sub').textContent=currentSite==='sandpiper'?'Sandpiper House — Job 59153':'Tunbridge Wells — Job 60327';
+  document.getElementById('d-date').value=today();
+  document.getElementById('d-workers').value='';
+  document.getElementById('d-works').value='';
+  document.getElementById('d-subs').value='';
+  document.getElementById('d-issues').value='';
+  document.getElementById('d-tomorrow').value='';
+  document.getElementById('d-author').value='';
+  selectedWeather='';
+  document.querySelectorAll('.w-opt').forEach(o=>o.classList.remove('sel'));
+  document.getElementById('diary-overlay').classList.add('open');
+}
+function closeDiary(){document.getElementById('diary-overlay').classList.remove('open');}
+function setWeather(w){selectedWeather=w;document.querySelectorAll('.w-opt').forEach(o=>{o.classList.toggle('sel',o.textContent.trim().includes(w));});}
+
+function saveDiaryEntry(){
+  const entry={
+    id:uid(),site:currentSite,
+    date:document.getElementById('d-date').value,
+    weather:selectedWeather,
+    workers:parseInt(document.getElementById('d-workers').value)||0,
+    works:document.getElementById('d-works').value.trim(),
+    subs:document.getElementById('d-subs').value.trim(),
+    issues:document.getElementById('d-issues').value.trim(),
+    tomorrow:document.getElementById('d-tomorrow').value.trim(),
+    author:document.getElementById('d-author').value.trim(),
+    ts:new Date().toISOString()
+  };
+  if(!entry.date||!entry.works){toast('Date and works description required','err');return;}
+  if(!siteData.diary) siteData.diary=[];
+  siteData.diary.unshift(entry);
+  closeDiary();renderDiary();saveAll();
+}
+
+function renderDiary(){
+  const entries=(siteData.diary||[]).filter(e=>e.site===currentSite);
+  document.getElementById('diary-badge').textContent=entries.length+' '+(entries.length===1?'entry':'entries');
+  if(!entries.length){
+    document.getElementById('diary-entries-list').innerHTML='<div class="empty-state"><div class="empty-icon">&#128214;</div>No diary entries yet.</div>';
+    return;
+  }
+  const sorted=[...entries].sort((a,b)=>b.date.localeCompare(a.date));
+  document.getElementById('diary-entries-list').innerHTML=sorted.map(e=>`
+    <div class="diary-entry">
+      <div class="de-header">
+        <div class="de-date">${fmtDate(e.date)}</div>
+        <div class="de-meta">
+          ${e.weather?`<span class="de-pill weather">${e.weather}</span>`:''}
+          ${e.workers?`<span class="de-pill workers">&#128119; ${e.workers} workers</span>`:''}
+          ${e.issues?`<span class="de-pill issue">&#9888; Issues logged</span>`:''}
+          ${e.author?`<span class="de-pill">&#128100; ${e.author}</span>`:''}
+          <button class="de-delete" onclick="deleteDiary('${e.id}')">&#10005; Delete</button>
+        </div>
+      </div>
+      ${e.works?`<div class="de-section"><div class="de-section-label">Works carried out</div><div class="de-section-text">${e.works}</div></div>`:''}
+      ${e.subs?`<div class="de-section"><div class="de-section-label">Subcontractor activity</div><div class="de-section-text">${e.subs}</div></div>`:''}
+      ${e.issues?`<div class="de-section"><div class="de-section-label">Issues / delays / instructions</div><div class="de-section-text" style="color:var(--amber)">${e.issues}</div></div>`:''}
+      ${e.tomorrow?`<div class="de-section"><div class="de-section-label">Planned tomorrow</div><div class="de-section-text" style="color:var(--slate)">${e.tomorrow}</div></div>`:''}
+    </div>`).join('');
+}
+
+function deleteDiary(id){
+  if(!confirm('Delete this diary entry?')) return;
+  siteData.diary=(siteData.diary||[]).filter(e=>e.id!==id);
+  renderDiary();saveAll();
+}
+
+// ── GANTT ──────────────────────────────────────────────
+function openGanttForm(){
+  document.getElementById('g-task').value='';
+  document.getElementById('g-trade').value='';
+  document.getElementById('g-start').value=today();
+  document.getElementById('g-end').value='';
+  document.getElementById('g-progress').value='0';
+  document.getElementById('gantt-overlay').classList.add('open');
+}
+function closeGantt(){document.getElementById('gantt-overlay').classList.remove('open');}
+
+function saveGanttTask(){
+  const task={id:uid(),task:document.getElementById('g-task').value.trim(),trade:document.getElementById('g-trade').value.trim(),color:document.getElementById('g-color').value,start:document.getElementById('g-start').value,end:document.getElementById('g-end').value,progress:parseInt(document.getElementById('g-progress').value)||0};
+  if(!task.task||!task.start||!task.end){toast('Task name and dates required','err');return;}
+  if(!siteData.gantt) siteData.gantt={};
+  if(!siteData.gantt[currentSite]) siteData.gantt[currentSite]=[];
+  siteData.gantt[currentSite].push(task);
+  closeGantt();renderGantt();saveAll();
+}
+
+function renderGantt(){
+  const tasks=(siteData.gantt&&siteData.gantt[currentSite])||[];
+  if(!tasks.length){
+    document.getElementById('gantt-container').innerHTML='<div class="empty-state"><div class="empty-icon">&#128200;</div>No programme tasks yet. Add the first task above.</div>';
+    return;
+  }
+  const colorMap={green:'var(--green)',blue:'var(--blue)',amber:'var(--amber)',red:'var(--red)',purple:'var(--purple)',gray:'var(--slate)'};
+  const dates=tasks.flatMap(t=>[new Date(t.start),new Date(t.end)]).filter(d=>!isNaN(d));
+  const minDate=new Date(Math.min(...dates));
+  const maxDate=new Date(Math.max(...dates));
+  minDate.setDate(1);
+  maxDate.setMonth(maxDate.getMonth()+1);maxDate.setDate(1);
+  const totalDays=(maxDate-minDate)/86400000;
+
+  // Build month headers
+  const months=[];
+  let cur=new Date(minDate);
+  while(cur<maxDate){
+    const end=new Date(cur.getFullYear(),cur.getMonth()+1,1);
+    const days=Math.min((end-minDate)/86400000,totalDays)-(cur-minDate)/86400000;
+    months.push({label:cur.toLocaleDateString('en-GB',{month:'short',year:'2-digit'}),pct:(days/totalDays*100).toFixed(2)});
+    cur=end;
+  }
+
+  const today2=new Date();
+  const todayPct=Math.max(0,Math.min(100,(today2-minDate)/86400000/totalDays*100));
+
+  const rows=tasks.map((t,i)=>{
+    const s=new Date(t.start);const e=new Date(t.end);
+    if(isNaN(s)||isNaN(e)) return '';
+    const left=Math.max(0,(s-minDate)/86400000/totalDays*100);
+    const width=Math.max(1,(e-s)/86400000/totalDays*100);
+    const col=colorMap[t.color]||colorMap.blue;
+    return `<tr>
+      <td style="min-width:160px;max-width:160px"><div class="task-name">${t.task}</div><div class="task-trade">${t.trade}</div></td>
+      <td class="gantt-bar-cell" style="position:relative;padding:6px 4px">
+        <div style="position:relative">
+          <div class="gantt-bar-outer">
+            <div class="gantt-bar-fill" style="left:${left}%;width:${width}%;background:${col}"></div>
+            <div class="gantt-bar-fill" style="left:${left}%;width:${Math.min(width,width*t.progress/100)}%;background:${col};opacity:1"></div>
+            <div style="position:absolute;left:${left+width/2}%;transform:translateX(-50%);top:50%;transform:translate(-50%,-50%);font-size:9px;font-family:var(--mono);color:rgba(255,255,255,0.85);white-space:nowrap">${t.progress}%</div>
+          </div>
+          <div style="position:absolute;top:-2px;bottom:-2px;left:${todayPct}%;width:1px;background:var(--red);opacity:0.6;pointer-events:none"></div>
+        </div>
+      </td>
+      <td style="white-space:nowrap;width:80px"><span class="pct-badge">${fmtDate(t.start)}</span></td>
+      <td style="white-space:nowrap;width:80px"><span class="pct-badge">${fmtDate(t.end)}</span></td>
+      <td style="width:36px"><button onclick="deleteGantt('${t.id}')" style="background:transparent;border:none;color:var(--slate);cursor:pointer;font-size:11px;padding:3px 5px;border-radius:3px" title="Delete">&#10005;</button></td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('gantt-container').innerHTML=`
+    <table class="gantt-table">
+      <thead>
+        <tr>
+          <th class="left">Task</th>
+          <th>
+            <div style="display:flex;width:100%">${months.map(m=>`<div style="flex:${m.pct};text-align:center;border-left:1px solid rgba(255,255,255,0.06);min-width:0;overflow:hidden;white-space:nowrap;font-size:9px">${m.label}</div>`).join('')}</div>
+          </th>
+          <th>Start</th><th>End</th><th></th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div style="margin-top:8px;font-size:10px;color:var(--slate);font-family:var(--mono);display:flex;align-items:center;gap:6px"><div style="width:12px;height:2px;background:var(--red);opacity:0.6"></div> Today — ${fmtDate(today2.toISOString().split('T')[0])}</div>`;
+}
+
+function deleteGantt(id){
+  if(!confirm('Remove this task?')) return;
+  siteData.gantt[currentSite]=(siteData.gantt[currentSite]||[]).filter(t=>t.id!==id);
+  renderGantt();saveAll();
+}
+
+// ── ATTENDANCE ─────────────────────────────────────────
+function openSubForm(){
+  document.getElementById('s-name').value='';
+  document.getElementById('s-trade').value='';
+  document.getElementById('s-contact').value='';
+  document.getElementById('sub-overlay').classList.add('open');
+}
+function closeSub(){document.getElementById('sub-overlay').classList.remove('open');}
+
+function saveSub(){
+  const sub={id:uid(),name:document.getElementById('s-name').value.trim(),trade:document.getElementById('s-trade').value.trim(),contact:document.getElementById('s-contact').value.trim(),active:true};
+  if(!sub.name){toast('Company name required','err');return;}
+  if(!siteData.subcontractors) siteData.subcontractors={};
+  if(!siteData.subcontractors[currentSite]) siteData.subcontractors[currentSite]=[];
+  siteData.subcontractors[currentSite].push(sub);
+  closeSub();renderAttendance();saveAll();
+}
+
+function renderAttendance(){
+  const subs=(siteData.subcontractors&&siteData.subcontractors[currentSite])||[];
+  document.getElementById('attend-badge').textContent=fmtDate(today());
+  if(!subs.length){
+    document.getElementById('attend-container').innerHTML='<div class="empty-state"><div class="empty-icon">&#128119;</div>No subcontractors added yet.</div>';
+    return;
+  }
+  const days=[];
+  for(let i=4;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push({date:d.toISOString().split('T')[0],label:i===0?'Today':i===1?'Yesterday':d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric'})});}
+
+  document.getElementById('attend-container').innerHTML=`
+    <div class="attend-grid">${subs.map(s=>`
+      <div class="attend-card">
+        <div class="attend-name">${s.name}</div>
+        <div class="attend-trade">${s.trade}</div>
+        <div class="attend-log">
+          ${days.map(d=>{
+            const att=(siteData.attendance||[]).find(a=>a.site===currentSite&&a.sub===s.id&&a.date===d.date);
+            const val=att?att.count:0;
+            return `<div class="attend-day">
+              <span class="attend-day-label">${d.label}</span>
+              <input class="attend-input" type="number" min="0" value="${val}" onchange="logAttendance('${s.id}','${d.date}',this.value)">
+            </div>`;
+          }).join('')}
+        </div>
+        <div class="attend-total">
+          <span class="attend-total-label">5-day total</span>
+          <span class="attend-total-val">${days.reduce((sum,d)=>{const a=(siteData.attendance||[]).find(a=>a.site===currentSite&&a.sub===s.id&&a.date===d.date);return sum+(a?a.count:0);},0)} workers</span>
+        </div>
+      </div>`).join('')}</div>
+    <button class="btn btn-ghost" onclick="saveAll()" style="margin-top:0.75rem;font-size:11px">Save attendance log</button>`;
+}
+
+function logAttendance(subId,date,count){
+  if(!siteData.attendance) siteData.attendance=[];
+  const idx=siteData.attendance.findIndex(a=>a.site===currentSite&&a.sub===subId&&a.date===date);
+  const val=parseInt(count)||0;
+  if(idx>=0) siteData.attendance[idx].count=val;
+  else siteData.attendance.push({site:currentSite,sub:subId,date,count:val});
+}
+
+// ── PHOTOS ─────────────────────────────────────────────
+function handleFileSelect(e){
+  const files=Array.from(e.target.files);
+  if(files.length) processPhotoFile(files[0]);
+  e.target.value='';
+}
+function handleDrop(e){
+  e.preventDefault();
+  document.getElementById('upload-area').classList.remove('drag-over');
+  const files=Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
+  if(files.length) processPhotoFile(files[0]);
+}
+function processPhotoFile(file){
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    pendingPhotoData=ev.target.result;
+    pendingPhotoFile=file;
+    document.getElementById('photo-preview').src=pendingPhotoData;
+    document.getElementById('p-caption').value='';
+    document.getElementById('p-date').value=today();
+    document.getElementById('photo-overlay').classList.add('open');
+  };
+  reader.readAsDataURL(file);
+}
+function closePhoto(){document.getElementById('photo-overlay').classList.remove('open');pendingPhotoData=null;}
+function confirmPhoto(){
+  if(!pendingPhotoData){closePhoto();return;}
+  const photo={id:uid(),site:currentSite,data:pendingPhotoData,caption:document.getElementById('p-caption').value.trim(),date:document.getElementById('p-date').value,filename:pendingPhotoFile?pendingPhotoFile.name:'photo.jpg'};
+  if(!siteData.photos) siteData.photos=[];
+  siteData.photos.unshift(photo);
+  closePhoto();renderPhotos();
+  toast('Photo added — note: photos are stored in session only (too large for GitHub)');
+}
+function renderPhotos(){
+  const photos=(siteData.photos||[]).filter(p=>p.site===currentSite);
+  document.getElementById('photos-badge').textContent=photos.length+' '+(photos.length===1?'photo':'photos');
+  if(!photos.length){
+    document.getElementById('photo-grid').innerHTML='';return;
+  }
+  document.getElementById('photo-grid').innerHTML=photos.map(p=>`
+    <div class="photo-card">
+      <img class="photo-img" src="${p.data}" alt="${p.caption||'Site photo'}" onerror="this.style.display='none'">
+      <div class="photo-meta">
+        <span class="photo-delete" onclick="deletePhoto('${p.id}')">&#10005;</span>
+        <div class="photo-caption">${p.caption||'No caption'}</div>
+        <div class="photo-date">${fmtDate(p.date)}</div>
+      </div>
+    </div>`).join('');
+}
+function deletePhoto(id){
+  siteData.photos=(siteData.photos||[]).filter(p=>p.id!==id);
+  renderPhotos();
+}
+
+// ── SECTION TOGGLES ────────────────────────────────────
+function toggleSection(id){
+  const body=document.getElementById('body-'+id);
+  const chev=document.getElementById('chevron-'+id);
+  const isOpen=body.classList.contains('open');
+  body.classList.toggle('open',!isOpen);
+  chev.classList.toggle('open',!isOpen);
+}
+
+// ── TOAST ──────────────────────────────────────────────
+function toast(msg,type){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  t.className='toast'+(type==='err'?' err':'');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),4000);
+}
+
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');}));
+
+init();
+setInterval(loadData,90000);
+</script>
+</body>
+</html>

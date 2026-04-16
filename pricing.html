@@ -592,6 +592,11 @@ function getFiltered(){
 }
 
 function jobTotalValue(job){
+  // Sum all subs that have a quoted value, regardless of received status
+  return (job.subs||[]).reduce((sum,s)=>sum+(parseFloat(s.value)||0),0);
+}
+function jobReceivedValue(job){
+  // Sum only confirmed received quotes
   return (job.subs||[]).filter(s=>s.received==='Yes').reduce((sum,s)=>sum+(parseFloat(s.value)||0),0);
 }
 
@@ -643,7 +648,13 @@ function render(){
         <td class="center"><span class="${j.followUp==='Yes'?'followup-yes':'followup-no'}">${j.followUp==='Yes'?'&#9888; Yes':'No'}</span></td>
         <td style="font-size:12px">${j.assigned||'&mdash;'}</td>
         <td class="center">${priorityBadge(j.priority)}</td>
-        <td class="center"><span class="value-cell${val?'':' zero'}">${fmtVal(val)}</span></td>
+        <td class="center">${(()=>{
+          const recv=jobReceivedValue(j);
+          const tot=jobTotalValue(j);
+          if(!tot) return '<span class="value-cell zero">&pound;&mdash;</span>';
+          if(recv===tot) return '<span class="value-cell">'+fmtVal(tot)+'</span>';
+          return '<span class="value-cell" style="color:var(--amber)" title="'+fmtVal(recv)+' received of '+fmtVal(tot)+' total">'+fmtVal(recv)+' / '+fmtVal(tot)+'</span>';
+        })()}</td>
         <td style="font-size:11px;color:var(--slate);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${j.notes||''}">${j.notes||'&mdash;'}</td>
         <td><div class="row-actions">
           <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openSubPanel('${j.id}')" title="Subcontractors">&#128119;</button>
@@ -672,7 +683,7 @@ function updateMetrics(filtered){
     const subs=j.subs||[];
     return subs.some(s=>s.received==='Yes'&&s.dateRequested&&new Date(s.dateRequested)>=weekStart);
   }).length;
-  const total=all.reduce((sum,j)=>sum+jobTotalValue(j),0);
+  const total=all.reduce((sum,j)=>sum+jobReceivedValue(j),0);
   document.getElementById('m-value').textContent='\xa3'+Math.round(total).toLocaleString('en-GB');
   document.getElementById('live-date').textContent=new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
 }
@@ -789,28 +800,37 @@ function renderSubTable(){
   if(!job) return;
   const subs=job.subs||[];
 
-  // Build table rows
+  // Build table rows — all fields are inline-editable
+  const fi='background:var(--navy);border:1px solid var(--navy-border);border-radius:4px;padding:4px 7px;color:var(--white);font-family:var(--font);font-size:11px;width:100%;min-width:0';
+  const fd='background:var(--navy);border:1px solid var(--navy-border);border-radius:4px;padding:4px 7px;color:var(--white);font-family:var(--mono);font-size:11px;width:100%;min-width:0';
+  const fs='background:var(--navy);border:1px solid var(--navy-border);border-radius:4px;padding:4px 7px;color:var(--white);font-family:var(--font);font-size:11px;width:100%;cursor:pointer';
   document.getElementById('sub-tbody').innerHTML=subs.length?subs.map((s,i)=>{
     const od=s.due&&s.received!=='Yes'&&new Date(s.due)<new Date();
-    return `<tr>
-      <td><div style="font-size:12px;font-weight:500;color:var(--white)">${s.company||''}</div></td>
-      <td style="font-size:11px;color:var(--slate)">${s.contact||'&mdash;'}</td>
-      <td><span style="font-size:10px;font-family:var(--mono);background:rgba(74,144,217,0.1);color:var(--blue);padding:2px 6px;border-radius:3px">${s.trade||''}</span></td>
-      <td style="font-size:11px;color:var(--slate)">${s.email||'&mdash;'}</td>
-      <td style="font-size:11px;font-family:var(--mono)">${fmtDate(s.requested)||'&mdash;'}</td>
-      <td><span class="date-cell${od?' sub-overdue':''}">${fmtDate(s.due)||'&mdash;'}</span></td>
-      <td><span class="${s.received==='Yes'?'sub-received-yes':'sub-received-no'}">${s.received==='Yes'?'&#10003; Yes':'&#10005; No'}</span></td>
-      <td><span style="font-size:12px;font-family:var(--mono);color:${s.received==='Yes'?'var(--green)':'var(--slate)'}">${s.received==='Yes'?fmtVal(s.value):'&mdash;'}</span></td>
-      <td style="font-size:11px;color:var(--slate);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${s.notes||''}">${s.notes||'&mdash;'}</td>
+    return `<tr style="vertical-align:middle">
+      <td style="min-width:120px"><input style="${fi}" value="${(s.company||'').replace(/"/g,'&quot;')}" onchange="updateSub(${i},'company',this.value)" placeholder="Company"></td>
+      <td style="min-width:100px"><input style="${fi}" value="${(s.contact||'').replace(/"/g,'&quot;')}" onchange="updateSub(${i},'contact',this.value)" placeholder="Contact"></td>
+      <td style="min-width:90px"><input style="${fi}" value="${(s.trade||'').replace(/"/g,'&quot;')}" onchange="updateSub(${i},'trade',this.value)" placeholder="Trade"></td>
+      <td style="min-width:120px"><input style="${fi}" value="${(s.email||'').replace(/"/g,'&quot;')}" onchange="updateSub(${i},'email',this.value)" placeholder="Email/phone"></td>
+      <td style="min-width:110px"><input type="date" style="${fd}" value="${s.requested||''}" onchange="updateSub(${i},'requested',this.value)"></td>
+      <td style="min-width:110px"><input type="date" style="${fd}${od?';border-color:var(--red)':''}" value="${s.due||''}" onchange="updateSub(${i},'due',this.value)"></td>
+      <td style="min-width:80px"><select style="${fs}" onchange="updateSub(${i},'received',this.value)">
+        <option value="No"${s.received!=='Yes'?' selected':''}>No</option>
+        <option value="Yes"${s.received==='Yes'?' selected':''}>Yes</option>
+      </select></td>
+      <td style="min-width:100px"><input type="number" style="${fd}" value="${s.value||''}" onchange="updateSub(${i},'value',this.value)" placeholder="0" min="0"></td>
+      <td style="min-width:120px"><input style="${fi}" value="${(s.notes||'').replace(/"/g,'&quot;')}" onchange="updateSub(${i},'notes',this.value)" placeholder="Notes"></td>
       <td><button class="btn btn-danger btn-sm" onclick="deleteSub(${i})">&#10005;</button></td>
     </tr>`;
   }).join(''):`<tr><td colspan="10" style="text-align:center;padding:1.5rem;color:var(--slate);font-size:12px">No subcontractors added yet</td></tr>`;
 
   // Total
-  const total=subs.filter(s=>s.received==='Yes').reduce((sum,s)=>sum+(parseFloat(s.value)||0),0);
+  const total=subs.reduce((sum,s)=>sum+(parseFloat(s.value)||0),0);
+  const recv=subs.filter(s=>s.received==='Yes').reduce((sum,s)=>sum+(parseFloat(s.value)||0),0);
   const totalRow=document.getElementById('sub-total-row');
-  if(total>0){totalRow.style.display='flex';document.getElementById('sub-total-val').textContent=fmtVal(total);}
-  else totalRow.style.display='none';
+  if(total>0){
+    totalRow.style.display='flex';
+    document.getElementById('sub-total-val').textContent=recv<total?fmtVal(recv)+' received of '+fmtVal(total):fmtVal(total);
+  } else totalRow.style.display='none';
 
   // Comparison
   renderComparison(subs);
@@ -857,7 +877,26 @@ function addSubcontractor(){
   document.getElementById('ns-trade').value='';document.getElementById('ns-email').value='';
   document.getElementById('ns-received').value='No';document.getElementById('ns-value').value='';
   document.getElementById('ns-notes').value='';
-  renderSubTable();pushData();toast('Subcontractor added');
+  renderSubTable();pushData();render();toast('Subcontractor added');
+}
+
+function updateSub(idx, field, value){
+  const job=jobs.find(j=>j.id===subJobId);
+  if(!job||!job.subs||!job.subs[idx]) return;
+  job.subs[idx][field]=value;
+  // Re-render totals and comparison without full table re-render (avoids losing focus)
+  const subs=job.subs;
+  const total=subs.reduce((sum,s)=>sum+(parseFloat(s.value)||0),0);
+  const recv=subs.filter(s=>s.received==='Yes').reduce((sum,s)=>sum+(parseFloat(s.value)||0),0);
+  const totalRow=document.getElementById('sub-total-row');
+  if(total>0){
+    totalRow.style.display='flex';
+    document.getElementById('sub-total-val').textContent=recv<total?fmtVal(recv)+' received of '+fmtVal(total):fmtVal(total);
+  } else totalRow.style.display='none';
+  renderComparison(subs);
+  // Auto-save after short debounce
+  clearTimeout(window._subSaveTimer);
+  window._subSaveTimer=setTimeout(()=>{pushData();render();},800);
 }
 
 function deleteSub(idx){
@@ -865,7 +904,7 @@ function deleteSub(idx){
   if(!job||!job.subs) return;
   if(!confirm('Remove this subcontractor?')) return;
   job.subs.splice(idx,1);
-  renderSubTable();pushData();
+  renderSubTable();pushData();render();
 }
 
 function closeSubPanel(){document.getElementById('sub-overlay').classList.remove('open');subJobId=null;}

@@ -13,7 +13,20 @@
     "quotesIn": "No",
     "scope": "roof works to be completed.",
     "notes": "pitched only",
-    "subs": [],
+    "subs": [
+      {
+        "id": "mo1606535du3",
+        "company": "Highview",
+        "contact": "Mark Mills",
+        "trade": "Roofing",
+        "email": "markmills@highview.co.uj",
+        "requested": "2026-04-16",
+        "due": "2026-04-20",
+        "received": "No",
+        "value": "45000",
+        "notes": ""
+      }
+    ],
     "created": "2026-04-15T15:31:04.126Z",
     "updated": "2026-04-15T15:33:06.627Z"
   }

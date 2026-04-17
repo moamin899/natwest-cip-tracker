@@ -31,6 +31,19 @@
   ],
   "diary": [
     {
+      "id": "mo2ovd01a2l6",
+      "site": "sandpiper",
+      "date": "2026-04-17",
+      "weather": "Sunny",
+      "workers": 1,
+      "works": "t",
+      "subs": "t",
+      "issues": "",
+      "tomorrow": "t",
+      "author": "t",
+      "ts": "2026-04-17T09:11:32.497Z"
+    },
+    {
       "id": "mo2os0ss36w3",
       "site": "sandpiper",
       "date": "2026-04-17",

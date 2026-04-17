@@ -27,20 +27,6 @@
       "start": "2026-04-01",
       "completion": "2026-07-31",
       "description": "CIP works — pre-start complete"
-    },
-    {
-      "id": "site__mo2ku6zc",
-      "name": "Tunbridge Wells",
-      "job": "s",
-      "order": "s",
-      "value": "s",
-      "pm": "s",
-      "sm": "s",
-      "client_pm": "",
-      "pd": "d",
-      "start": "2026-03-31",
-      "completion": "2026-05-05",
-      "description": "ss"
     }
   ],
   "diary": [

@@ -156,7 +156,7 @@ body{font-family:var(--font);background:var(--navy);color:var(--white);min-heigh
 .upload-icon{font-size:28px;margin-bottom:8px;color:var(--slate)}
 .upload-label{font-size:13px;color:var(--slate)}
 .upload-label strong{color:var(--blue)}
-.upload-sub{font-size:11px;color:var(--slate);margin-top:4px;font-family:var(--mono)}
+.upload-sub{font-size:11px;color:var(--slate);margin-top:4px;font-family:var(--mono);line-height:1.5}
 .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
 .photo-card{background:var(--navy);border:1px solid var(--navy-border);border-radius:8px;overflow:hidden}
 .photo-img{width:100%;height:140px;object-fit:cover;display:block;background:var(--navy-light)}
@@ -322,13 +322,57 @@ body{font-family:var(--font);background:var(--navy);color:var(--white);min-heigh
       <span class="section-chevron" id="chevron-photos">&#9660;</span>
     </div>
     <div class="section-body" id="body-photos">
-      <div class="photo-upload-area" id="upload-area" onclick="document.getElementById('photo-file-input').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleDrop(event)">
+      <!-- Cloudinary setup banner -->
+      <div id="cloudinary-setup" style="background:rgba(240,165,0,0.07);border:1px solid rgba(240,165,0,0.22);border-radius:8px;padding:1rem 1.25rem;margin-bottom:1rem;display:none">
+        <div style="font-size:13px;font-weight:500;color:var(--amber);margin-bottom:4px">&#9881; Connect Cloudinary for persistent photo storage</div>
+        <div style="font-size:12px;color:var(--slate);margin-bottom:10px;line-height:1.6">
+          Free at <a href="https://cloudinary.com" target="_blank" style="color:var(--blue)">cloudinary.com</a> &mdash; 25GB storage. You need your <strong>Cloud Name</strong> and an <strong>Upload Preset</strong> (unsigned).
+          <br>In Cloudinary: Settings &rarr; Upload &rarr; Upload presets &rarr; Add unsigned preset. Copy the preset name below.
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <input id="cl-cloud-name" placeholder="Cloud name (e.g. my-swbruce)" style="background:var(--navy);border:1px solid var(--navy-border);border-radius:6px;padding:7px 11px;color:var(--white);font-family:var(--mono);font-size:12px;width:200px">
+          <input id="cl-preset" placeholder="Upload preset name" style="background:var(--navy);border:1px solid var(--navy-border);border-radius:6px;padding:7px 11px;color:var(--white);font-family:var(--mono);font-size:12px;width:200px">
+          <button class="btn btn-primary" onclick="saveCloudinaryConfig()" style="font-size:12px;padding:7px 14px">Save & connect</button>
+        </div>
+        <div id="cl-setup-status" style="font-size:11px;margin-top:6px;color:var(--slate)"></div>
+      </div>
+
+      <!-- Upload status bar -->
+      <div id="upload-status-bar" style="display:none;background:var(--navy-mid);border:1px solid var(--navy-light);border-radius:6px;padding:10px 14px;margin-bottom:1rem;display:none;align-items:center;gap:10px">
+        <div style="flex:1">
+          <div style="font-size:12px;color:var(--ice)" id="upload-status-text">Uploading...</div>
+          <div style="margin-top:6px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden">
+            <div id="upload-progress-bar" style="height:100%;background:var(--blue);border-radius:2px;width:0%;transition:width 0.3s"></div>
+          </div>
+        </div>
+        <div style="font-size:11px;font-family:var(--mono);color:var(--slate)" id="upload-count-text"></div>
+      </div>
+
+      <!-- Drop zone -->
+      <div class="photo-upload-area" id="upload-area"
+        onclick="document.getElementById('photo-file-input').click()"
+        ondragover="event.preventDefault();this.classList.add('drag-over')"
+        ondragleave="this.classList.remove('drag-over')"
+        ondrop="handleDrop(event)">
         <div class="upload-icon">&#128247;</div>
         <div class="upload-label"><strong>Click to upload</strong> or drag and drop photos here</div>
-        <div class="upload-sub">JPG, PNG, WEBP — photos are stored locally in your browser session</div>
+        <div id="upload-sub-text" class="upload-sub">JPG, PNG, WEBP &mdash; connect Cloudinary above for permanent storage</div>
       </div>
       <input type="file" id="photo-file-input" accept="image/*" multiple style="display:none" onchange="handleFileSelect(event)">
+
+      <!-- Filter bar -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;flex-wrap:wrap;gap:8px" id="photo-filter-bar" style="display:none">
+        <div style="font-size:11px;color:var(--slate)" id="photo-count-label"></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-ghost" style="font-size:11px;padding:4px 10px" onclick="loadPhotos()">&#8635; Refresh</button>
+          <button class="btn btn-ghost" style="font-size:11px;padding:4px 10px" onclick="toggleCloudinarySetup()">&#9881; Settings</button>
+        </div>
+      </div>
+
       <div class="photo-grid" id="photo-grid"></div>
+      <div id="photo-load-more" style="display:none;text-align:center;margin-top:1rem">
+        <button class="btn btn-ghost" onclick="loadMorePhotos()" style="font-size:12px">Load more photos</button>
+      </div>
     </div>
   </div>
 
@@ -544,6 +588,7 @@ function init(){
   document.getElementById('live-date').textContent=new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
   injectLogo();
   buildSiteTabs();
+  initCloudinary();
   loadData();
 }
 
@@ -930,51 +975,255 @@ function logAttendance(subId,date,count){
   else siteData.attendance.push({site:currentSite,sub:subId,date,count:val});
 }
 
-// ── PHOTOS ─────────────────────────────────────────────
-function handleFileSelect(e){
-  const files=Array.from(e.target.files);
-  if(files.length) processPhotoFile(files[0]);
-  e.target.value='';
+// ── PHOTOS — CLOUDINARY BACKEND ────────────────────────
+// Photos are stored in Cloudinary (free tier: 25GB)
+// Metadata (url, caption, date, site) stored in GitHub site_data.json
+// This allows thousands of photos with no session limitations
+
+let clCloudName='';
+let clPreset='';
+let photoPage=0;
+const PHOTOS_PER_PAGE=24;
+
+function initCloudinary(){
+  clCloudName=localStorage.getItem('cl_cloud_name')||'';
+  clPreset=localStorage.getItem('cl_preset')||'';
+  const connected=!!(clCloudName&&clPreset);
+  // Show/hide setup banner
+  if(!connected){
+    document.getElementById('cloudinary-setup').style.display='block';
+  }
+  // Update upload hint text
+  document.getElementById('upload-sub-text').textContent=connected
+    ?'JPG, PNG, WEBP — upload multiple at once — stored permanently in Cloudinary'
+    :'JPG, PNG, WEBP — connect Cloudinary above for permanent storage (otherwise session only)';
+  // Pre-fill settings if already set
+  if(clCloudName) document.getElementById('cl-cloud-name').value=clCloudName;
+  if(clPreset) document.getElementById('cl-preset').value=clPreset;
 }
+
+function saveCloudinaryConfig(){
+  const cn=document.getElementById('cl-cloud-name').value.trim();
+  const pr=document.getElementById('cl-preset').value.trim();
+  if(!cn||!pr){
+    document.getElementById('cl-setup-status').textContent='Please enter both Cloud Name and Upload Preset.';
+    document.getElementById('cl-setup-status').style.color='var(--red)';
+    return;
+  }
+  clCloudName=cn; clPreset=pr;
+  localStorage.setItem('cl_cloud_name',cn);
+  localStorage.setItem('cl_preset',pr);
+  document.getElementById('cl-setup-status').textContent='Connected! You can now upload photos.';
+  document.getElementById('cl-setup-status').style.color='var(--green)';
+  document.getElementById('upload-sub-text').textContent='JPG, PNG, WEBP — upload multiple at once — stored permanently in Cloudinary';
+  setTimeout(()=>document.getElementById('cloudinary-setup').style.display='none',2000);
+  toast('Cloudinary connected');
+}
+
+function toggleCloudinarySetup(){
+  const el=document.getElementById('cloudinary-setup');
+  el.style.display=el.style.display==='none'?'block':'none';
+}
+
+async function uploadToCloudinary(file,onProgress){
+  if(!clCloudName||!clPreset){
+    // Fallback: store as base64 in session (old behaviour) with warning
+    return new Promise(resolve=>{
+      const reader=new FileReader();
+      reader.onload=ev=>resolve({url:ev.target.result,publicId:null,sessionOnly:true});
+      reader.readAsDataURL(file);
+    });
+  }
+  const formData=new FormData();
+  formData.append('file',file);
+  formData.append('upload_preset',clPreset);
+  formData.append('folder','swbruce-site-photos');
+  // Tag with site for easy filtering in Cloudinary dashboard
+  formData.append('tags',currentSite);
+
+  return new Promise((resolve,reject)=>{
+    const xhr=new XMLHttpRequest();
+    xhr.upload.addEventListener('progress',e=>{
+      if(e.lengthComputable && onProgress) onProgress(Math.round(e.loaded/e.total*100));
+    });
+    xhr.addEventListener('load',()=>{
+      if(xhr.status===200){
+        const r=JSON.parse(xhr.responseText);
+        resolve({url:r.secure_url,publicId:r.public_id,sessionOnly:false,width:r.width,height:r.height});
+      } else {
+        reject(new Error('Cloudinary upload failed: '+xhr.status));
+      }
+    });
+    xhr.addEventListener('error',()=>reject(new Error('Network error during upload')));
+    xhr.open('POST',`https://api.cloudinary.com/v1_1/${clCloudName}/image/upload`);
+    xhr.send(formData);
+  });
+}
+
+function handleFileSelect(e){
+  const files=Array.from(e.target.files).filter(f=>f.type.startsWith('image/'));
+  e.target.value='';
+  if(files.length===1){
+    // Single file: show caption dialog first
+    pendingPhotoFile=files[0];
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      pendingPhotoData=ev.target.result;
+      document.getElementById('photo-preview').src=pendingPhotoData;
+      document.getElementById('p-caption').value='';
+      document.getElementById('p-date').value=today();
+      document.getElementById('photo-overlay').classList.add('open');
+    };
+    reader.readAsDataURL(files[0]);
+  } else if(files.length>1){
+    // Multiple files: upload all immediately with auto-caption prompt
+    uploadMultiple(files);
+  }
+}
+
 function handleDrop(e){
   e.preventDefault();
   document.getElementById('upload-area').classList.remove('drag-over');
   const files=Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
-  if(files.length) processPhotoFile(files[0]);
-}
-function processPhotoFile(file){
-  const reader=new FileReader();
-  reader.onload=function(ev){
-    pendingPhotoData=ev.target.result;
-    pendingPhotoFile=file;
-    document.getElementById('photo-preview').src=pendingPhotoData;
-    document.getElementById('p-caption').value='';
-    document.getElementById('p-date').value=today();
-    document.getElementById('photo-overlay').classList.add('open');
-  };
-  reader.readAsDataURL(file);
-}
-function closePhoto(){document.getElementById('photo-overlay').classList.remove('open');pendingPhotoData=null;}
-function confirmPhoto(){
-  if(!pendingPhotoData){closePhoto();return;}
-  const photo={id:uid(),site:currentSite,data:pendingPhotoData,caption:document.getElementById('p-caption').value.trim(),date:document.getElementById('p-date').value,filename:pendingPhotoFile?pendingPhotoFile.name:'photo.jpg'};
-  if(!siteData.photos) siteData.photos=[];
-  siteData.photos.unshift(photo);
-  closePhoto();renderPhotos();
-  toast('Photo added — note: photos are stored in session only (too large for GitHub)');
-}
-function renderPhotos(){
-  const photos=(siteData.photos||[]).filter(p=>p.site===currentSite);
-  document.getElementById('photos-badge').textContent=photos.length+' '+(photos.length===1?'photo':'photos');
-  if(!photos.length){
-    document.getElementById('photo-grid').innerHTML='';return;
+  if(!files.length) return;
+  if(files.length===1){
+    pendingPhotoFile=files[0];
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      pendingPhotoData=ev.target.result;
+      document.getElementById('photo-preview').src=pendingPhotoData;
+      document.getElementById('p-caption').value='';
+      document.getElementById('p-date').value=today();
+      document.getElementById('photo-overlay').classList.add('open');
+    };
+    reader.readAsDataURL(files[0]);
+  } else {
+    uploadMultiple(files);
   }
-  document.getElementById('photo-grid').innerHTML=photos.map(p=>`
-    <div class="photo-card">
-      <img class="photo-img" src="${p.data}" alt="${p.caption||'Site photo'}" onclick="openLightbox('${p.id}')" onerror="this.style.display='none'" title="Click to enlarge">
+}
+
+async function uploadMultiple(files){
+  const statusBar=document.getElementById('upload-status-bar');
+  const statusText=document.getElementById('upload-status-text');
+  const progressBar=document.getElementById('upload-progress-bar');
+  const countText=document.getElementById('upload-count-text');
+  statusBar.style.display='flex';
+  let done=0;
+  const results=[];
+  for(const file of files){
+    statusText.textContent=`Uploading ${file.name}...`;
+    countText.textContent=`${done+1} of ${files.length}`;
+    try{
+      const result=await uploadToCloudinary(file,pct=>{
+        const overall=((done+pct/100)/files.length)*100;
+        progressBar.style.width=overall+'%';
+      });
+      results.push({file,result});
+    }catch(err){
+      toast('Failed to upload '+file.name+': '+err.message,'err');
+    }
+    done++;
+  }
+  statusBar.style.display='none';
+  progressBar.style.width='0%';
+  if(!siteData.photos) siteData.photos=[];
+  for(const {file,result} of results){
+    siteData.photos.unshift({
+      id:uid(),site:currentSite,
+      url:result.url,publicId:result.publicId||null,
+      sessionOnly:result.sessionOnly||false,
+      caption:'',date:today(),
+      filename:file.name,uploaded:new Date().toISOString()
+    });
+  }
+  saveAll();renderPhotos();
+  toast(`${results.length} photo${results.length===1?'':'s'} uploaded`);
+}
+
+function closePhoto(){document.getElementById('photo-overlay').classList.remove('open');pendingPhotoData=null;pendingPhotoFile=null;}
+
+async function confirmPhoto(){
+  if(!pendingPhotoFile){closePhoto();return;}
+  const caption=document.getElementById('p-caption').value.trim();
+  const date=document.getElementById('p-date').value;
+  // Show uploading state
+  document.getElementById('photo-overlay').classList.remove('open');
+  const statusBar=document.getElementById('upload-status-bar');
+  const progressBar=document.getElementById('upload-progress-bar');
+  const statusText=document.getElementById('upload-status-text');
+  statusBar.style.display='flex';
+  statusText.textContent='Uploading '+pendingPhotoFile.name+'...';
+  try{
+    const result=await uploadToCloudinary(pendingPhotoFile,pct=>{
+      progressBar.style.width=pct+'%';
+    });
+    if(!siteData.photos) siteData.photos=[];
+    const photo={
+      id:uid(),site:currentSite,
+      url:result.url,publicId:result.publicId||null,
+      sessionOnly:result.sessionOnly||false,
+      caption,date,filename:pendingPhotoFile.name,
+      uploaded:new Date().toISOString()
+    };
+    siteData.photos.unshift(photo);
+    statusBar.style.display='none';
+    progressBar.style.width='0%';
+    pendingPhotoData=null;pendingPhotoFile=null;
+    saveAll();renderPhotos();
+    toast(result.sessionOnly?'Photo added (session only — connect Cloudinary for permanent storage)':'Photo uploaded to Cloudinary');
+  }catch(err){
+    statusBar.style.display='none';
+    toast('Upload failed: '+err.message,'err');
+  }
+}
+
+function loadPhotos(){
+  photoPage=0;
+  renderPhotos();
+}
+function loadMorePhotos(){
+  photoPage++;
+  renderPhotos(true);
+}
+
+function renderPhotos(append=false){
+  const allPhotos=(siteData.photos||[]).filter(p=>p.site===currentSite);
+  const start=photoPage*PHOTOS_PER_PAGE;
+  const photos=allPhotos.slice(0,start+PHOTOS_PER_PAGE);
+  const hasMore=allPhotos.length>start+PHOTOS_PER_PAGE;
+
+  document.getElementById('photos-badge').textContent=allPhotos.length+' '+(allPhotos.length===1?'photo':'photos');
+
+  // Show filter bar when there are photos
+  document.getElementById('photo-filter-bar').style.display=allPhotos.length?'flex':'none';
+  document.getElementById('photo-count-label').textContent=`Showing ${photos.length} of ${allPhotos.length} photos`;
+
+  if(!photos.length){
+    document.getElementById('photo-grid').innerHTML='<div style="text-align:center;padding:2rem;color:var(--slate);font-size:13px">No photos yet. Upload the first one above.</div>';
+    document.getElementById('photo-load-more').style.display='none';
+    return;
+  }
+
+  const grid=document.getElementById('photo-grid');
+  if(!append) grid.innerHTML='';
+
+  const newItems=photos.slice(append?start:0).map(p=>{
+    const imgSrc=p.url||(p.data||'');
+    // Use Cloudinary transformation for thumbnails (faster loading)
+    const thumbSrc=p.publicId&&clCloudName
+      ?`https://res.cloudinary.com/${clCloudName}/image/upload/w_400,h_300,c_fill,q_auto,f_auto/${p.publicId}`
+      :imgSrc;
+    const sessionBadge=p.sessionOnly?'<span style="font-size:9px;background:rgba(240,165,0,0.15);color:var(--amber);padding:1px 5px;border-radius:3px;font-family:var(--mono)">session</span>':'';
+    return `<div class="photo-card" id="pc-${p.id}">
+      <img class="photo-img" src="${thumbSrc}" alt="${p.caption||'Site photo'}"
+        onclick="openLightbox('${p.id}')"
+        onerror="this.src='${imgSrc}'"
+        title="Click to enlarge — ${p.caption||'No caption'}">
       <div class="photo-meta">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-          <div class="photo-date">${fmtDate(p.date)}</div>
+          <div style="display:flex;align-items:center;gap:4px">
+            <span class="photo-date">${fmtDate(p.date)}</span>${sessionBadge}
+          </div>
           <div style="display:flex;gap:6px">
             <span onclick="downloadPhoto('${p.id}')" title="Download" style="cursor:pointer;font-size:13px;color:var(--green);padding:2px 4px;border-radius:3px">&#11123;</span>
             <span class="photo-delete" onclick="deletePhoto('${p.id}')">&#10005;</span>
@@ -982,11 +1231,28 @@ function renderPhotos(){
         </div>
         <div class="photo-caption">${p.caption||'No caption'}</div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
+
+  if(append) grid.innerHTML+=newItems;
+  else grid.innerHTML=newItems;
+  document.getElementById('photo-load-more').style.display=hasMore?'block':'none';
 }
-function deletePhoto(id){
+
+async function deletePhoto(id){
+  const photo=(siteData.photos||[]).find(p=>p.id===id);
+  if(!photo) return;
+  if(!confirm('Delete this photo? This cannot be undone.')) return;
+  // Remove from Cloudinary if we have publicId (requires server-side in production)
+  // For now just remove from metadata
+  if(photo.publicId){
+    toast('Removed from tracker. Note: to delete from Cloudinary storage, use your Cloudinary dashboard.');
+  }
   siteData.photos=(siteData.photos||[]).filter(p=>p.id!==id);
-  renderPhotos();
+  const card=document.getElementById('pc-'+id);
+  if(card) card.remove();
+  document.getElementById('photos-badge').textContent=(siteData.photos||[]).filter(p=>p.site===currentSite).length+' photos';
+  saveAll();
 }
 
 // ── SECTION TOGGLES ────────────────────────────────────
@@ -1007,7 +1273,11 @@ function openLightbox(id){
   const photo=photos.find(p=>p.id===id);
   if(!photo) return;
   lightboxPhotoId=id;
-  document.getElementById('lb-img').src=photo.data;
+  // Use full-res Cloudinary URL if available, else fallback to stored url/data
+  const fullSrc=photo.publicId&&clCloudName
+    ?`https://res.cloudinary.com/${clCloudName}/image/upload/q_auto,f_auto/${photo.publicId}`
+    :(photo.url||photo.data||'');
+  document.getElementById('lb-img').src=fullSrc;
   document.getElementById('lb-caption').textContent=photo.caption||'No caption';
   document.getElementById('lb-date').textContent=fmtDate(photo.date);
   document.getElementById('lightbox').classList.add('open');
@@ -1022,12 +1292,20 @@ function downloadPhoto(id){
   const photos=siteData.photos||[];
   const photo=photos.find(p=>p.id===id)||photos.find(p=>p.id===lightboxPhotoId);
   if(!photo) return;
-  const a=document.createElement('a');
-  a.href=photo.data;
+  const src=photo.url||photo.data||'';
+  if(!src){toast('No download available','err');return;}
   const ext=photo.filename?photo.filename.split('.').pop():'jpg';
   const name=(photo.caption||'site-photo').replace(/[^a-z0-9]/gi,'-').toLowerCase().slice(0,40);
-  a.download=name+'-'+fmtDate(photo.date).replace(/ /g,'-')+'.'+ext;
-  a.click();
+  const filename=name+'-'+fmtDate(photo.date).replace(/ /g,'-')+'.'+ext;
+  // For Cloudinary URLs, open in new tab (cross-origin download restriction)
+  if(src.startsWith('http')){
+    const a=document.createElement('a');
+    a.href=src; a.download=filename; a.target='_blank';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  } else {
+    const a=document.createElement('a');
+    a.href=src; a.download=filename; a.click();
+  }
 }
 
 function lightboxDelete(){

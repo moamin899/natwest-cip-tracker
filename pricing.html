@@ -583,6 +583,144 @@ function jobReceivedValue(job){
   return (job.subs||[]).filter(s=>s.received==='Yes').reduce((sum,s)=>sum+(parseFloat(s.value)||0),0);
 }
 
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function statusBadge(s){
+  const map={'Not Started':'b-notstarted','Pricing Requested':'b-requested','Quotes Received':'b-received','Submitted':'b-submitted','Approved':'b-approved'};
+  return `<span class="badge ${map[s]||'b-notstarted'}">${s||'Not Started'}</span>`;
+}
+
+function priorityBadge(p){
+  if(p==='High') return `<span class="p-high">&#9650; High</span>`;
+  if(p==='Low')  return `<span class="p-low">&#9660; Low</span>`;
+  return `<span class="p-med">&#9644; Med</span>`;
+}
+
+function render(){
+  const rows=getFiltered();
+  const tbody=document.getElementById('tbody');
+  if(!rows.length){
+    tbody.innerHTML=`<tr><td colspan="14"><div class="empty-state"><div class="empty-icon">&#128196;</div>No pricing jobs found. Add one above.</div></td></tr>`;
+  } else {
+
+
+function updateMetrics(filtered){
+  const all=jobs;
+  const now=new Date();
+  const weekEnd=new Date(now); weekEnd.setDate(weekEnd.getDate()+7);
+  const weekStart=new Date(now); weekStart.setDate(weekStart.getDate()-7);
+  document.getElementById('m-total').textContent=all.length;
+  document.getElementById('m-overdue').textContent=all.filter(j=>isOverdue(j)).length;
+  document.getElementById('m-duesoon').textContent=all.filter(j=>{
+    if(!j.due||j.quotesIn==='Yes') return false;
+    const d=new Date(j.due); return d>=now&&d<=weekEnd;
+  }).length;
+  document.getElementById('m-received').textContent=all.filter(j=>{
+    if(j.quotesIn!=='Yes') return false;
+    const subs=j.subs||[];
+    return subs.some(s=>s.received==='Yes'&&s.dateRequested&&new Date(s.dateRequested)>=weekStart);
+  }).length;
+  const total=all.reduce((sum,j)=>sum+jobReceivedValue(j),0);
+  document.getElementById('m-value').textContent='\xa3'+Math.round(total).toLocaleString('en-GB');
+  document.getElementById('live-date').textContent=new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+}
+
+function sortBy(f){if(sortField===f)sortAsc=!sortAsc;else{sortField=f;sortAsc=true;}render();}
+function setFilter(f,el){currentFilter=f;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');render();}
+
+// ── ADD / EDIT JOB ────────────────────────────────────────────────────────────
+function openAddJob(){
+  editJobId=null;
+  document.getElementById('job-panel-title').textContent='Add pricing job';
+  document.getElementById('delete-btn').style.display='none';
+  document.getElementById('f-name').value='';
+  document.getElementById('f-num').value='';
+  document.getElementById('f-pm').value='';
+  document.getElementById('f-assigned').value='';
+  document.getElementById('f-status').value='Not Started';
+  document.getElementById('f-priority').value='Medium';
+  document.getElementById('f-requested').value=today();
+  document.getElementById('f-due').value='';
+  document.getElementById('f-followup').value='No';
+  document.getElementById('f-quotes-in').value='No';
+  document.getElementById('f-scope').value='';
+  document.getElementById('f-notes').value='';
+  document.getElementById('job-save-note').textContent='';
+  document.getElementById('job-overlay').classList.add('open');
+}
+
+function openEditJob(id){
+  const job=jobs.find(j=>j.id===id);
+  if(!job) return;
+  editJobId=id;
+  document.getElementById('job-panel-title').textContent='Edit job';
+  document.getElementById('delete-btn').style.display='inline-flex';
+  document.getElementById('f-name').value=job.name||'';
+  document.getElementById('f-num').value=job.num||'';
+  document.getElementById('f-pm').value=job.pm||'';
+  document.getElementById('f-assigned').value=job.assigned||'';
+  document.getElementById('f-status').value=job.status||'Not Started';
+  document.getElementById('f-priority').value=job.priority||'Medium';
+  document.getElementById('f-requested').value=job.requested||'';
+  document.getElementById('f-due').value=job.due||'';
+  document.getElementById('f-followup').value=job.followUp||'No';
+  document.getElementById('f-quotes-in').value=job.quotesIn||'No';
+  document.getElementById('f-scope').value=job.scope||'';
+  document.getElementById('f-notes').value=job.notes||'';
+  document.getElementById('job-save-note').textContent='';
+  document.getElementById('job-overlay').classList.add('open');
+}
+
+function saveJob(){
+  const name=document.getElementById('f-name').value.trim();
+  if(!name){toast('Project name required','err');return;}
+  const job={
+    id:editJobId||uid(),name,
+    num:document.getElementById('f-num').value.trim(),
+    pm:document.getElementById('f-pm').value.trim(),
+    assigned:document.getElementById('f-assigned').value.trim(),
+    status:document.getElementById('f-status').value,
+    priority:document.getElementById('f-priority').value,
+    requested:document.getElementById('f-requested').value,
+    due:document.getElementById('f-due').value,
+    followUp:document.getElementById('f-followup').value,
+    quotesIn:document.getElementById('f-quotes-in').value,
+    scope:document.getElementById('f-scope').value.trim(),
+    notes:document.getElementById('f-notes').value.trim(),
+    subs:editJobId?(jobs.find(j=>j.id===editJobId)?.subs||[]):[],
+    created:editJobId?(jobs.find(j=>j.id===editJobId)?.created||new Date().toISOString()):new Date().toISOString(),
+    updated:new Date().toISOString()
+  };
+  if(editJobId){const idx=jobs.findIndex(j=>j.id===editJobId);if(idx>=0)jobs[idx]=job;}
+  else jobs.unshift(job);
+  closeJobPanel();render();pushData();
+}
+
+function deleteJob(){
+  if(!editJobId) return;
+  const job=jobs.find(j=>j.id===editJobId);
+  if(!confirm('Delete '+job?.name+'? This cannot be undone.')) return;
+  jobs=jobs.filter(j=>j.id!==editJobId);
+  closeJobPanel();render();pushData();
+}
+
+function closeJobPanel(){document.getElementById('job-overlay').classList.remove('open');editJobId=null;}
+
+// ── CSV EXPORT ────────────────────────────────────────────────────────────────
+function exportCSV(){
+  const cols=['Project','Job No','PM','Status','Priority','Scope','Quotes Requested','Quote Due','Quotes In','Follow-Up','Assigned To','Total Quoted','Notes','Subcontractors'];
+  const rows=jobs.map(j=>{
+    const subs=(j.subs||[]).map(s=>`${s.company} (${s.trade}) ${s.received==='Yes'?'\xa3'+s.value:'pending'}`).join('; ');
+    return [j.name,j.num,j.pm,j.status,j.priority,j.scope,fmtDate(j.requested),fmtDate(j.due),j.quotesIn,j.followUp,j.assigned,fmtVal(jobTotalValue(j)),j.notes,subs]
+      .map(v=>'"'+(v||'').toString().replace(/"/g,'""')+'"').join(',');
+  });
+  const csv=[cols.map(c=>'"'+c+'"').join(','),...rows].join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='pricing-tracker-'+today()+'.csv';a.click();
+  toast('CSV exported');
+}
+
 // ── EXPANDED ROW SYSTEM ──────────────────────────────────────────────────────
 let expandedJobId = null; // Currently expanded job
 

@@ -602,7 +602,42 @@ function render(){
   if(!rows.length){
     tbody.innerHTML=`<tr><td colspan="14"><div class="empty-state"><div class="empty-icon">&#128196;</div>No pricing jobs found. Add one above.</div></td></tr>`;
   } else {
-
+    tbody.innerHTML=rows.map(j=>{
+      const od=isOverdue(j);const ds=isDueSoon(j);
+      const rowClass=od?'overdue':ds?'due-soon':'';
+      const dcClass=j.due?dateClass(j.due):'';
+      const isExp=expandedJobId===j.id;
+      const subCount=(j.subs||[]).length;
+      const recvCount=(j.subs||[]).filter(s=>s.received==='Yes').length;
+      return `<tr class="job-row ${rowClass}${isExp?' expanded':''}" id="job-row-${j.id}" onclick="toggleExpand('${j.id}')">
+        <td class="center" style="width:28px;padding-right:0"><span class="chevron${isExp?' open':''}">&#9660;</span></td>
+        <td><div class="job-name">${j.name||'Unnamed job'}</div><div class="job-num">${j.num||''} ${subCount?`<span style="font-size:10px;font-family:var(--mono);background:rgba(74,144,217,0.1);color:var(--blue);padding:1px 5px;border-radius:3px;margin-left:4px">${recvCount}/${subCount} quotes</span>`:''}</div></td>
+        <td style="font-size:12px">${j.pm||'&mdash;'}</td>
+        <td>${statusBadge(j.status)}</td>
+        <td style="font-size:11px;color:var(--slate);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${j.scope||''}">${j.scope||'&mdash;'}</td>
+        <td class="center"><span class="date-cell">${fmtDate(j.requested)||'&mdash;'}</span></td>
+        <td class="center"><span class="date-cell ${dcClass}">${fmtDate(j.due)||'&mdash;'}</span></td>
+        <td class="center"><span style="font-size:11px;font-family:var(--mono);color:${j.quotesIn==='Yes'?'var(--green)':j.quotesIn==='Partial'?'var(--amber)':'var(--slate)'}">${j.quotesIn||'No'}</span></td>
+        <td class="center"><span class="${j.followUp==='Yes'?'followup-yes':'followup-no'}">${j.followUp==='Yes'?'&#9888; Yes':'No'}</span></td>
+        <td style="font-size:12px">${j.assigned||'&mdash;'}</td>
+        <td class="center">${priorityBadge(j.priority)}</td>
+        <td class="center">${(()=>{
+          const recv=jobReceivedValue(j);
+          const tot=jobTotalValue(j);
+          if(!tot) return '<span class="value-cell zero">&pound;&mdash;</span>';
+          if(recv===tot) return '<span class="value-cell">'+fmtVal(tot)+'</span>';
+          return '<span class="value-cell" style="color:var(--amber)" title="'+fmtVal(recv)+' received of '+fmtVal(tot)+' total">'+fmtVal(recv)+' / '+fmtVal(tot)+'</span>';
+        })()}</td>
+        <td style="font-size:11px;color:var(--slate);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${j.notes||''}">${j.notes||'&mdash;'}</td>
+        <td><div class="row-actions">
+          <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openEditJob('${j.id}')" title="Edit">&#9998;</button>
+        </div></td>
+      </tr>
+      ${isExp?renderExpandRow(j):'<tr class="expand-row" id="expand-row-'+j.id+'" style="display:none"><td colspan="14"></td></tr>'}`;
+    }).join('');
+  }
+  updateMetrics(rows);
+}
 
 function updateMetrics(filtered){
   const all=jobs;
@@ -923,7 +958,7 @@ function refreshJobRow(jobId){
 // Legacy functions kept for compatibility
 function openSubPanel(jobId){ toggleExpand(jobId); }
 function closeSubPanel(){ if(expandedJobId) toggleExpand(expandedJobId); }
-let subJobId=null;
+// subJobId already declared above
 // updateSub no longer used (inline cards replace it)
 function updateSub(){}
 function deleteSub(){}

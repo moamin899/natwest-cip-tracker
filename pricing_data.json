@@ -31,20 +31,7 @@
     "quotesIn": "No",
     "scope": "roof works to be completed.",
     "notes": "pitched only",
-    "subs": [
-      {
-        "id": "mo1gmq3gp2pq",
-        "company": "test",
-        "contact": "test",
-        "trade": "roof",
-        "email": "bobbob@swbruce.co.uk",
-        "requested": "2026-04-16",
-        "due": "",
-        "received": "No",
-        "value": "45000",
-        "notes": ""
-      }
-    ],
+    "subs": [],
     "created": "2026-04-15T15:31:04.126Z",
     "updated": "2026-04-15T15:33:06.627Z"
   }

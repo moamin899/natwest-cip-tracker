@@ -9,9 +9,9 @@
     "priority": "Medium",
     "requested": "2026-04-17",
     "due": "2026-05-09",
-    "followUp": "No",
+    "followUp": "Yes",
     "quotesIn": "Partial",
-    "scope": "roof",
+    "scope": "",
     "notes": "test",
     "subs": [
       {
@@ -40,7 +40,7 @@
       }
     ],
     "created": "2026-04-17T09:27:22.944Z",
-    "updated": "2026-05-08T12:32:27.918Z"
+    "updated": "2026-05-08T13:49:26.537Z"
   },
   {
     "id": "mo07jqd940d0",

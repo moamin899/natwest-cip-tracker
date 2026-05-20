@@ -597,11 +597,32 @@ function cycleCheck(id){
 }
 
 function addSite(){
-  const blank={site:'New site',job:'',priority:'12',listed:'No',planning:'none',bsa:'waiting',pci:'waiting',cfra:'waiting',lead:'waiting',leadNote:'',scaff:'waiting',scaffNote:'',cpp:'waiting',cppPct:0,reviewDate:'',submission:'',subcosts:'waiting',subcostsDate:'',wtsub:'waiting',wtDate:'',suppliers:''};
-  data.push(blank);openEdit(data.length-1);
+  // Open a blank form — only adds to data on save, not on open
+  currentIdx=-1; // -1 signals "new site"
+  snap=JSON.stringify({});
+  document.getElementById('ep-title').textContent='New site';
+  document.getElementById('ep-sub').textContent='Fill in the details below and save';
+  document.getElementById('f-site').value='';
+  document.getElementById('f-job').value='';
+  document.getElementById('f-priority').value='10';
+  document.getElementById('f-listed').value='No';
+  document.getElementById('f-planning').value='none';
+  document.getElementById('f-cpp').value='0';
+  document.getElementById('f-review').value='';
+  document.getElementById('f-submission').value='';
+  document.getElementById('f-subcosts-date').value='';
+  document.getElementById('f-wt-date').value='';
+  document.getElementById('f-suppliers').value='';
+  document.getElementById('f-lead-note').value='';
+  document.getElementById('f-scaff-note').value='';
+  ckStates={};
+  CHECKS.forEach(c=>{ckStates[c.id]='waiting';renderCk(c.id);});
+  document.getElementById('save-note').textContent='';
+  document.getElementById('edit-overlay').classList.add('open');
 }
 
 function deleteSite(){
+  if(currentIdx===-1) return; // Nothing to delete for a new unsaved site
   const r=data[currentIdx];
   if(!confirm('Delete '+r.site+'? Cannot be undone.')) return;
   data.splice(currentIdx,1);closeEdit();render();
@@ -614,23 +635,40 @@ function getChanges(old,neo){
 }
 
 function saveEdit(){
-  const r=data[currentIdx];const old=JSON.parse(snap);
-  r.site=document.getElementById('f-site').value.trim()||r.site;
-  r.job=document.getElementById('f-job').value.trim();
-  r.priority=document.getElementById('f-priority').value;
-  r.listed=document.getElementById('f-listed').value;
-  r.planning=document.getElementById('f-planning').value;
-  r.cppPct=Math.min(100,Math.max(0,parseInt(document.getElementById('f-cpp').value)||0));
-  r.reviewDate=document.getElementById('f-review').value;
-  r.submission=document.getElementById('f-submission').value;
-  r.subcostsDate=document.getElementById('f-subcosts-date').value;
-  r.wtDate=document.getElementById('f-wt-date').value;
-  r.suppliers=document.getElementById('f-suppliers').value.trim();
-  r.leadNote=document.getElementById('f-lead-note').value.trim();
-  r.scaffNote=document.getElementById('f-scaff-note').value.trim();
-  CHECKS.forEach(c=>{r[c.id]=ckStates[c.id]||'waiting';});
-  const changes=getChanges(old,r);
-  closeEdit();render();pushData(r.site,changes);
+  const siteName=document.getElementById('f-site').value.trim();
+  if(!siteName){toast('Site name is required','err');return;}
+
+  // Build the updated/new site object
+  const updated={
+    site:siteName,
+    job:document.getElementById('f-job').value.trim(),
+    priority:document.getElementById('f-priority').value,
+    listed:document.getElementById('f-listed').value,
+    planning:document.getElementById('f-planning').value,
+    cppPct:Math.min(100,Math.max(0,parseInt(document.getElementById('f-cpp').value)||0)),
+    reviewDate:document.getElementById('f-review').value,
+    submission:document.getElementById('f-submission').value,
+    subcostsDate:document.getElementById('f-subcosts-date').value,
+    wtDate:document.getElementById('f-wt-date').value,
+    suppliers:document.getElementById('f-suppliers').value.trim(),
+    leadNote:document.getElementById('f-lead-note').value.trim(),
+    scaffNote:document.getElementById('f-scaff-note').value.trim(),
+  };
+  CHECKS.forEach(c=>{updated[c.id]=ckStates[c.id]||'waiting';});
+
+  if(currentIdx===-1){
+    // New site — push fresh entry to data
+    data.push(updated);
+    const changes=['New site added: '+siteName];
+    closeEdit();render();pushData(siteName,changes);
+  } else {
+    // Editing existing — update in place
+    const r=data[currentIdx];
+    const old=JSON.parse(snap);
+    Object.assign(r,updated);
+    const changes=getChanges(old,r);
+    closeEdit();render();pushData(r.site,changes);
+  }
 }
 
 function closeEdit(){document.getElementById('edit-overlay').classList.remove('open');currentIdx=null;}
@@ -707,7 +745,20 @@ document.getElementById('edit-overlay').addEventListener('click',function(e){if(
 document.getElementById('email-overlay').addEventListener('click',function(e){if(e.target===this)closeEmail();});
 
 startApp();
-setInterval(()=>{if(!document.getElementById('pw-screen').classList.contains('hidden'))return;loadData();},60000);
+
+// Safe auto-refresh — skips if user is actively typing in any field
+function safeRefresh(){
+  const active = document.activeElement;
+  const isTyping = active && (
+    active.tagName === 'INPUT' ||
+    active.tagName === 'TEXTAREA' ||
+    active.tagName === 'SELECT' ||
+    active.isContentEditable
+  );
+  if(isTyping) return;
+  loadData();
+}
+setInterval(()=>{if(!document.getElementById('pw-screen').classList.contains('hidden'))return;safeRefresh();},60000);
 </script>
 </body>
 </html>

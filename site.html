@@ -1420,7 +1420,20 @@ function deleteCurrentSite(){
 document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');}));
 
 init();
-setInterval(loadData,90000);
+
+// Safe auto-refresh — skips if user is actively typing in any field
+function safeRefresh(){
+  const active = document.activeElement;
+  const isTyping = active && (
+    active.tagName === 'INPUT' ||
+    active.tagName === 'TEXTAREA' ||
+    active.tagName === 'SELECT' ||
+    active.isContentEditable
+  );
+  if(isTyping) return; // Don't interrupt typing
+  loadData();
+}
+setInterval(safeRefresh,90000);
 </script>
 </body>
 </html>

@@ -1000,9 +1000,22 @@ if(sessionStorage.getItem('pw_auth')==='1'){
   document.getElementById('pw-input').focus();
 }
 
+
+// Safe auto-refresh — skips if user is actively typing in any field
+function safeRefresh(){
+  const active = document.activeElement;
+  const isTyping = active && (
+    active.tagName === 'INPUT' ||
+    active.tagName === 'TEXTAREA' ||
+    active.tagName === 'SELECT' ||
+    active.isContentEditable
+  );
+  if(isTyping) return; // Don't interrupt typing
+  loadData();
+}
 setInterval(()=>{
   if(sessionStorage.getItem('pw_auth')!=='1') return;
-  loadData();
+  safeRefresh();
 },60000);
 </script>
 </body>

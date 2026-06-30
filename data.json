@@ -55,7 +55,7 @@
     "pci": "done",
     "cfra": "done",
     "lead": "waiting",
-    "leadNote": "On completion of scaffold",
+    "leadNote": "Requires Scaffold",
     "scaff": "done",
     "scaffNote": "",
     "cpp": "done",

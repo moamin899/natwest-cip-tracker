@@ -274,28 +274,5 @@
     "wtsub": "waiting",
     "wtDate": "",
     "suppliers": ""
-  },
-  {
-    "site": "Hitchin",
-    "job": "60341",
-    "priority": "12",
-    "listed": "No",
-    "planning": "none",
-    "cppPct": 0,
-    "reviewDate": "2026-05-05",
-    "submission": "2026-06-02",
-    "subcostsDate": "2026-05-10",
-    "wtDate": "2026-06-02",
-    "suppliers": "",
-    "leadNote": "",
-    "scaffNote": "",
-    "bsa": "waiting",
-    "pci": "waiting",
-    "cfra": "waiting",
-    "lead": "waiting",
-    "scaff": "waiting",
-    "cpp": "waiting",
-    "subcosts": "waiting",
-    "wtsub": "waiting"
   }
 ]
